@@ -1,5 +1,6 @@
 package com.example.order.cafe.domain;
 
+import com.example.order.cafe.errorMsg.CafeErrorMsg;
 import lombok.Getter;
 
 @Getter
@@ -10,7 +11,6 @@ public class CafeInfo {
     private String address;
 
     private int MIN_NAME_LENGTH = 1;
-    private final String NAME_LENGTH_ERROR_MESSAGE = "카페명은 1자 이상이여야 합니다.";
 
     public CafeInfo(String name, String explain, String contactNumber, String address){
         validation(name);
@@ -22,9 +22,11 @@ public class CafeInfo {
 
     private void validation(String name){
         if(name.length() < MIN_NAME_LENGTH){
-            throw new IllegalArgumentException(NAME_LENGTH_ERROR_MESSAGE);
+            throw new IllegalArgumentException(CafeErrorMsg.CAFE_NAME_LENGTH_ERROR_MESSAGE.getValue());
 
         }
     }
+
+
 
 }
