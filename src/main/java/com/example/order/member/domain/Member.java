@@ -1,17 +1,22 @@
 package com.example.order.member.domain;
 
+import com.example.order.member.errorMsg.MemberErrorMsg;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Member {
 
+    @Getter
     private String memberId;
     private String password;
     private AuthType authType;
     private String phoneNum;
 
-    private final String MEMBER_ID_LENGTH_ERROR_MESSAGE = "아이디는 4-10자여야 합니다.";
-    private final String MEMBER_ID_REGEX_ERROR_MESSAGE = "아이디는 영문과 숫자로 이루어져야 합니다.";
-    private final String MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE = "비밀번호는 8-15자여야 합니다.";
-    private final String MEMBER_PHONE_NUM_REGEX_ERROR_MESSAGE = "휴대폰번호는 숫자로만 이루어져야 합니다.";
-    private final String MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE = "휴대폰번호는 11자리여야 합니다.";
+    public static final String MEMBER_ID_REG = "^(?=.*[a-zA-Z])(?=.*\\d).+$";
+    public static final String PHONE_NUM_FORMAT_REG = "^\\d{3}-\\d{4}-\\d{4}$";
+    public static final String PHONE_NUM_NUMBER_REG = "^\\d+$";
+
     private final int MIN_ID_LENGTH = 4;
     private final int MAX_ID_LENGTH = 10;
     private final int MIN_PASSWORD_LENGTH = 8;
@@ -33,52 +38,63 @@ public class Member {
         check_password_length(password);
 
         check_phone_num_length(phoneNum);
-        check_phone_num_regex(phoneNum);
+        check_phone_num_only_number_regex(phoneNum);
+        check_phone_num_format_regex(phoneNum);
     }
 
     public void check_id_length(String memberId){
 
         if(memberId.length() < MIN_ID_LENGTH || memberId.length() > MAX_ID_LENGTH){
-            throw new IllegalArgumentException(MEMBER_ID_LENGTH_ERROR_MESSAGE);
+            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_LENGTH_ERROR_MESSAGE.getValue());
         }
 
     }
 
     public void check_id_regex(String memberId){
-        String regex = "^(?=.*[a-zA-Z])(?=.*\\d).+$";
 
-        boolean check_id = memberId.matches(regex);
-
-        if(!check_id){
-            throw new IllegalArgumentException(MEMBER_ID_REGEX_ERROR_MESSAGE);
+        if(!memberId.matches(MEMBER_ID_REG)){
+            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_REGEX_ERROR_MESSAGE.getValue());
         }
     }
 
     public void check_password_length(String password){
 
         if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
-            throw new IllegalArgumentException(MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE);
+            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE.getValue());
 
         }
     }
 
     public void check_phone_num_length(String phoneNum){
+        String phoneNumAfterDeleteDash = replaceDashToSpace(phoneNum);
 
-        if(phoneNum.length() != PHONE_NUM_LENGTH){
-            throw new IllegalArgumentException(MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE);
+        if(phoneNumAfterDeleteDash.length() != PHONE_NUM_LENGTH){
+            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
         }
 
     }
 
-    public void check_phone_num_regex(String phoneNum){
-        String regex = "^\\d{11}$";
+    public void check_phone_num_only_number_regex(String phoneNum){
+        String phoneNumAfterDeleteDash = replaceDashToSpace(phoneNum);
 
-        boolean check_phone_num = phoneNum.matches(regex);
-
-        if(!check_phone_num){
-            throw new IllegalArgumentException(MEMBER_PHONE_NUM_REGEX_ERROR_MESSAGE);
+        if(!phoneNumAfterDeleteDash.matches(PHONE_NUM_NUMBER_REG)){
+            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
 
         }
 
     }
+
+    public void check_phone_num_format_regex(String phoneNum){
+
+        if(!phoneNum.matches(PHONE_NUM_FORMAT_REG)){
+            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
+
+        }
+
+    }
+
+    public String replaceDashToSpace(String phoneNum){
+        return phoneNum.replaceAll("-", "");
+    }
+
 }
