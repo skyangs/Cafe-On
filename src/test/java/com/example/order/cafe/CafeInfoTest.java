@@ -109,7 +109,7 @@ public class CafeInfoTest {
     public void create_error_equal_1() {
 
         String 다른_카페명 = "cafeName";
-        String 다른_연락처 = "029999999";
+        String 다른_연락처 = "02-999-9999";
         String 다른_주소 = "부산시";
 
         CafeInfo cafeInfo_기본 = new CafeInfo(CafeInfoFixture.카페명, CafeInfoFixture.설명, CafeInfoFixture.연락처, CafeInfoFixture.주소);
