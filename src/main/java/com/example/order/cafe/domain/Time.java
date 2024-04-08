@@ -4,7 +4,7 @@ import com.example.order.cafe.errorMsg.TimeErrorMsg;
 
 public class Time {
     private int hour;
-    private  int minute;
+    private int minute;
 
     public static final int MIN_HOUR = 0;
     public static final int MAX_HOUR = 23;
@@ -22,23 +22,25 @@ public class Time {
     }
 
     public void validation(int hour, int minute){
-        check_hour(hour);
-        check_minute(minute);
+        check_hour_range(hour);
+
+        check_minute_range(minute);
     }
 
-    public void check_hour(int hour){
+    public void check_hour_range(int hour){
 
         if(hour < MIN_HOUR || hour > MAX_HOUR){
             throw new IllegalArgumentException(TimeErrorMsg.TIME_HOUR_RANGE_OUT_ERROR_MESSAGE.getValue());
         }
     }
 
-    public void check_minute(int minute){
+    public void check_minute_range(int minute){
 
         if(minute < MIN_MINUTE || minute > MAX_MINUTE){
             throw new IllegalArgumentException(TimeErrorMsg.TIME_MINUTE_RANGE_OUT_ERROR_MESSAGE.getValue());
         }
     }
+
 
     public String formatHourAndMinute(int hour, int minute){
         String string_hour = formatHour(hour);
@@ -46,6 +48,7 @@ public class Time {
 
         return string_hour + ":" + string_minute;
     }
+
     public String formatHour(int hour) {
         return (hour < 10) ? "0" + hour : String.valueOf(hour);
     }
