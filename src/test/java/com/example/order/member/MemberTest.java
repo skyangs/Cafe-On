@@ -1,5 +1,6 @@
 package com.example.order.member;
 
+import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
 import com.example.order.member.errorMsg.MemberErrorMsg;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +16,14 @@ public class MemberTest {
     @Test
     public void create(){
 
-        Member member = new Member(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.권한, MemberFixture.연락처);
+        String 아이디 = "id123";
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+        String 연락처 =  "010-1111-1111";
+        
+        Member member = new Member(아이디, 비밀번호, 권한, 연락처);
 
-        assertThat(member.getMemberId()).isEqualTo(MemberFixture.아이디);
+        assertThat(member.getMemberId()).isEqualTo(아이디);
     }
 
 
@@ -26,9 +32,13 @@ public class MemberTest {
     @ValueSource(strings = {"abc", "abcdefghijk"})
     public void create_error_id_length(String 아이디_자릿수){
 
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+        String 연락처 =  "010-1111-1111";
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                        new Member(아이디_자릿수, MemberFixture.비밀번호, MemberFixture.권한, MemberFixture.연락처);
+                        new Member(아이디_자릿수, 비밀번호, 권한, 연락처);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_ID_LENGTH_ERROR_MESSAGE.getValue());
 
@@ -39,9 +49,13 @@ public class MemberTest {
     @ValueSource(strings = {"abcd", "1234","한글아이디","한글12","ad한글"})
     public void create_error_id_regex(String 아이디_유효문자){
 
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+        String 연락처 =  "010-1111-1111";
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Member(아이디_유효문자, MemberFixture.비밀번호, MemberFixture.권한, MemberFixture.연락처);
+                    new Member(아이디_유효문자, 비밀번호, 권한, 연락처);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_ID_REGEX_ERROR_MESSAGE.getValue());
 
@@ -52,9 +66,13 @@ public class MemberTest {
     @ValueSource(strings = {"한글1", "a한글","한글123456789","abcdefghi한글"})
     public void create_error_id(String 아이디_자릿수_유효문자){
 
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+        String 연락처 =  "010-1111-1111";
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Member(아이디_자릿수_유효문자, MemberFixture.비밀번호, MemberFixture.권한, MemberFixture.연락처);
+                    new Member(아이디_자릿수_유효문자, 비밀번호, 권한, 연락처);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_ID_LENGTH_ERROR_MESSAGE.getValue());
 
@@ -65,9 +83,13 @@ public class MemberTest {
     @ValueSource(strings = {"passwor", "passwordpassword"})
     public void create_error_password(String 비밀번호_자릿수){
 
+        String 아이디 = "id123";
+        AuthType 권한  = AuthType.USER;
+        String 연락처 =  "010-1111-1111";
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Member(MemberFixture.아이디, 비밀번호_자릿수, MemberFixture.권한, MemberFixture.연락처);
+                    new Member(아이디, 비밀번호_자릿수, 권한, 연락처);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE.getValue());
 
@@ -78,9 +100,13 @@ public class MemberTest {
     @ValueSource(strings = {"010-1111-111", "010-1111-11111"})
     public void create_error_phoneNum_length(String 연락처_자릿수){
 
+        String 아이디 = "id123";
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Member(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.권한, 연락처_자릿수);
+                    new Member(아이디, 비밀번호, 권한, 연락처_자릿수);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
     }
@@ -90,9 +116,13 @@ public class MemberTest {
     @ValueSource(strings = {"연락처-열한자리-한글일때", "aaa-aaaa-aaaa"})     
     public void create_error_phoneNum_only_number_regex(String 연락처_유효문자){
 
+        String 아이디 = "id123";
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Member(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.권한, 연락처_유효문자);
+                    new Member(아이디, 비밀번호, 권한, 연락처_유효문자);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_PHONE_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
 
@@ -103,9 +133,13 @@ public class MemberTest {
     @ValueSource(strings = {"01000000000", "0100000-0000", "010-00000000"})
     public void create_error_phoneNum_format(String 연락처_형식){
 
+        String 아이디 = "id123";
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Member(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.권한, 연락처_형식);
+                    new Member(아이디, 비밀번호, 권한, 연락처_형식);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_PHONE_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
 
@@ -116,9 +150,13 @@ public class MemberTest {
     @ValueSource(strings = {"가나다라마바사아자차", "가나다라마바사아자차카타"})
     public void create_error_phoneNum(String 연락처){
 
+        String 아이디 = "id123";
+        String 비밀번호 = "password";
+        AuthType 권한  = AuthType.USER;
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Member(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.권한, 연락처);
+                    new Member(아이디, 비밀번호, 권한, 연락처);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
 
