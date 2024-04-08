@@ -1,14 +1,13 @@
 package com.example.order.cafe.errorMsg;
 
-public enum TimeErrorMsg {
-    TIME_HOUR_RANGE_OUT_ERROR_MESSAGE("T101","Hour는 0-23 사이 숫자만 가능합니다."),
-    TIME_MINUTE_RANGE_OUT_ERROR_MESSAGE("T102", "Minute는 0-59 사이 숫자만 가능합니다."),
+public enum OperationTimeErrorMsg {
+    OPEN_TIME_IS_FASTER_THAN_CLOSE_TIME_ERROR_MSG("OT101","오픈시간은 마감시간보다 빨라야합니다."),
     ;
 
     private final String code;
     private final String value;
 
-    TimeErrorMsg(String code, String value){
+    OperationTimeErrorMsg(String code, String value){
         this.code = code;
         this.value = value;
     }

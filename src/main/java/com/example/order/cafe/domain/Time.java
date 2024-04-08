@@ -10,6 +10,17 @@ public class Time {
     public static final int MAX_HOUR = 23;
     public static final int MIN_MINUTE = 0;
     public static final int MAX_MINUTE = 59;
+    public static final int MAX_HOUR_CHANGE_FORMAT = 10;
+    public static final int MAX_MINUTE_CHANGE_FORMAT = 10;
+    public static final String STRING_ZERO = "0";
+    public static final String COLON = ":";
+
+    public static final int IS_AFTER_HOUR = 1;
+    public static final int IS_BEFORE_HOUR = -1;
+
+    public static final int IS_AFTER_MINUTE = 1;
+    public static final int IS_BEFORE_MINUTE = -1;
+    public static final int IS_EQUAL_MINUTE = 0;
 
     public Time(int hour, int minute){
         validation(hour, minute);
@@ -41,21 +52,43 @@ public class Time {
         }
     }
 
-
-    public String formatHourAndMinute(int hour, int minute){
-        String string_hour = formatHour(hour);
-        String string_minute = formatMinute(minute);
-
-        return string_hour + ":" + string_minute;
+    public String formatHourAndMinute(){
+        return formatHour(this.hour) + COLON + formatMinute(this.minute);
     }
 
     public String formatHour(int hour) {
-        return (hour < 10) ? "0" + hour : String.valueOf(hour);
+        return (hour < MAX_HOUR_CHANGE_FORMAT) ? STRING_ZERO + hour : String.valueOf(hour);
     }
 
     public String formatMinute(int minute) {
-        return (minute < 10) ? "0" + minute : String.valueOf(minute);
+        return (minute < MAX_MINUTE_CHANGE_FORMAT) ? STRING_ZERO + minute : String.valueOf(minute);
     }
 
+    public int compareTime(Time otherTime){
+        return compareHour(otherTime);
+    }
+
+    public int compareHour(Time otherTime){
+
+        if (this.hour < otherTime.hour) {
+            return IS_BEFORE_HOUR;
+        } else if (this.hour > otherTime.hour) {
+            return IS_AFTER_HOUR;
+        } else {
+            return compareMinute(otherTime);
+        }
+
+    }
+
+    public int compareMinute(Time otherTime){
+
+        if (this.minute < otherTime.minute) {
+            return IS_BEFORE_MINUTE;
+        } else if (this.minute > otherTime.minute) {
+            return IS_AFTER_MINUTE;
+        }
+
+        return IS_EQUAL_MINUTE;
+    }
 
 }
