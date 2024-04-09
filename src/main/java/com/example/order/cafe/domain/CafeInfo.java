@@ -39,7 +39,7 @@ public class CafeInfo {
         }
     }
     public void check_contact_num_length(String contactNumber){
-        String contactNumAfterDeleteDash = replaceDashToSpace(contactNumber);
+        String contactNumAfterDeleteDash = removeHyphens(contactNumber);
 
         if(contactNumAfterDeleteDash.length() < MIN_CONTACT_NUM_LENGTH || contactNumAfterDeleteDash.length() > MAX_CONTACT_NUM_LENGTH){
             throw new IllegalArgumentException(CafeInfoErrorMsg.CAFE_CONTACT_NUM_LENGTH_ERROR_MESSAGE.getValue());
@@ -48,7 +48,7 @@ public class CafeInfo {
     }
 
     public void check_contact_num_only_number_regex(String contactNumber){
-        String phoneNumAfterDeleteDash = replaceDashToSpace(contactNumber);
+        String phoneNumAfterDeleteDash = removeHyphens(contactNumber);
 
         if(!phoneNumAfterDeleteDash.matches(CONTACT_NUM_NUMBER_REG)){
             throw new IllegalArgumentException(CafeInfoErrorMsg.CAFE_CONTACT_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
@@ -65,7 +65,7 @@ public class CafeInfo {
 
     }
 
-    public String replaceDashToSpace(String contactNumber){
+    public String removeHyphens(String contactNumber){
         return contactNumber.replaceAll("-", "");
     }
 
