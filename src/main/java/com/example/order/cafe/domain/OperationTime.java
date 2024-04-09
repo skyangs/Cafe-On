@@ -7,7 +7,9 @@ public class OperationTime {
     private Time close;
 
     public static final int OPEN_IS_BEFORE_CLOSE_VALUE = -1;
+    public static final int OPEN_IS_AFTER_CLOSE_VALUE = 1;
     public static final String HYPHEN = " - ";
+    public static final String DAY_OFF = "휴무";
 
     public OperationTime(Time open, Time close) {
         this.open = open;
@@ -22,11 +24,26 @@ public class OperationTime {
         return this.close.equals(close);
     }
 
-    public void CheckOpenTimeIsFasterThanCloseTime(){
-        if(this.open.compareTime(this.close) > OPEN_IS_BEFORE_CLOSE_VALUE){
+    public String makeOperationTimeList(){
+        if(isOpenSameAsClose()){
+            return CheckOpenTimeIsSameCloseTime();
+        } else if(isOpenAfterClose()){
             throw new IllegalArgumentException(OperationTimeErrorMsg.OPEN_TIME_IS_FASTER_THAN_CLOSE_TIME_ERROR_MSG.getValue());
         }
 
+        return formatOperationTime();
+    }
+
+    public boolean isOpenSameAsClose(){
+        return this.open.compareTime(this.close) == 0;
+    }
+
+    public String CheckOpenTimeIsSameCloseTime(){
+        return DAY_OFF;
+    }
+
+    public boolean isOpenAfterClose(){
+        return this.open.compareTime(this.close) == OPEN_IS_AFTER_CLOSE_VALUE;
     }
 
     public String formatOperationTime(){
