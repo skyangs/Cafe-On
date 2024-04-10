@@ -3,6 +3,7 @@ package com.example.order.cafe.domain;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class Cafe {
@@ -14,6 +15,14 @@ public class Cafe {
     public Cafe(CafeInfo cafeInfo, BusinessHours businessHours){
         this.cafeInfo = cafeInfo;
         this.businessHours = businessHours;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cafe cafe = (Cafe) o;
+        return Objects.equals(cafeInfo, cafe.cafeInfo) && Objects.equals(businessHours, cafe.businessHours);
     }
 
     public Cafe enrollCafe(CafeInfo cafeInfo, BusinessHours businessHours){
