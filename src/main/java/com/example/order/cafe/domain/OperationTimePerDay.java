@@ -19,12 +19,6 @@ public class OperationTimePerDay {
         }
     }
 
-    public void isDuplicate(Days days){
-            if(this.days == days){
-                throw new IllegalArgumentException(OperationTimePerDayErrorMsg.BUSINESS_HOURS_NOT_DUPLICATE_DAY_ERROR_MESSAGE.getValue());
-            }
-    }
-
     public Days getDays(){
         return this.days;
     }

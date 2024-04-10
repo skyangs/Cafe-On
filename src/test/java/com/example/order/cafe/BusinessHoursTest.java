@@ -84,7 +84,6 @@ public class BusinessHoursTest {
         OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.THURSDAY, 평일_운영시간);
         OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.FRIDAY, 평일_운영시간);
         OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.SATURDAY, 주말_운영시간);
-        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.SUNDAY, 주말_운영시간);
 
         List<OperationTimePerDay> 운영시간_리스트 = new ArrayList<>();
 
@@ -96,12 +95,10 @@ public class BusinessHoursTest {
         운영시간_리스트.add(토요일);
         운영시간_리스트.add(월요일);
 
-        BusinessHours 운영시간 = new BusinessHours(운영시간_리스트);
-
         assertThatIllegalArgumentException()
-                .isThrownBy(운영시간::isDuplicateDay
+                .isThrownBy(() -> new BusinessHours(운영시간_리스트)
                 )
-                .withMessage(OperationTimePerDayErrorMsg.BUSINESS_HOURS_NOT_DUPLICATE_DAY_ERROR_MESSAGE.getValue());
+                .withMessage(BusinessHoursErrorMsg.OPERATION_TIME_PER_DAY_LIST_LENGTH_ERROR_MSG.getValue());
 
     }
 
