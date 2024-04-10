@@ -19,13 +19,13 @@ public class BusinessHoursTest {
 
         OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
         OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
-        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.월, 평일_운영시간);
-        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.화, 평일_운영시간);
-        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.수, 평일_운영시간);
-        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.목, 평일_운영시간);
-        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.금, 평일_운영시간);
-        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.토, 주말_운영시간);
-        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.일, 주말_운영시간);
+        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.MONDAY, 평일_운영시간);
+        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.TUESDAY, 평일_운영시간);
+        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.WEDNESDAY, 평일_운영시간);
+        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.THURSDAY, 평일_운영시간);
+        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.FRIDAY, 평일_운영시간);
+        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.SATURDAY, 주말_운영시간);
+        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.SUNDAY, 주말_운영시간);
 
         List<OperationTimePerDay> 운영시간_리스트 = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class BusinessHoursTest {
         운영시간_리스트.add(토요일);
         운영시간_리스트.add(일요일);
 
-        assertThat(new BusinessHours(운영시간_리스트).getTimePerDay(Days.토))
+        assertThat(new BusinessHours(운영시간_리스트).getTimePerDay(Days.SATURDAY))
                 .isEqualTo(주말_운영시간.makeOperationTimeList());
 
     }
@@ -48,13 +48,13 @@ public class BusinessHoursTest {
 
         OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
         OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
-        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.월, 평일_운영시간);
-        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.화, 평일_운영시간);
-        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.수, 평일_운영시간);
-        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.목, 평일_운영시간);
-        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.금, 평일_운영시간);
-        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.토, 주말_운영시간);
-        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.일, 주말_운영시간);
+        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.MONDAY, 평일_운영시간);
+        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.TUESDAY, 평일_운영시간);
+        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.WEDNESDAY, 평일_운영시간);
+        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.THURSDAY, 평일_운영시간);
+        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.FRIDAY, 평일_운영시간);
+        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.SATURDAY, 주말_운영시간);
+        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.SUNDAY, 주말_운영시간);
 
         List<OperationTimePerDay> 운영시간_리스트 = new ArrayList<>();
 
@@ -78,13 +78,13 @@ public class BusinessHoursTest {
 
         OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
         OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
-        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.월, 평일_운영시간);
-        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.화, 평일_운영시간);
-        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.수, 평일_운영시간);
-        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.목, 평일_운영시간);
-        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.금, 평일_운영시간);
-        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.토, 주말_운영시간);
-        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.일, 주말_운영시간);
+        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.MONDAY, 평일_운영시간);
+        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.TUESDAY, 평일_운영시간);
+        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.WEDNESDAY, 평일_운영시간);
+        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.THURSDAY, 평일_운영시간);
+        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.FRIDAY, 평일_운영시간);
+        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.SATURDAY, 주말_운영시간);
+        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.SUNDAY, 주말_운영시간);
 
         List<OperationTimePerDay> 운영시간_리스트 = new ArrayList<>();
 
