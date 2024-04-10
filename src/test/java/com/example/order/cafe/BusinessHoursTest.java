@@ -1,41 +1,115 @@
 package com.example.order.cafe;
 
-import com.example.order.cafe.domain.BusinessHours;
+import com.example.order.cafe.domain.*;
+import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
+import com.example.order.cafe.errorMsg.OperationTimePerDayErrorMsg;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class BusinessHoursTest {
 
-    String BUSINESS_HOURS_REGEX_ERROR_MESSAGE = "영업시간은 HH:mm - HH:mm 혹은 휴무로 입력해야합니다.";
-
-    @DisplayName("생성 테스트 : 영업시간 HH:mm - HH:mm의 형태")
+    @DisplayName("생성 : 정상")
     @Test
-    public void create_error_business_hours() {
-        Map<String, String> 시간리스트 = new HashMap<>();
+    public void create() {
 
-        String[] 요일 = {"월", "화", "수", "목", "금", "토", "일"};
-        String 평소영업시간 = "10:00 - 18:00";
-        String 예외영업시간 = "20:00 - 18:00";
-        String 휴무 = "휴무";
+        OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
+        OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
+        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.월, 평일_운영시간);
+        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.화, 평일_운영시간);
+        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.수, 평일_운영시간);
+        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.목, 평일_운영시간);
+        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.금, 평일_운영시간);
+        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.토, 주말_운영시간);
+        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.일, 주말_운영시간);
 
-        for (String day : 요일){
-            if(day.equals("월")){
-                시간리스트.put(day, 예외영업시간);
-            }else if(day.equals("일")){
-                시간리스트.put(day, 휴무);
-            }else 시간리스트.put(day, 평소영업시간);
-        }
+        List<OperationTimePerDay> 운영시간_리스트 = new ArrayList<>();
 
-        Exception 예외_영업시간 = assertThrows(IllegalArgumentException.class,
-                () -> new BusinessHours(시간리스트));
+        운영시간_리스트.add(월요일);
+        운영시간_리스트.add(화요일);
+        운영시간_리스트.add(수요일);
+        운영시간_리스트.add(목요일);
+        운영시간_리스트.add(금요일);
+        운영시간_리스트.add(토요일);
+        운영시간_리스트.add(일요일);
 
-        assertThat(예외_영업시간.getMessage()).isEqualTo(BUSINESS_HOURS_REGEX_ERROR_MESSAGE);
+        assertThat(new BusinessHours(운영시간_리스트).getTimePerDay(Days.토))
+                .isEqualTo(주말_운영시간.makeOperationTimeList());
 
     }
+
+    @DisplayName("생성 예외 : 리스트 길이 - 7")
+    @Test
+    public void create_error_operationTimePerDay_length() {
+
+        OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
+        OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
+        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.월, 평일_운영시간);
+        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.화, 평일_운영시간);
+        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.수, 평일_운영시간);
+        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.목, 평일_운영시간);
+        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.금, 평일_운영시간);
+        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.토, 주말_운영시간);
+        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.일, 주말_운영시간);
+
+        List<OperationTimePerDay> 운영시간_리스트 = new ArrayList<>();
+
+        운영시간_리스트.add(월요일);
+        운영시간_리스트.add(화요일);
+        운영시간_리스트.add(수요일);
+        운영시간_리스트.add(목요일);
+        운영시간_리스트.add(금요일);
+        운영시간_리스트.add(토요일);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new BusinessHours(운영시간_리스트)
+                )
+                .withMessage(BusinessHoursErrorMsg.OPERATION_TIME_PER_DAY_LIST_LENGTH_ERROR_MSG.getValue());
+
+    }
+
+    @DisplayName("생성 예외 : 요일 - 중복 삽입 불가")
+    @Test
+    public void create_error_duplicate_dayOfWeek() {
+
+        OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
+        OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
+        OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.월, 평일_운영시간);
+        OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.화, 평일_운영시간);
+        OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.수, 평일_운영시간);
+        OperationTimePerDay 목요일 =  new OperationTimePerDay(Days.목, 평일_운영시간);
+        OperationTimePerDay 금요일 =  new OperationTimePerDay(Days.금, 평일_운영시간);
+        OperationTimePerDay 토요일 =  new OperationTimePerDay(Days.토, 주말_운영시간);
+        OperationTimePerDay 일요일 =  new OperationTimePerDay(Days.일, 주말_운영시간);
+
+        List<OperationTimePerDay> 운영시간_리스트 = new ArrayList<>();
+
+        운영시간_리스트.add(월요일);
+        운영시간_리스트.add(화요일);
+        운영시간_리스트.add(수요일);
+        운영시간_리스트.add(목요일);
+        운영시간_리스트.add(금요일);
+        운영시간_리스트.add(토요일);
+        운영시간_리스트.add(월요일);
+
+        BusinessHours 운영시간 = new BusinessHours(운영시간_리스트);
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(운영시간::isDuplicateDay
+                )
+                .withMessage(OperationTimePerDayErrorMsg.BUSINESS_HOURS_NOT_DUPLICATE_DAY_ERROR_MESSAGE.getValue());
+
+    }
+
+
+    @DisplayName("생성 : 운영시간 리스트 수정")
+    @Test
+    public void create_add_operationTimePerDay_to_list() {
+
+    }
+
 }
