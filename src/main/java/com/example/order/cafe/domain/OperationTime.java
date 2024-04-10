@@ -2,13 +2,15 @@ package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.OperationTimeErrorMsg;
 
+import java.util.Objects;
+
 public class OperationTime {
     private Time open;
     private Time close;
 
-    public static final int OPEN_IS_BEFORE_CLOSE_VALUE = -1;
-    public static final int OPEN_IS_AFTER_CLOSE_VALUE = 1;
-    public static final String HYPHEN = " - ";
+    public static final String IS_BEFORE_TIME = "이전";
+    public static final String IS_AFTER_TIME = "이후";
+    public static final String IS_SAME_TIME = "동일";
     public static final String DAY_OFF = "휴무";
 
     public OperationTime(Time open, Time close) {
@@ -26,7 +28,7 @@ public class OperationTime {
 
     public String makeOperationTimeList(){
         if(isOpenSameAsClose()){
-            return CheckOpenTimeIsSameCloseTime();
+            return checkOpenTimeIsSameCloseTime();
         } else if(isOpenAfterClose()){
             throw new IllegalArgumentException(OperationTimeErrorMsg.OPEN_TIME_IS_FASTER_THAN_CLOSE_TIME_ERROR_MSG.getValue());
         }
@@ -35,19 +37,19 @@ public class OperationTime {
     }
 
     public boolean isOpenSameAsClose(){
-        return this.open.compareTime(this.close) == 0;
+        return Objects.equals(this.open.compareTime(this.close), IS_SAME_TIME);
     }
 
-    public String CheckOpenTimeIsSameCloseTime(){
+    public String checkOpenTimeIsSameCloseTime(){
         return DAY_OFF;
     }
 
     public boolean isOpenAfterClose(){
-        return this.open.compareTime(this.close) == OPEN_IS_AFTER_CLOSE_VALUE;
+        return Objects.equals(this.open.compareTime(this.close), IS_AFTER_TIME);
     }
 
     public String formatOperationTime(){
-        return this.open.formatHourAndMinute() + HYPHEN + this.close.formatHourAndMinute();
+        return this.open.formatHourAndMinute() + " - " + this.close.formatHourAndMinute();
     }
 
 }

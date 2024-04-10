@@ -115,7 +115,7 @@ public class OperationTimeTest {
 
         OperationTime 운영시간 = new OperationTime(오픈_시간, 마감_시간);
 
-        String 운영시간_형식 = 오픈_시간.formatHourAndMinute() + OperationTime.HYPHEN  + 마감_시간.formatHourAndMinute();
+        String 운영시간_형식 = 오픈_시간.formatHourAndMinute() + " - "  + 마감_시간.formatHourAndMinute();
         assertThat(운영시간.formatOperationTime()).isEqualTo(운영시간_형식);
 
     }
