@@ -1,40 +1,41 @@
 package com.example.order.cafe.domain;
 
-import com.example.order.cafe.errorMsg.CafeErrorMsg;
+import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BusinessHours {
-    private Map<String, String> hours;
+    private final List<OperationTimePerDay> operationTimeList;
 
-    public BusinessHours(Map<String, String> hours){
-        validation(hours);
-        this.hours = hours;
+    public static final int OPERATION_TIME_PER_DAY_SIZE = 7;
+
+    public BusinessHours(List<OperationTimePerDay> operationTimeList){
+        validation(operationTimeList);
+        this.operationTimeList = operationTimeList;
     }
 
-    public void validation(Map<String, String> hours){
 
-        String regex = "^([01]\\d|2[0-3]):([0-5]\\d) - ([01]\\d|2[0-3]):([0-5]\\d)$";
+    public void validation(List<OperationTimePerDay> operationTimePerDay){
 
-        for (Map.Entry<String, String> day : hours.entrySet()){
-            String hour = day.getValue();
+        checkOperationTimeList_length(operationTimePerDay);
 
-            boolean check_businessHours_regex = hour.matches(regex);
-            boolean closed = hour.equals("휴무");
+        isDuplicateDay();
+    }
 
-            if(!check_businessHours_regex && !closed){
-                throw new IllegalArgumentException(CafeErrorMsg.BUSINESS_HOURS_REGEX_ERROR_MESSAGE.getValue() + day.getKey());
-            }
-
+    public void checkOperationTimeList_length(List<OperationTimePerDay> operationTimePerDay){
+        if(operationTimePerDay.size() != OPERATION_TIME_PER_DAY_SIZE){
+            throw new IllegalArgumentException(BusinessHoursErrorMsg.OPERATION_TIME_PER_DAY_LIST_LENGTH_ERROR_MSG.getValue());
         }
     }
 
-    public void enrollBusinessHours(Map<String, String> hours){
-        this.hours.putAll(hours);
+    public void isDuplicateDay(){
+        for (OperationTimePerDay operationTimePerDay : this.operationTimeList) {
+        }
     }
 
-    public void editBusinessHours(Map<String, String> hours){
-        this.hours.putAll(hours);
+    public String getTimePerDay(Days day){
+        return operationTimeList.get(day.ordinal()).getOperationTime().makeOperationTimeList();
     }
 
 }
