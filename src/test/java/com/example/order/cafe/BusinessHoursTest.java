@@ -2,7 +2,6 @@ package com.example.order.cafe;
 
 import com.example.order.cafe.domain.*;
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
-import com.example.order.cafe.errorMsg.OperationTimePerDayErrorMsg;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +16,8 @@ public class BusinessHoursTest {
     @Test
     public void create() {
 
-        OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
-        OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
+        OperationTime 평일_운영시간 = OperationTime.of(Time.of(9,0), Time.of(17,0));
+        OperationTime 주말_운영시간 = OperationTime.of(Time.of(0,0), Time.of(0,0));
         OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.MONDAY, 평일_운영시간);
         OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.TUESDAY, 평일_운영시간);
         OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.WEDNESDAY, 평일_운영시간);
@@ -46,8 +45,8 @@ public class BusinessHoursTest {
     @Test
     public void create_error_operationTimePerDay_length() {
 
-        OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
-        OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
+        OperationTime 평일_운영시간 = OperationTime.of(Time.of(9,0), Time.of(17,0));
+        OperationTime 주말_운영시간 = OperationTime.of(Time.of(0,0), Time.of(0,0));
         OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.MONDAY, 평일_운영시간);
         OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.TUESDAY, 평일_운영시간);
         OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.WEDNESDAY, 평일_운영시간);
@@ -76,8 +75,8 @@ public class BusinessHoursTest {
     @Test
     public void create_error_duplicate_dayOfWeek() {
 
-        OperationTime 평일_운영시간 = new OperationTime(new Time(9, 0), new Time(17, 0));
-        OperationTime 주말_운영시간 = new OperationTime(new Time(0, 0), new Time(0, 0));
+        OperationTime 평일_운영시간 = OperationTime.of(Time.of(9,0), Time.of(17,0));
+        OperationTime 주말_운영시간 = OperationTime.of(Time.of(0,0), Time.of(0,0));
         OperationTimePerDay 월요일 =  new OperationTimePerDay(Days.MONDAY, 평일_운영시간);
         OperationTimePerDay 화요일 =  new OperationTimePerDay(Days.TUESDAY, 평일_운영시간);
         OperationTimePerDay 수요일 =  new OperationTimePerDay(Days.WEDNESDAY, 평일_운영시간);
@@ -102,11 +101,5 @@ public class BusinessHoursTest {
 
     }
 
-
-    @DisplayName("생성 : 운영시간 리스트 수정")
-    @Test
-    public void create_add_operationTimePerDay_to_list() {
-
-    }
 
 }

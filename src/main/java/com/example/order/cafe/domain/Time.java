@@ -3,8 +3,8 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.TimeErrorMsg;
 
 public class Time {
-    private int hour;
-    private int minute;
+    private final int hour;
+    private final int minute;
 
     public static final int MIN_HOUR = 0;
     public static final int MAX_HOUR = 23;
@@ -18,10 +18,14 @@ public class Time {
     public static final String IS_AFTER_TIME = "이후";
     public static final String IS_SAME_TIME = "동일";
 
-    public Time(int hour, int minute){
+    private Time(int hour, int minute){
         validation(hour, minute);
         this.hour = hour;
         this.minute = minute;
+    }
+
+    public static Time of(int hour, int minute){
+        return new Time(hour, minute);
     }
 
     public boolean isHour(int hour){
@@ -80,4 +84,11 @@ public class Time {
         return hour * 60 + minute;
     }
 
+    public int getHour(){
+        return hour;
+    }
+
+    public int getMinute(){
+        return minute;
+    }
 }

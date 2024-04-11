@@ -23,11 +23,11 @@ public class OperationTimePerDayTest {
         int 마감_시 = 23;
         int 마감_분 = 59;
 
-        Time 오픈_시간 = new Time(오픈_시, 오픈_분);
-        Time 마감_시간 = new Time(마감_시, 마감_분);
+        Time 오픈_시간 = Time.of(오픈_시, 오픈_분);
+        Time 마감_시간 = Time.of(마감_시, 마감_분);
 
         Days 요일 = Days.WEDNESDAY;
-        OperationTime 운영시간 = new OperationTime(오픈_시간, 마감_시간);
+        OperationTime 운영시간 = OperationTime.of(오픈_시간, 마감_시간);
         OperationTimePerDay 하루_운영시간 = new OperationTimePerDay(요일, 운영시간);
 
         assertThat(하루_운영시간.getDays()).isEqualTo(요일);
