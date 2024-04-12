@@ -4,6 +4,7 @@ import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BusinessHours {
 
@@ -47,6 +48,14 @@ public class BusinessHours {
 
     public String getTimePerDay(Days day){
         return operationTimeList.get(day.ordinal()).getOperationTime().makeOperationTimeList();
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BusinessHours businessHours = (BusinessHours) o;
+        return Objects.equals(operationTimeList, businessHours.operationTimeList);
     }
 
 }

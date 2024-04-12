@@ -1,9 +1,11 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.CafeInfoErrorMsg;
+import lombok.Getter;
 
 import java.util.Objects;
 
+@Getter
 public class CafeInfo {
     private String name;
     private String explain;
@@ -17,12 +19,16 @@ public class CafeInfo {
     private int MIN_CONTACT_NUM_LENGTH = 9;
     private int MAX_CONTACT_NUM_LENGTH = 11;
 
-    public CafeInfo(String name, String explain, String contactNumber, String address){
+    private CafeInfo(String name, String explain, String contactNumber, String address){
         validation(name, contactNumber);
         this.name = name;
         this.explain = explain;
         this.contactNumber = contactNumber;
         this.address = address;
+    }
+
+    public static CafeInfo of(String name, String explain, String contactNumber, String address){
+        return new CafeInfo(name, explain, contactNumber, address);
     }
 
     private void validation(String name, String contactNumber){
@@ -60,9 +66,7 @@ public class CafeInfo {
 
         if(!contactNumber.matches(CONTACT_NUM_FORMAT_REG)){
             throw new IllegalArgumentException(CafeInfoErrorMsg.CAFE_CONTACT_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
-
         }
-
     }
 
     public String removeHyphens(String contactNumber){

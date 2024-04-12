@@ -23,9 +23,9 @@ public class CafeInfoTest {
         String 연락처  = "02-111-1111";
         String 주소=  "서울시 강남구 1010동";
 
-        CafeInfo cafeInfo = new CafeInfo(카페명, 설명, 연락처, 주소);
+        CafeInfo 카페프로필 = CafeInfo.of(카페명, 설명, 연락처, 주소);
 
-        assertThat(cafeInfo.isMyAddress(주소)).isTrue();
+        assertThat(카페프로필.isMyAddress(주소)).isTrue();
     }
 
     @DisplayName("생성 예외 : 카페명 - 1글자 이상")
@@ -39,7 +39,7 @@ public class CafeInfoTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new CafeInfo(빈_카페명, 설명, 연락처, 주소);
+                    CafeInfo.of(빈_카페명, 설명, 연락처, 주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_NAME_LENGTH_ERROR_MESSAGE.getValue());
     }
@@ -55,7 +55,7 @@ public class CafeInfoTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new CafeInfo(카페명, 설명, 비정상_연락처_자릿수, 주소);
+                    CafeInfo.of(카페명, 설명, 비정상_연락처_자릿수, 주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_LENGTH_ERROR_MESSAGE.getValue());
     }
@@ -71,7 +71,7 @@ public class CafeInfoTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new CafeInfo(카페명, 설명, 연락처_유효문자, 주소);
+                    CafeInfo.of(카페명, 설명, 연락처_유효문자, 주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
 
@@ -88,7 +88,7 @@ public class CafeInfoTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new CafeInfo(카페명, 설명, 연락처_형식, 주소);
+                    CafeInfo.of(카페명, 설명, 연락처_형식, 주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
 
@@ -105,7 +105,7 @@ public class CafeInfoTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new CafeInfo(카페명, 설명, 예외연락처, 주소);
+                    CafeInfo.of(카페명, 설명, 예외연락처, 주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_LENGTH_ERROR_MESSAGE.getValue());
 
@@ -121,10 +121,10 @@ public class CafeInfoTest {
         String 연락처  = "02-111-1111";
         String 주소=  "서울시 강남구 1010동";
 
-        CafeInfo cafeInfo_설명있음 = new CafeInfo(카페명, 설명, 연락처, 주소);
-        CafeInfo cafeInfo_설명없음 = new CafeInfo(카페명, 빈_설명, 연락처, 주소);
+        CafeInfo 카페프로필_설명있음 = CafeInfo.of(카페명, 설명, 연락처, 주소);
+        CafeInfo 카페프로필_설명없음 = CafeInfo.of(카페명, 빈_설명, 연락처, 주소);
 
-        assertEquals(cafeInfo_설명있음, cafeInfo_설명없음);
+        assertEquals(카페프로필_설명있음, 카페프로필_설명없음);
 
     }
 
@@ -141,14 +141,14 @@ public class CafeInfoTest {
         String 다른_연락처 = "02-999-9999";
         String 다른_주소 = "부산시";
 
-        CafeInfo cafeInfo_기본 = new CafeInfo(카페명, 설명, 연락처, 주소);
-        CafeInfo cafeInfo_다른카페명 = new CafeInfo(다른_카페명, 설명, 연락처, 주소);
-        CafeInfo cafeInfo_다른연락처 = new CafeInfo(카페명, 설명, 다른_연락처, 주소);
-        CafeInfo cafeInfo_다른주소 = new CafeInfo(카페명, 설명, 연락처, 다른_주소);
+        CafeInfo 카페프로필_기본 = CafeInfo.of(카페명, 설명, 연락처, 주소);
+        CafeInfo 카페프로필_다른카페명 = CafeInfo.of(다른_카페명, 설명, 연락처, 주소);
+        CafeInfo 카페프로필_다른연락처 = CafeInfo.of(카페명, 설명, 다른_연락처, 주소);
+        CafeInfo 카페프로필_다른주소 = CafeInfo.of(카페명, 설명, 연락처, 다른_주소);
 
-        assertNotEquals(cafeInfo_기본, cafeInfo_다른카페명);
-        assertNotEquals(cafeInfo_기본, cafeInfo_다른연락처);
-        assertNotEquals(cafeInfo_기본, cafeInfo_다른주소);
+        assertNotEquals(카페프로필_기본, 카페프로필_다른카페명);
+        assertNotEquals(카페프로필_기본, 카페프로필_다른연락처);
+        assertNotEquals(카페프로필_기본, 카페프로필_다른주소);
 
     }
 }

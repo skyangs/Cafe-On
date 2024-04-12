@@ -1,19 +1,23 @@
 package com.example.order.cafe.errorMsg;
 
-import lombok.Getter;
-
-@Getter
 public enum CafeErrorMsg {
-    BUSINESS_HOURS_REGEX_ERROR_MESSAGE("영업시간은 HH:mm - HH:mm 혹은 휴무로 입력해야합니다."),
-    CAFE_NAME_LENGTH_ERROR_MESSAGE("카페명은 1자 이상이여야 합니다."),
-    MENU_NAME_LENGTH_ERROR_MESSAGE("메뉴 이름은 1자 이상이여야 합니다."),
-    STOCK_UNDER_ZERO_ERROR_MESSAGE("음료 재고는 0개 이상이여야 합니다."),
-    PRICE_UNDER_ZERO_ERROR_MESSAGE("음료 가격은 0원 이상이여야 합니다.");
+    CAFE_INFO_NULL_ERROR_MESSAGE("CE101","카페프로필은 NULL일 수 없습니다."),
+    BUSINESS_HOURS_NULL_ERROR_MESSAGE("CE102", "카페 운영시간은 NULL일 수 없습니다."),
+    ;
 
+    private final String code;
     private final String value;
 
-    CafeErrorMsg(String value){
+    CafeErrorMsg(String code, String value){
+        this.code = code;
         this.value = value;
+    }
+
+    public String getCode(){
+        return this.value;
+    }
+    public String getValue(){
+        return this.value;
     }
 
 }
