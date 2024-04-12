@@ -56,4 +56,11 @@ public class OperationTime {
         return this.open.formatHourAndMinute() + " - " + this.close.formatHourAndMinute();
     }
 
+    public Time getOpen(){
+        return open;
+    }
+
+    public Time getClose(){
+        return close;
+    }
 }

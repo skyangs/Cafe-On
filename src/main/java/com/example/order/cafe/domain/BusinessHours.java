@@ -2,6 +2,7 @@ package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessHours {
@@ -10,9 +11,13 @@ public class BusinessHours {
 
     public static final int DISTINCT_DAY_SIZE = 7;
 
-    public BusinessHours(List<OperationTimePerDay> operationTimeList){
+    private BusinessHours(List<OperationTimePerDay> operationTimeList){
         validation(operationTimeList);
-        this.operationTimeList = operationTimeList;
+        this.operationTimeList = new ArrayList<>(operationTimeList);
+    }
+
+    public static BusinessHours of(List<OperationTimePerDay> operationTimeList){
+        return new BusinessHours(operationTimeList);
     }
 
     public void validation(List<OperationTimePerDay> operationTimePerDay){
@@ -34,6 +39,10 @@ public class BusinessHours {
         if(daysList.size() != DISTINCT_DAY_SIZE){
             throw new IllegalArgumentException(BusinessHoursErrorMsg.OPERATION_TIME_PER_DAY_LIST_LENGTH_ERROR_MSG.getValue());
         }
+    }
+
+    public List<OperationTimePerDay> getOperationTimeList(){
+        return List.copyOf(operationTimeList);
     }
 
     public String getTimePerDay(Days day){

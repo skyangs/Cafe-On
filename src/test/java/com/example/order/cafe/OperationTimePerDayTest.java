@@ -28,7 +28,7 @@ public class OperationTimePerDayTest {
 
         Days 요일 = Days.WEDNESDAY;
         OperationTime 운영시간 = OperationTime.of(오픈_시간, 마감_시간);
-        OperationTimePerDay 하루_운영시간 = new OperationTimePerDay(요일, 운영시간);
+        OperationTimePerDay 하루_운영시간 = OperationTimePerDay.of(요일, 운영시간);
 
         assertThat(하루_운영시간.getDays()).isEqualTo(요일);
         assertThat(하루_운영시간.getOperationTime()).isEqualTo(운영시간);
@@ -42,7 +42,7 @@ public class OperationTimePerDayTest {
         OperationTime 운영시간_널 = null;
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> new OperationTimePerDay(월요일, 운영시간_널))
+                .isThrownBy(() -> OperationTimePerDay.of(월요일, 운영시간_널))
                 .withMessage(OperationTimePerDayErrorMsg.OPERATION_TIME_NON_NULL_ERROR_MSG.getValue());
 
     }
