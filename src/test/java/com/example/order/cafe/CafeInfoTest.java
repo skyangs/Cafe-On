@@ -20,12 +20,12 @@ public class CafeInfoTest {
     public void create(){
 
         CafeInfo 카페프로필 = CafeInfo.of(
-                CafeInfoFixture.카페명(),
-                CafeInfoFixture.설명(),
-                CafeInfoFixture.연락처(),
-                CafeInfoFixture.주소());
+                CafeInfoFixture.카페명,
+                CafeInfoFixture.설명,
+                CafeInfoFixture.연락처,
+                CafeInfoFixture.주소);
 
-        assertThat(카페프로필.isMyAddress(CafeInfoFixture.주소())).isTrue();
+        assertThat(카페프로필.isMyAddress(CafeInfoFixture.주소)).isTrue();
     }
 
     @DisplayName("생성 예외 : 카페명 - 1글자 이상")
@@ -41,9 +41,9 @@ public class CafeInfoTest {
                 .isThrownBy(() -> {
                     CafeInfo.of(
                             빈_카페명,
-                            CafeInfoFixture.설명(),
-                            CafeInfoFixture.연락처(),
-                            CafeInfoFixture.주소());
+                            CafeInfoFixture.설명,
+                            CafeInfoFixture.연락처,
+                            CafeInfoFixture.주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_NAME_LENGTH_ERROR_MESSAGE.getValue());
     }
@@ -56,10 +56,10 @@ public class CafeInfoTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
                     CafeInfo.of(
-                            CafeInfoFixture.카페명(),
-                            CafeInfoFixture.설명(),
+                            CafeInfoFixture.카페명,
+                            CafeInfoFixture.설명,
                             비정상_연락처_자릿수,
-                            CafeInfoFixture.주소());
+                            CafeInfoFixture.주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_LENGTH_ERROR_MESSAGE.getValue());
     }
@@ -72,10 +72,10 @@ public class CafeInfoTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
                     CafeInfo.of(
-                            CafeInfoFixture.카페명(),
-                            CafeInfoFixture.설명(),
+                            CafeInfoFixture.카페명,
+                            CafeInfoFixture.설명,
                             연락처_유효문자,
-                            CafeInfoFixture.주소());
+                            CafeInfoFixture.주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
 
@@ -89,10 +89,10 @@ public class CafeInfoTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
                     CafeInfo.of(
-                            CafeInfoFixture.카페명(),
-                            CafeInfoFixture.설명(),
+                            CafeInfoFixture.카페명,
+                            CafeInfoFixture.설명,
                             연락처_형식,
-                            CafeInfoFixture.주소());
+                            CafeInfoFixture.주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
 
@@ -106,10 +106,10 @@ public class CafeInfoTest {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
                     CafeInfo.of(
-                            CafeInfoFixture.카페명(),
-                            CafeInfoFixture.설명(),
+                            CafeInfoFixture.카페명,
+                            CafeInfoFixture.설명,
                             예외연락처,
-                            CafeInfoFixture.주소());
+                            CafeInfoFixture.주소);
                 })
                 .withMessage(CafeInfoErrorMsg.CAFE_CONTACT_NUM_LENGTH_ERROR_MESSAGE.getValue());
 
@@ -122,15 +122,15 @@ public class CafeInfoTest {
         String 빈_설명 = "";
 
         CafeInfo 카페프로필_설명있음 = CafeInfo.of(
-                CafeInfoFixture.카페명(),
-                CafeInfoFixture.설명(),
-                CafeInfoFixture.연락처(),
-                CafeInfoFixture.주소());
+                CafeInfoFixture.카페명,
+                CafeInfoFixture.설명,
+                CafeInfoFixture.연락처,
+                CafeInfoFixture.주소);
         CafeInfo 카페프로필_설명없음 = CafeInfo.of(
-                CafeInfoFixture.카페명(),
+                CafeInfoFixture.카페명,
                 빈_설명,
-                CafeInfoFixture.연락처(),
-                CafeInfoFixture.주소());
+                CafeInfoFixture.연락처,
+                CafeInfoFixture.주소);
 
         assertEquals(카페프로필_설명있음, 카페프로필_설명없음);
 
@@ -149,24 +149,24 @@ public class CafeInfoTest {
         String 다른_연락처 = "02-999-9999";
         String 다른_주소 = "부산시";
 
-        CafeInfo 카페프로필_기본 = CafeInfo.of( CafeInfoFixture.카페명(),
-                CafeInfoFixture.설명(),
-                CafeInfoFixture.연락처(),
-                CafeInfoFixture.주소());
+        CafeInfo 카페프로필_기본 = CafeInfo.of( CafeInfoFixture.카페명,
+                CafeInfoFixture.설명,
+                CafeInfoFixture.연락처,
+                CafeInfoFixture.주소);
         CafeInfo 카페프로필_다른카페명 = CafeInfo.of(
                 다른_카페명,
-                CafeInfoFixture.설명(),
-                CafeInfoFixture.연락처(),
-                CafeInfoFixture.주소());
+                CafeInfoFixture.설명,
+                CafeInfoFixture.연락처,
+                CafeInfoFixture.주소);
         CafeInfo 카페프로필_다른연락처 = CafeInfo.of(
-                CafeInfoFixture.카페명(),
-                CafeInfoFixture.설명(),
+                CafeInfoFixture.카페명,
+                CafeInfoFixture.설명,
                 다른_연락처,
-                CafeInfoFixture.주소());
+                CafeInfoFixture.주소);
         CafeInfo 카페프로필_다른주소 = CafeInfo.of(
-                CafeInfoFixture.카페명(),
-                CafeInfoFixture.설명(),
-                CafeInfoFixture.연락처(),
+                CafeInfoFixture.카페명,
+                CafeInfoFixture.설명,
+                CafeInfoFixture.연락처,
                 다른_주소);
 
         assertNotEquals(카페프로필_기본, 카페프로필_다른카페명);
