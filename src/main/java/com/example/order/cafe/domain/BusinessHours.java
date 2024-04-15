@@ -23,11 +23,11 @@ public class BusinessHours {
 
     public void validation(List<OperationTimePerDay> operationTimePerDay){
 
-        checkOperationTimeList_length(isDuplicateDay(operationTimePerDay));
+        checkLengthOfOperationTimeList(getDistinctDays(operationTimePerDay));
 
     }
 
-    public List<Days> isDuplicateDay(List<OperationTimePerDay> operationTimePerDay){
+    public List<Days> getDistinctDays(List<OperationTimePerDay> operationTimePerDay){
 
         return operationTimePerDay.stream()
                 .map(OperationTimePerDay::getDays)
@@ -36,7 +36,7 @@ public class BusinessHours {
 
     }
 
-    public void checkOperationTimeList_length(List<Days> daysList){
+    public void checkLengthOfOperationTimeList(List<Days> daysList){
         if(daysList.size() != DISTINCT_DAY_SIZE){
             throw new IllegalArgumentException(BusinessHoursErrorMsg.OPERATION_TIME_PER_DAY_LIST_LENGTH_ERROR_MSG.getValue());
         }

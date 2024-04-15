@@ -31,26 +31,22 @@ public class OperationTime {
     }
 
     public String makeOperationTimeList(){
-        if(isOpenSameAsClose()){
+        if(open.isThisTimeSameAsOtherTime(close)){
             return checkOpenTimeIsSameCloseTime();
-        } else if(isOpenAfterClose()){
+        }
+
+        if(open.isThisTimeAfterOtherTime(close)){
             throw new IllegalArgumentException(OperationTimeErrorMsg.OPEN_TIME_IS_FASTER_THAN_CLOSE_TIME_ERROR_MSG.getValue());
         }
 
         return formatOperationTime();
     }
 
-    public boolean isOpenSameAsClose(){
-        return Objects.equals(this.open.compareTime(this.close), IS_SAME_TIME);
-    }
 
     public String checkOpenTimeIsSameCloseTime(){
         return DAY_OFF;
     }
 
-    public boolean isOpenAfterClose(){
-        return Objects.equals(this.open.compareTime(this.close), IS_AFTER_TIME);
-    }
 
     public String formatOperationTime(){
         return this.open.formatHourAndMinute() + " - " + this.close.formatHourAndMinute();

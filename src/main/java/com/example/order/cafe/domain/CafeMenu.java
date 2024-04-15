@@ -1,18 +1,20 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.CafeMenuErrorMsg;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 public class CafeMenu {
 
-    private String menuName;
-    private List<TemperatureOption> temperatureOption;
-    private String explain;
-    private int stock;
-    private int price;
+    private final String menuName;
+    private final List<TemperatureOption> temperatureOption;
+    private final String explain;
+    private final int stock;
+    private final int price;
 
     private int MIN_NAME_LENGTH = 1;
     private int MIN_STOCK_LENGTH = 0;
@@ -47,11 +49,11 @@ public class CafeMenu {
 
 
     private void validate_temperatureOption(List<TemperatureOption> temperatureOption) {
-        temperatureOption_null(temperatureOption);
+        isTemperatureOptionNull(temperatureOption);
         temperatureOption_empty(temperatureOption);
     }
 
-    private void temperatureOption_null(List<TemperatureOption> temperatureOption){
+    private void isTemperatureOptionNull(List<TemperatureOption> temperatureOption){
         if(temperatureOption == null)
             throw new IllegalArgumentException(CafeMenuErrorMsg.TEMPERATURE_OPTION_NULL_ERROR_MESSAGE.getValue());
     }
@@ -88,6 +90,10 @@ public class CafeMenu {
                 Objects.equals(temperatureOption, cafeMenu.temperatureOption) &&
                 Objects.equals(price, cafeMenu.price)
                 ;
+    }
+
+    public List<TemperatureOption> getTemperatureOption(){
+        return List.copyOf(temperatureOption);
     }
 
 }

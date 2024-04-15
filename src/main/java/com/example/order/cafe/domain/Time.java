@@ -2,6 +2,8 @@ package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.TimeErrorMsg;
 
+import java.util.Objects;
+
 public class Time {
     private final int hour;
     private final int minute;
@@ -78,6 +80,14 @@ public class Time {
         }
 
         return IS_SAME_TIME;
+    }
+
+    public boolean isThisTimeSameAsOtherTime(Time otherTime){
+        return Objects.equals(compareTime(otherTime), IS_SAME_TIME);
+    }
+
+    public boolean isThisTimeAfterOtherTime(Time otherTime){
+        return Objects.equals(compareTime(otherTime), IS_AFTER_TIME);
     }
 
     public int calculateTotalMinute(int hour, int minute){

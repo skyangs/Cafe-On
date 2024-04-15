@@ -2,26 +2,26 @@ package com.example.order.member.domain;
 
 import com.example.order.member.errorMsg.MemberErrorMsg;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
-@Component
+import java.util.Objects;
+
+@Getter
 public class Member {
 
-    @Getter
-    private String memberId;
-    private String password;
-    private AuthType authType;
-    private String phoneNum;
+    private final String memberId;
+    private final String password;
+    private final AuthType authType;
+    private final String phoneNum;
 
     public static final String MEMBER_ID_REG = "^(?=.*[a-zA-Z])(?=.*\\d).+$";
     public static final String PHONE_NUM_FORMAT_REG = "^\\d{3}-\\d{4}-\\d{4}$";
     public static final String PHONE_NUM_NUMBER_REG = "^\\d+$";
 
-    private final int MIN_ID_LENGTH = 4;
-    private final int MAX_ID_LENGTH = 10;
-    private final int MIN_PASSWORD_LENGTH = 8;
-    private final int MAX_PASSWORD_LENGTH = 15;
-    private final int PHONE_NUM_LENGTH = 11;
+    private int MIN_ID_LENGTH = 4;
+    private int MAX_ID_LENGTH = 10;
+    private int MIN_PASSWORD_LENGTH = 8;
+    private int MAX_PASSWORD_LENGTH = 15;
+    private int PHONE_NUM_LENGTH = 11;
 
     private Member(String memberId, String password, AuthType authType, String phoneNum){
         validation(memberId, password, phoneNum);
@@ -99,6 +99,18 @@ public class Member {
 
     public String removeHyphens(String phoneNum){
         return phoneNum.replaceAll("-", "");
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Member member = (Member) o;
+        return Objects.equals(memberId, member.memberId) &&
+                Objects.equals(password, member.password) &&
+                Objects.equals(authType, member.authType) &&
+                Objects.equals(phoneNum, member.phoneNum)
+                ;
     }
 
 }

@@ -7,10 +7,10 @@ import java.util.Objects;
 
 @Getter
 public class CafeInfo {
-    private String name;
-    private String explain;
-    private String contactNumber;
-    private String address;
+    private final String name;
+    private final String explain;
+    private final String contactNumber;
+    private final String address;
 
     public static final String CONTACT_NUM_NUMBER_REG = "^\\d+$";
     public static final String CONTACT_NUM_FORMAT_REG = "^\\d{2,3}-\\d{3,4}-\\d{4}$";
@@ -73,9 +73,8 @@ public class CafeInfo {
         return contactNumber.replaceAll("-", "");
     }
 
-
     public boolean isMyAddress(String address){
-        return  this.address.equals(address);
+        return this.address.equals(address);
     }
 
     public boolean equals(Object o) {

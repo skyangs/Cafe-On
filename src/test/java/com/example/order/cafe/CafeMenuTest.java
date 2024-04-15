@@ -109,9 +109,9 @@ public class CafeMenuTest {
     }
 
 
-    @DisplayName("생성 : 같은 객체 비교 - 설명, 재고만 다를 때")
+    @DisplayName("생성 : 객체 비교 - 설명, 재고만 다를 때")
     @Test
-    public void create_error_equal() {
+    public void create_equal() {
 
         String 다른_설명 = "산미가 있고 시원합니다.";
         int 다른_재고 = 0;
