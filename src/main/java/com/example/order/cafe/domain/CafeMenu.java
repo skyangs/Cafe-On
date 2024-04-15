@@ -1,10 +1,15 @@
 package com.example.order.cafe.domain;
 
-import com.example.order.cafe.errorMsg.CafeErrorMsg;
+import com.example.order.cafe.errorMsg.CafeMenuErrorMsg;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class CafeMenu {
 
     private String menuName;
+    private List<TemperatureOption> temperatureOption;
     private String explain;
     private int stock;
     private int price;
@@ -13,16 +18,22 @@ public class CafeMenu {
     private int MIN_STOCK_LENGTH = 0;
     private int MIN_PRICE_LENGTH = 0;
 
-    public CafeMenu(String menuName, String explain, int stock, int price){
-        validation(menuName, stock, price);
+    private CafeMenu(String menuName, List<TemperatureOption> temperatureOption, String explain, int stock, int price){
+        validation(menuName, temperatureOption, stock, price);
         this.menuName = menuName;
+        this.temperatureOption = new ArrayList<>(temperatureOption);
         this.explain = explain;
         this.stock = stock;
         this.price = price;
     }
 
-    private void validation(String menuName, int stock, int price) {
+    public static CafeMenu of(String menuName, List<TemperatureOption> temperatureOption, String explain, int stock, int price){
+        return new CafeMenu(menuName, temperatureOption, explain, stock, price);
+    }
+
+    private void validation(String menuName, List<TemperatureOption> temperatureOption, int stock, int price) {
         validate_menuName(menuName);
+        validate_temperatureOption(temperatureOption);
         validate_stock(stock);
         validate_price(price);
 
@@ -30,29 +41,53 @@ public class CafeMenu {
 
     private void validate_menuName(String menuName){
         if(menuName.length() < MIN_NAME_LENGTH){
-            throw new IllegalArgumentException(CafeErrorMsg.MENU_NAME_LENGTH_ERROR_MESSAGE.getValue());
+            throw new IllegalArgumentException(CafeMenuErrorMsg.MENU_NAME_LENGTH_ERROR_MESSAGE.getValue());
         }
     }
 
+
+    private void validate_temperatureOption(List<TemperatureOption> temperatureOption) {
+        temperatureOption_null(temperatureOption);
+        temperatureOption_empty(temperatureOption);
+    }
+
+    private void temperatureOption_null(List<TemperatureOption> temperatureOption){
+        if(temperatureOption == null)
+            throw new IllegalArgumentException(CafeMenuErrorMsg.TEMPERATURE_OPTION_NULL_ERROR_MESSAGE.getValue());
+    }
+
+    private void temperatureOption_empty(List<TemperatureOption> temperatureOption){
+        if(temperatureOption.isEmpty()){
+            throw new IllegalArgumentException(CafeMenuErrorMsg.TEMPERATURE_OPTION_EMPTY_ERROR_MESSAGE.getValue());
+        }
+    }
+
+
     private void validate_stock(int stock){
         if(stock < MIN_STOCK_LENGTH){
-            throw new IllegalArgumentException(CafeErrorMsg.STOCK_UNDER_ZERO_ERROR_MESSAGE.getValue());
+            throw new IllegalArgumentException(CafeMenuErrorMsg.STOCK_UNDER_ZERO_ERROR_MESSAGE.getValue());
         }
     }
 
     private void validate_price(int price){
         if(price < MIN_PRICE_LENGTH){
-            throw new IllegalArgumentException(CafeErrorMsg.PRICE_UNDER_ZERO_ERROR_MESSAGE.getValue());
+            throw new IllegalArgumentException(CafeMenuErrorMsg.PRICE_UNDER_ZERO_ERROR_MESSAGE.getValue());
         }
     }
 
-    public CafeMenu enrollCafeMenu(String menuName, String explain, int stock, int price){
-        return new CafeMenu(menuName, explain, stock, price);
+    public boolean isMenuName(String menuName){
+        return this.menuName.equals(menuName);
     }
 
-    public void editCafeMenu(String menuName, String explain, int stock){
-        this.menuName = menuName;
-        this.explain = explain;
-        this.stock =stock;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CafeMenu cafeMenu = (CafeMenu) o;
+        return Objects.equals(menuName, cafeMenu.menuName) &&
+                Objects.equals(temperatureOption, cafeMenu.temperatureOption) &&
+                Objects.equals(price, cafeMenu.price)
+                ;
     }
+
 }
