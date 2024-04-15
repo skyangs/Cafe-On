@@ -4,13 +4,17 @@ import com.example.order.cafe.errorMsg.OperationTimePerDayErrorMsg;
 
 public class OperationTimePerDay {
 
-    private Days days;
-    private OperationTime operationTime;
+    private final Days days;
+    private final OperationTime operationTime;
 
-    public OperationTimePerDay(Days days, OperationTime operationTime){
+    private OperationTimePerDay(Days days, OperationTime operationTime){
         validation(operationTime);
         this.days = days;
         this.operationTime = operationTime;
+    }
+
+    public static OperationTimePerDay of(Days days, OperationTime operationTime){
+        return new OperationTimePerDay(days, operationTime);
     }
 
     public void validation(OperationTime operationTime){
@@ -19,17 +23,11 @@ public class OperationTimePerDay {
         }
     }
 
-    public void isDuplicate(Days days){
-            if(this.days == days){
-                throw new IllegalArgumentException(OperationTimePerDayErrorMsg.BUSINESS_HOURS_NOT_DUPLICATE_DAY_ERROR_MESSAGE.getValue());
-            }
-    }
-
     public Days getDays(){
-        return this.days;
+        return days;
     }
 
     public OperationTime getOperationTime(){
-        return this.operationTime;
+        return operationTime;
     }
 }

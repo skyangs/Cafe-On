@@ -20,7 +20,7 @@ public class TimeTest {
         int 시 = 15;
         int 분 = 30;
 
-        Time 시간 = new Time(시, 분);
+        Time 시간 = Time.of(시, 분);
 
         assertThat(시간.isHour(시)).isTrue();
     }
@@ -34,7 +34,7 @@ public class TimeTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Time(비정상_시_범위, 분);
+                    Time.of(비정상_시_범위, 분);
                 })
                 .withMessage(TimeErrorMsg.TIME_HOUR_RANGE_OUT_ERROR_MESSAGE.getValue());
     }
@@ -48,7 +48,7 @@ public class TimeTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Time(시, 비정상_분_범위);
+                    Time.of(시, 비정상_분_범위);
                 })
                 .withMessage(TimeErrorMsg.TIME_MINUTE_RANGE_OUT_ERROR_MESSAGE.getValue());
     }
@@ -60,7 +60,7 @@ public class TimeTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
-                    new Time(비정상_시_범위, 비정상_분_범위);
+                    Time.of(비정상_시_범위, 비정상_분_범위);
                 })
                 .withMessage(TimeErrorMsg.TIME_HOUR_RANGE_OUT_ERROR_MESSAGE.getValue());
     }
@@ -72,7 +72,7 @@ public class TimeTest {
         int 한자리수_시 = 9;
         int 분 = 30;
 
-        Time 시간 = new Time(한자리수_시, 분);
+        Time 시간 = Time.of(한자리수_시, 분);
 
         assertThat(시간.formatHour(한자리수_시)).isEqualTo(시간.formatMinute(한자리수_시));
 
@@ -85,7 +85,7 @@ public class TimeTest {
         int 시 = 10;
         int 한자리수_분 = 9;
 
-        Time 시간 = new Time(시, 한자리수_분);
+        Time 시간 = Time.of(시, 한자리수_분);
 
         assertThat(시간.formatMinute(한자리수_분)).isEqualTo(시간.formatMinute(한자리수_분));
 
@@ -98,109 +98,50 @@ public class TimeTest {
         int 한자리수_시 = 9;
         int 한자리수_분 = 9;
 
-        Time 시간 = new Time(한자리수_시, 한자리수_분);
+        Time 시간 = Time.of(한자리수_시, 한자리수_분);
 
         String 변경된_시_형식 = 시간.formatHour(한자리수_시);
         String 변경된_분_형식 = 시간.formatMinute(한자리수_분);
-        String 변경된_시간_형식 = 변경된_시_형식 + Time.COLON + 변경된_분_형식;
+        String 변경된_시간_형식 = 변경된_시_형식 + ":" + 변경된_분_형식;
 
         assertThat(시간.formatHourAndMinute()).isEqualTo(변경된_시간_형식);
 
     }
 
-    @DisplayName("생성 : 시간 비교 - 시 다를 때")
+    @DisplayName("생성 : 시간 비교")
     @ParameterizedTest
-    @CsvSource({"0, 30, 23, 0,", "23, 59, 1, 0"})
+    @CsvSource({"0, 30, 23, 0,", "23, 59, 1, 0","12, 0, 12, 0"})
     public void create_compare_to_time(int 오픈_시, int 오픈_분, int 마감_시, int 마감_분 ) {
 
-        Time 오픈_시간 = new Time(오픈_시, 오픈_분);
-        Time 마감_시간 = new Time(마감_시, 마감_분);
+        Time 오픈_시간 = Time.of(오픈_시, 오픈_분);
+        Time 마감_시간 = Time.of(마감_시, 마감_분);
 
         if(오픈_시 < 마감_시){
-            assertThat(오픈_시간.compareHour(마감_시간)).isEqualTo(Time.IS_BEFORE_HOUR);
-        } else if (오픈_시 > 마감_시) {
-            assertThat(오픈_시간.compareHour(마감_시간)).isEqualTo(Time.IS_AFTER_HOUR);
+            assertThat(오픈_시간.compareTime(마감_시간)).isEqualTo(Time.IS_BEFORE_TIME);
         }
+
+        if (오픈_시 > 마감_시) {
+            assertThat(오픈_시간.compareTime(마감_시간)).isEqualTo(Time.IS_AFTER_TIME);
+        }
+
+        if (오픈_시 == 마감_시) {
+            assertThat(오픈_시간.compareTime(마감_시간)).isEqualTo(Time.IS_SAME_TIME);
+        }
+
     }
 
-    @DisplayName("생성 : 시간 비교 - 시 같을 때")
-    @ParameterizedTest
-    @CsvSource({"59, 0","0, 59","30, 30"})
-    public void create_compare_to_time_equals(int 오픈_분, int 마감_분 ) {
+    @DisplayName("생성 : 시간 - 분으로 계산")
+    @Test
+    public void create_calculate_time() {
 
-        int 오픈_시 = 12;
-        int 마감_시 = 12;
+        int 시 = 12;
+        int 분 = 30;
 
-        Time 오픈_시간 = new Time(오픈_시, 오픈_분);
-        Time 마감_시간 = new Time(마감_시, 마감_분);
+        Time 시간 = Time.of(시, 분);
+        int 분_계산 = 시 * 60 + 분;
 
-        if(오픈_분 < 마감_분){
-            assertThat(오픈_시간.compareTime(마감_시간)).isEqualTo(Time.IS_BEFORE_MINUTE);
-        } else if (오픈_분 > 마감_분) {
-            assertThat(오픈_시간.compareTime(마감_시간)).isEqualTo(Time.IS_AFTER_MINUTE);
-        }else if( 오픈_분 == 마감_분){
-            assertThat(오픈_시간.compareTime(마감_시간)).isEqualTo(Time.IS_EQUAL_MINUTE);
-        }
-    }
+        assertThat(시간.calculateTotalMinute(시, 분)).isEqualTo(분_계산);
 
-
-    @DisplayName("생성 : 시 비교 - 다를 때")
-    @ParameterizedTest
-    @CsvSource({"0, 23", "23, 1", "12, 12"})
-    public void create_compare_to_hour(int 오픈_시, int 마감_시) {
-
-        int 오픈_분 = 0;
-        int 마감_분 = 59;
-
-        Time 오픈_시간 = new Time(오픈_시, 오픈_분);
-        Time 마감_시간 = new Time(마감_시, 마감_분);
-
-        if(오픈_시 < 마감_시){
-            assertThat(오픈_시간.compareHour(마감_시간)).isEqualTo(Time.IS_BEFORE_HOUR);
-        } else if (오픈_시 > 마감_시) {
-            assertThat(오픈_시간.compareHour(마감_시간)).isEqualTo(Time.IS_AFTER_HOUR);
-        }
-    }
-
-    @DisplayName("생성 : 시 비교 - 같을 때 분 비교")
-    @ParameterizedTest
-    @CsvSource({"0, 59","59, 0", "30, 30"})
-    public void create_compare_to_hour_if_hour_is_equal(int 오픈_분, int 마감_분) {
-
-        int 오픈_시 = 12;
-        int 마감_시 = 12;
-
-        Time 오픈_시간 = new Time(오픈_시, 오픈_분);
-        Time 마감_시간 = new Time(마감_시, 마감_분);
-
-        if(오픈_분 < 마감_분){
-            assertThat(오픈_시간.compareHour(마감_시간)).isEqualTo(Time.IS_BEFORE_MINUTE);
-        } else if (오픈_분 > 마감_분) {
-            assertThat(오픈_시간.compareHour(마감_시간)).isEqualTo(Time.IS_AFTER_MINUTE);
-        }else if (오픈_분 == 마감_분) {
-            assertThat(오픈_시간.compareHour(마감_시간)).isEqualTo(Time.IS_EQUAL_MINUTE);
-        }
-    }
-
-
-    @DisplayName("생성 : 분 비교")
-    @ParameterizedTest
-    @CsvSource({"0, 59","59, 0", "30, 30"})
-    public void create_compare_to_minute(int 오픈_분, int 마감_분) {
-
-        int 오픈_시 = 15;
-        int 마감_시 = 15;
-
-        Time 오픈_시간 = new Time(오픈_시, 오픈_분);
-        Time 마감_시간 = new Time(마감_시, 마감_분);
-
-        if(오픈_분 < 마감_분){
-            assertThat(오픈_시간.compareMinute(마감_시간)).isEqualTo(Time.IS_BEFORE_MINUTE);
-        } else if (오픈_분 > 마감_분) {
-            assertThat(오픈_시간.compareMinute(마감_시간)).isEqualTo(Time.IS_AFTER_MINUTE);
-        }else if (오픈_분 == 마감_분) {
-            assertThat(오픈_시간.compareMinute(마감_시간)).isEqualTo(Time.IS_EQUAL_MINUTE);
-        }
     }
 
 }

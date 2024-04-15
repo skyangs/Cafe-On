@@ -3,8 +3,8 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.TimeErrorMsg;
 
 public class Time {
-    private int hour;
-    private int minute;
+    private final int hour;
+    private final int minute;
 
     public static final int MIN_HOUR = 0;
     public static final int MAX_HOUR = 23;
@@ -13,19 +13,19 @@ public class Time {
     public static final int MAX_HOUR_CHANGE_FORMAT = 10;
     public static final int MAX_MINUTE_CHANGE_FORMAT = 10;
     public static final String STRING_ZERO = "0";
-    public static final String COLON = ":";
 
-    public static final int IS_AFTER_HOUR = 1;
-    public static final int IS_BEFORE_HOUR = -1;
+    public static final String IS_BEFORE_TIME = "이전";
+    public static final String IS_AFTER_TIME = "이후";
+    public static final String IS_SAME_TIME = "동일";
 
-    public static final int IS_AFTER_MINUTE = 1;
-    public static final int IS_BEFORE_MINUTE = -1;
-    public static final int IS_EQUAL_MINUTE = 0;
-
-    public Time(int hour, int minute){
+    private Time(int hour, int minute){
         validation(hour, minute);
         this.hour = hour;
         this.minute = minute;
+    }
+
+    public static Time of(int hour, int minute){
+        return new Time(hour, minute);
     }
 
     public boolean isHour(int hour){
@@ -53,7 +53,7 @@ public class Time {
     }
 
     public String formatHourAndMinute(){
-        return formatHour(this.hour) + COLON + formatMinute(this.minute);
+        return formatHour(this.hour) + ":" + formatMinute(this.minute);
     }
 
     public String formatHour(int hour) {
@@ -64,31 +64,31 @@ public class Time {
         return (minute < MAX_MINUTE_CHANGE_FORMAT) ? STRING_ZERO + minute : String.valueOf(minute);
     }
 
-    public int compareTime(Time otherTime){
-        return compareHour(otherTime);
-    }
+    public String compareTime(Time otherTime){
 
-    public int compareHour(Time otherTime){
+        int thisTotalMinute = calculateTotalMinute(this.hour, this.minute);
+        int otherTotalMinute = calculateTotalMinute(otherTime.hour, otherTime.minute);
 
-        if (this.hour < otherTime.hour) {
-            return IS_BEFORE_HOUR;
-        } else if (this.hour > otherTime.hour) {
-            return IS_AFTER_HOUR;
-        } else {
-            return compareMinute(otherTime);
+        if (thisTotalMinute < otherTotalMinute){
+            return IS_BEFORE_TIME;
+        }
+        
+        if (thisTotalMinute > otherTotalMinute){
+            return IS_AFTER_TIME;
         }
 
+        return IS_SAME_TIME;
     }
 
-    public int compareMinute(Time otherTime){
-
-        if (this.minute < otherTime.minute) {
-            return IS_BEFORE_MINUTE;
-        } else if (this.minute > otherTime.minute) {
-            return IS_AFTER_MINUTE;
-        }
-
-        return IS_EQUAL_MINUTE;
+    public int calculateTotalMinute(int hour, int minute){
+        return hour * 60 + minute;
     }
 
+    public int getHour(){
+        return hour;
+    }
+
+    public int getMinute(){
+        return minute;
+    }
 }
