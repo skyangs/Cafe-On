@@ -19,11 +19,7 @@ public class CafeInfoTest {
     @Test
     public void create(){
 
-        CafeInfo 카페프로필 = CafeInfo.of(
-                CafeInfoFixture.카페명,
-                CafeInfoFixture.설명,
-                CafeInfoFixture.연락처,
-                CafeInfoFixture.주소);
+        CafeInfo 카페프로필 = CafeInfoFixture.카페프로필_기본생성();
 
         assertThat(카페프로필.isMyAddress(CafeInfoFixture.주소)).isTrue();
     }
@@ -33,9 +29,6 @@ public class CafeInfoTest {
     public void create_error_name_length() {
 
         String 빈_카페명 = "";
-        String 설명 = "저희카페는 강남에 위치해있습니다.";
-        String 연락처  = "02-111-1111";
-        String 주소=  "서울시 강남구 1010동";
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
@@ -121,11 +114,7 @@ public class CafeInfoTest {
 
         String 빈_설명 = "";
 
-        CafeInfo 카페프로필_설명있음 = CafeInfo.of(
-                CafeInfoFixture.카페명,
-                CafeInfoFixture.설명,
-                CafeInfoFixture.연락처,
-                CafeInfoFixture.주소);
+        CafeInfo 카페프로필_설명있음 = CafeInfoFixture.카페프로필_기본생성();
         CafeInfo 카페프로필_설명없음 = CafeInfo.of(
                 CafeInfoFixture.카페명,
                 빈_설명,
@@ -140,19 +129,12 @@ public class CafeInfoTest {
     @Test
     public void create_error_equal_1() {
 
-        String 카페명 = "id123";
-        String 설명 = "저희카페는 강남에 위치해있습니다.";
-        String 연락처  = "02-111-1111";
-        String 주소=  "서울시 강남구 1010동";
-
         String 다른_카페명 = "cafeName";
         String 다른_연락처 = "02-999-9999";
         String 다른_주소 = "부산시";
 
-        CafeInfo 카페프로필_기본 = CafeInfo.of( CafeInfoFixture.카페명,
-                CafeInfoFixture.설명,
-                CafeInfoFixture.연락처,
-                CafeInfoFixture.주소);
+        CafeInfo 카페프로필_기본 = CafeInfoFixture.카페프로필_기본생성();
+
         CafeInfo 카페프로필_다른카페명 = CafeInfo.of(
                 다른_카페명,
                 CafeInfoFixture.설명,

@@ -1,6 +1,5 @@
 package com.example.order.member;
 
-import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
 import com.example.order.member.errorMsg.MemberErrorMsg;
 import com.example.order.member.fixture.MemberFixture;
@@ -17,9 +16,9 @@ public class MemberTest {
     @Test
     public void create(){
 
-        Member member = Member.of(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.권한, MemberFixture.연락처);
+        Member 회원 = MemberFixture.회원_기본생성();
 
-        assertThat(member.getMemberId()).isEqualTo(MemberFixture.아이디);
+        assertThat(회원.getMemberId()).isEqualTo(MemberFixture.아이디);
     }
 
 
@@ -137,14 +136,14 @@ public class MemberTest {
     @DisplayName("생성 예외 : 휴대폰번호 자릿수 + 유효문자 + 형식 - 000-0000-0000 11자리 숫자")
     @ParameterizedTest
     @ValueSource(strings = {"가나다라마바사아자차", "가나다라마바사아자차카타"})
-    public void create_error_phoneNum(String 연락처){
+    public void create_error_phoneNum(String 예외_연락처){
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
                     Member.of(MemberFixture.아이디,
                             MemberFixture.비밀번호,
                             MemberFixture.권한,
-                            연락처);
+                            예외_연락처);
                 })
                 .withMessage(MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
 

@@ -9,8 +9,9 @@ public class CafeInfoFixture {
     public static final String 연락처 = "02-111-1111";
     public static final String 주소 = "서울시 강남구 1010동";
 
-    public static CafeInfo create_cafeInfo(String 카페명, String 설명, String 연락처, String 주소){
+    public static CafeInfo 카페프로필_기본생성(){
         return CafeInfo.of(카페명, 설명, 연락처, 주소);
     }
+
 
 }
