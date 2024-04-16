@@ -1,16 +1,24 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.OperationTimeErrorMsg;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
 
-import java.util.Objects;
+@Entity
+public class OperationTime extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-public class OperationTime {
+    @OneToOne
+    @JoinColumn(name = "OpenId", referencedColumnName = "id")
     private final Time open;
+
+    @OneToOne
+    @JoinColumn(name = "CloseId", referencedColumnName = "id")
     private final Time close;
 
-    public static final String IS_BEFORE_TIME = "이전";
-    public static final String IS_AFTER_TIME = "이후";
-    public static final String IS_SAME_TIME = "동일";
+    @Transient
     public static final String DAY_OFF = "휴무";
 
     private OperationTime(Time open, Time close) {

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -27,10 +28,12 @@ public class MemberTest {
     @ValueSource(strings = {"abc", "abcdefghijk"})
     public void create_error_id_length(String 아이디_자릿수){
 
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
                         Member.of(아이디_자릿수,
                                 MemberFixture.비밀번호,
+                                MemberFixture.이름,
                                 MemberFixture.권한,
                                 MemberFixture.연락처);
                 })
@@ -47,6 +50,7 @@ public class MemberTest {
                 .isThrownBy(() -> {
                     Member.of(아이디_유효문자,
                             MemberFixture.비밀번호,
+                            MemberFixture.이름,
                             MemberFixture.권한,
                             MemberFixture.연락처);
                 })
@@ -63,6 +67,7 @@ public class MemberTest {
                 .isThrownBy(() -> {
                     Member.of(아이디_자릿수_유효문자,
                             MemberFixture.비밀번호,
+                            MemberFixture.이름,
                             MemberFixture.권한,
                             MemberFixture.연락처);
                 })
@@ -79,6 +84,7 @@ public class MemberTest {
                 .isThrownBy(() -> {
                     Member.of(MemberFixture.아이디,
                             비밀번호_자릿수,
+                            MemberFixture.이름,
                             MemberFixture.권한,
                             MemberFixture.연락처);
                 })
@@ -95,6 +101,7 @@ public class MemberTest {
                 .isThrownBy(() -> {
                     Member.of(MemberFixture.아이디,
                             MemberFixture.비밀번호,
+                            MemberFixture.이름,
                             MemberFixture.권한,
                             연락처_자릿수);
                 })
@@ -110,6 +117,7 @@ public class MemberTest {
                 .isThrownBy(() -> {
                     Member.of(MemberFixture.아이디,
                             MemberFixture.비밀번호,
+                            MemberFixture.이름,
                             MemberFixture.권한,
                             연락처_유효문자);
                 })
@@ -126,6 +134,7 @@ public class MemberTest {
                 .isThrownBy(() -> {
                     Member.of(MemberFixture.아이디,
                             MemberFixture.비밀번호,
+                            MemberFixture.이름,
                             MemberFixture.권한,
                             연락처_형식);
                 })
@@ -142,6 +151,7 @@ public class MemberTest {
                 .isThrownBy(() -> {
                     Member.of(MemberFixture.아이디,
                             MemberFixture.비밀번호,
+                            MemberFixture.이름,
                             MemberFixture.권한,
                             예외_연락처);
                 })

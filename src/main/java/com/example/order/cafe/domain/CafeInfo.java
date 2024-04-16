@@ -1,23 +1,42 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.CafeInfoErrorMsg;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.Objects;
 
 @Getter
-public class CafeInfo {
+@Entity
+public class CafeInfo extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false)
     private final String name;
+
+    @Column(nullable = false)
     private final String explain;
+
+    @Column(nullable = false)
     private final String contactNumber;
+
+    @Column(nullable = false)
     private final String address;
 
+    @Transient
     public static final String CONTACT_NUM_NUMBER_REG = "^\\d+$";
+    @Transient
     public static final String CONTACT_NUM_FORMAT_REG = "^\\d{2,3}-\\d{3,4}-\\d{4}$";
 
-    private int MIN_NAME_LENGTH = 1;
-    private int MIN_CONTACT_NUM_LENGTH = 9;
-    private int MAX_CONTACT_NUM_LENGTH = 11;
+    @Transient
+    private static final int MIN_NAME_LENGTH = 1;
+    @Transient
+    private static final int MIN_CONTACT_NUM_LENGTH = 9;
+    @Transient
+    private static final int MAX_CONTACT_NUM_LENGTH = 11;
 
     private CafeInfo(String name, String explain, String contactNumber, String address){
         validation(name, contactNumber);

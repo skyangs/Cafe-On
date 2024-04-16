@@ -1,15 +1,24 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BusinessHours {
+@Entity
+public class BusinessHours extends BaseTimeEntity {
 
-    private final List<OperationTimePerDay> operationTimeList;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
+    @OneToMany(mappedBy = "businessHours")
+    private final List<OperationTimePerDay> operationTimeList ;
+
+    @Transient
     public static final int DISTINCT_DAY_SIZE = 7;
 
     private BusinessHours(List<OperationTimePerDay> operationTimeList){

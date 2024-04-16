@@ -3,19 +3,34 @@ package com.example.order.member.domain;
 import com.example.order.cafe.domain.Cafe;
 import com.example.order.cafe.domain.CafeMenu;
 import com.example.order.member.errorMsg.CartErrorMsg;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.Objects;
 
+@Entity
 public class Cart {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
     private final Member member;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
     private final Cafe cafe;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
     private final CafeMenu cafeMenu;
+
+    @Column(nullable = false)
     @Getter
     private final int amount;
 
-    private int MIN_AMOUNT_LENGTH = 0;
+    @Transient
+    private static final int MIN_AMOUNT_LENGTH = 0;
 
     private Cart(Member member, Cafe cafe, CafeMenu cafeMenu, int amount){
         validation(member, cafe, cafeMenu, amount);
@@ -65,7 +80,7 @@ public class Cart {
     }
 
     public Member getMember(){
-        return Member.of(member.getMemberId(), member.getPassword(), member.getAuthType(), member.getPhoneNum());
+        return Member.of(member.getMemberId(), member.getPassword(), member.getName(), member.getAuthType(), member.getPhoneNum());
     }
 
     public Cafe getCafe(){

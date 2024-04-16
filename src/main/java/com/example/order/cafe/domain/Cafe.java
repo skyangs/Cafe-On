@@ -1,13 +1,24 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.CafeErrorMsg;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
-public class Cafe {
+@Entity
+public class Cafe extends BaseTimeEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
     private final CafeInfo cafeInfo;
 
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
     private final BusinessHours businessHours;
 
     private Cafe(CafeInfo cafeInfo, BusinessHours businessHours){

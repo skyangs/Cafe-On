@@ -1,6 +1,8 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.CafeMenuErrorMsg;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -8,17 +10,37 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-public class CafeMenu {
+@Entity
+public class CafeMenu extends BaseTimeEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false)
     private final String menuName;
+
+    @ElementCollection
+    @CollectionTable(name = "TemperatureOption",
+            joinColumns = @JoinColumn(name = "id"))
+    @Enumerated(EnumType.STRING)
     private final List<TemperatureOption> temperatureOption;
+
+    @Column(nullable = false)
     private final String explain;
+
+    @Column(nullable = false)
     private final int stock;
+
+    @Column(nullable = false)
     private final int price;
 
-    private int MIN_NAME_LENGTH = 1;
-    private int MIN_STOCK_LENGTH = 0;
-    private int MIN_PRICE_LENGTH = 0;
+    @Transient
+    private static final int MIN_NAME_LENGTH = 1;
+    @Transient
+    private static final int MIN_STOCK_LENGTH = 0;
+    @Transient
+    private static final int MIN_PRICE_LENGTH = 0;
 
     private CafeMenu(String menuName, List<TemperatureOption> temperatureOption, String explain, int stock, int price){
         validation(menuName, temperatureOption, stock, price);
