@@ -14,11 +14,11 @@ public class Cafe extends BaseTimeEntity {
     private long id;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final CafeInfo cafeInfo;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final BusinessHours businessHours;
 
     private Cafe(CafeInfo cafeInfo, BusinessHours businessHours){

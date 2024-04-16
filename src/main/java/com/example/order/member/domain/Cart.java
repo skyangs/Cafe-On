@@ -16,13 +16,13 @@ public class Cart {
     private long id;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final Member member;
     @OneToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final Cafe cafe;
     @OneToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final CafeMenu cafeMenu;
 
     @Column(nullable = false)

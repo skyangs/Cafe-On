@@ -14,7 +14,7 @@ public class OperationTimePerDay extends BaseTimeEntity {
     private final Days days;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final OperationTime operationTime;
 
     @ManyToOne(fetch = FetchType.LAZY)

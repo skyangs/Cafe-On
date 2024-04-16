@@ -11,11 +11,11 @@ public class OperationTime extends BaseTimeEntity {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "OpenId", referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final Time open;
 
     @OneToOne
-    @JoinColumn(name = "CloseId", referencedColumnName = "id")
+    @JoinColumn(unique = true)
     private final Time close;
 
     @Transient
