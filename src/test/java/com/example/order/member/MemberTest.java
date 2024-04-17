@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.*;
 
+@DisplayName("Member 도메인 단위 테스트")
 public class MemberTest {
 
     @DisplayName("생성 : 정상 테스트")

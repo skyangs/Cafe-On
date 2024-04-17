@@ -117,9 +117,7 @@ public class Member extends BaseTimeEntity {
 
         if(!phoneNum.matches(PHONE_NUM_FORMAT_REG)){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
-
         }
-
     }
 
     public String removeHyphens(String phoneNum){
