@@ -3,11 +3,13 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 @Entity
 public class BusinessHours extends BaseTimeEntity {
 
@@ -15,7 +17,7 @@ public class BusinessHours extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "businessHours")
+    @OneToMany(mappedBy = "businessHours", cascade = CascadeType.PERSIST)
     private final List<OperationTimePerDay> operationTimeList ;
 
     @Transient
