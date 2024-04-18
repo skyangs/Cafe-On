@@ -3,7 +3,9 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.OperationTimePerDayErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class OperationTimePerDay extends BaseTimeEntity {
     @Id
@@ -13,7 +15,7 @@ public class OperationTimePerDay extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private final Days days;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(unique = true)
     private final OperationTime operationTime;
 

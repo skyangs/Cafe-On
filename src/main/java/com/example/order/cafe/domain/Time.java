@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 
 import java.util.Objects;
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Time extends BaseTimeEntity {
     @Id
@@ -114,11 +116,4 @@ public class Time extends BaseTimeEntity {
         return hour * 60 + minute;
     }
 
-    public int getHour(){
-        return hour;
-    }
-
-    public int getMinute(){
-        return minute;
-    }
 }
