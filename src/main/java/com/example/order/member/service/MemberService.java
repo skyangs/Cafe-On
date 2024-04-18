@@ -3,6 +3,7 @@ package com.example.order.member.service;
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
 import com.example.order.member.dto.response.MemberInfoResponse;
+import com.example.order.member.exception.MemberException;
 import com.example.order.member.mapper.MemberMapper;
 import com.example.order.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class MemberService {
     public void signUp(String memberId, String password, String name, AuthType authType,String phoneNum){
 
         if(memberRepository.findByMemberId(memberId).isPresent()){
-            throw new RuntimeException("이미 존재하는 ID입니다.");
+            throw new RuntimeException(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.toString());
         }
 
         Member newMember = Member.of(memberId, password, name, authType, phoneNum);

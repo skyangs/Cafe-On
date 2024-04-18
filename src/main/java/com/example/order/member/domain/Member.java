@@ -64,6 +64,7 @@ public class Member extends BaseTimeEntity {
         check_id_length(memberId);
         check_id_regex(memberId);
 
+        isPasswordNull(password);
         check_password_length(password);
 
         check_phone_num_length(phoneNum);
@@ -91,6 +92,13 @@ public class Member extends BaseTimeEntity {
         if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE.getValue());
 
+        }
+    }
+
+    public void isPasswordNull(String password){
+
+        if(password == null){
+            throw new NullPointerException(MemberErrorMsg.MEMBER_PASSWORD_NULL_ERROR_MESSAGE.getValue());
         }
     }
 
