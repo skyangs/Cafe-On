@@ -3,7 +3,9 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.OperationTimeErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class OperationTime extends BaseTimeEntity {
     @Id
@@ -60,11 +62,4 @@ public class OperationTime extends BaseTimeEntity {
         return this.open.formatHourAndMinute() + " - " + this.close.formatHourAndMinute();
     }
 
-    public Time getOpen(){
-        return open;
-    }
-
-    public Time getClose(){
-        return close;
-    }
 }
