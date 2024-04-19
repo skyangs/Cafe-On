@@ -1,6 +1,5 @@
 package com.example.order.cafe.service;
 
-import com.example.order.cafe.domain.BusinessHours;
 import com.example.order.cafe.domain.Days;
 import com.example.order.cafe.domain.OperationTime;
 import com.example.order.cafe.domain.OperationTimePerDay;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
@@ -73,7 +71,4 @@ public class OperationTimePerDayService {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public List<OperationTimePerDay> getBusinessHours(BusinessHours businessHours){
-        return operationTimePerDayRepository.findByBusinessHours(businessHours);
-    }
 }

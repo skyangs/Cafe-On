@@ -4,6 +4,7 @@ package com.example.order.cafe.service;
 import com.example.order.cafe.domain.BusinessHours;
 import com.example.order.cafe.domain.OperationTimePerDay;
 import com.example.order.cafe.dto.request.OperationTimePerDayRequest;
+import com.example.order.cafe.dto.request.OperationTimePerDayUpdateRequest;
 import com.example.order.cafe.dto.response.BusinessHoursResponse;
 import com.example.order.cafe.dto.response.OperationTimePerDayResponse;
 import com.example.order.cafe.repository.BusinessHoursRepository;
@@ -51,6 +52,35 @@ public class BusinessHoursService {
 
     }
 
+    @Transactional
+    public BusinessHours updateBusinessHours(long businessHoursid, List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequests){
+
+        check_existBusinessHours(businessHoursid);
+
+        List<OperationTimePerDay> updaetOperationTimePerDayList =
+                operationTimePerDayUpdateRequests.stream()
+                .map(operationTimePerDayRequest -> {
+                    return operationTimePerDayService.updateOperationTimePerDay(operationTimePerDayRequest.getId(),operationTimePerDayRequest.getOperationTime());
+                })
+                .toList();
+
+        BusinessHours updateBusinessHours = BusinessHours.of(updaetOperationTimePerDayList);
+
+        return businessHoursRepository.save(updateBusinessHours);
+    }
+
+    @Transactional
+    public void deleteBusinessHours(long businessHoursid){
+
+        BusinessHours businessHours = check_existBusinessHours(businessHoursid);
+
+        businessHours.getOperationTimeList()
+                        .forEach(operationTimePerDay -> {
+                             operationTimePerDayService.deleteOperationTimePerDay(operationTimePerDay.getId());
+                        });
+
+        businessHoursRepository.delete(businessHours);
+    }
 
     public BusinessHours check_existBusinessHours(long id){
 

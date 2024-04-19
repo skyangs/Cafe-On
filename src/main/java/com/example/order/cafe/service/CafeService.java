@@ -1,40 +1,90 @@
 package com.example.order.cafe.service;
 
+import com.example.order.cafe.domain.BusinessHours;
 import com.example.order.cafe.domain.Cafe;
-import com.example.order.member.domain.Cart;
-import com.example.order.member.domain.Member;
-import com.example.order.member.dto.CartRequest;
-import com.example.order.member.repository.CartRepository;
+import com.example.order.cafe.domain.CafeInfo;
+import com.example.order.cafe.dto.request.CafeCreateRequest;
+import com.example.order.cafe.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.dto.response.BusinessHoursResponse;
+import com.example.order.cafe.dto.response.CafeInfoResponse;
+import com.example.order.cafe.repository.CafeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class CafeService {
+    private final CafeRepository cafeRepository;
 
-    private MemberRepository memberRepository;
-    private CartRepository cartRepository;
-    private CafeRepository cafeRepository;
-    private Cart cart;
+    private final CafeInfoService cafeInfoService;
+    private final BusinessHoursService businessHoursService;
 
-    public void addCart(long memberId, CartRequest cartRequest){
-        Member member = memberRepository.findById(memberId);
+    public CafeResponse getCafeById(long cafeId){
 
-        List<Cart> cartList = cartRepository.findByMember(member);
+        Cafe cafe = check_existCafe(cafeId);
 
-        Cafe cafe = cafeRepository.findById(cartRequest.getCafeId());
+        CafeInfoResponse cafeInfoResponse = cafeInfoService.getCafeInfo(cafe.getCafeInfo().getId());
+        BusinessHoursResponse businessHoursResponse= businessHoursService.getBusinessHours(cafe.getBusinessHours().getId());
 
-        Cart cart1 = cart.addMenu(cartList, cafe);
-//        boolean checkCafe = cartList.stream().allMatch(cart -> cart.getCafe().equals(cafe));
-//        if(!checkCafe) {
-//            cartRepository.deleteAll(cartList);
-//        }
-//        cart.addMenu(new Cart(member,cafe, '카페메뉴', "카페옵션", 2));
-        cartRepository.save(cart1);
-
-
-
+        return new CafeResponse(cafeInfoResponse, businessHoursResponse);
     }
 
+    public List<CafeResponse> getAllCafe(){
+
+        return cafeRepository.findAll()
+                .stream()
+                .map(cafe -> {
+                    CafeInfoResponse cafeInfoResponse = cafeInfoService.getCafeInfo(cafe.getCafeInfo().getId());
+                    BusinessHoursResponse businessHoursResponse= businessHoursService.getBusinessHours(cafe.getBusinessHours().getId());
+
+                    return new CafeResponse(cafeInfoResponse, businessHoursResponse);
+                })
+                .toList();
+    }
+
+    @Transactional
+    public void registerCafe(CafeCreateRequest cafeCreateRequest) {
+
+        CafeInfo cafeInfo = cafeInfoService.registerCafeInfo(cafeCreateRequest.getCafeInfoRequest());
+        BusinessHours businessHours = businessHoursService.registerBusinessHours(cafeCreateRequest.getBusinessHoursRequest().getOperationTimeList());
+
+        Cafe cafe = Cafe.of(cafeInfo, businessHours);
+
+        cafeRepository.save(cafe);
+    }
+
+    @Transactional
+    public void updateCafe(long cafeId, CafeUpdateRequest cafeUpdateRequest) {
+
+        Cafe cafe = check_existCafe(cafeId);
+
+        CafeInfo updateCafeInfo = cafeInfoService.updateCafeInfo(cafe.getCafeInfo().getId(),cafeUpdateRequest.getCafeInfoRequest());
+        BusinessHours updateBusinessHours = businessHoursService.updateBusinessHours(cafe.getBusinessHours().getId(), cafeUpdateRequest.getBusinessHoursUpdateRequest().getOperationTimePerDayUpdateRequests());
+
+        Cafe updaeCafe = Cafe.of(updateCafeInfo, updateBusinessHours);
+
+        cafeRepository.save(updaeCafe);
+    }
+
+    @Transactional
+    public void deleteCafe(long cafeId){
+
+        Cafe cafe = check_existCafe(cafeId);
+
+        cafeInfoService.deleteCafeInfo(cafe.getCafeInfo().getId());
+        businessHoursService.deleteBusinessHours(cafe.getBusinessHours().getId());
+        cafeRepository.delete(cafe);
+    }
+
+    public Cafe check_existCafe(long cafeId){
+        return cafeRepository.findById(cafeId)
+                .orElseThrow(NoSuchElementException::new);
+    }
 
 }
