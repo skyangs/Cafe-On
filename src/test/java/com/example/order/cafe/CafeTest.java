@@ -3,6 +3,7 @@ package com.example.order.cafe;
 import com.example.order.cafe.domain.*;
 import com.example.order.cafe.errorMsg.CafeErrorMsg;
 import com.example.order.cafe.fixture.BusinessHoursFixture;
+import com.example.order.cafe.fixture.CafeInfoFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,14 +20,8 @@ public class CafeTest {
     @Test
     public void create(){
 
-        BusinessHours 운영시간 = BusinessHoursFixture.create_operationTimePerDayList();
-
-        String 카페명 = "id123";
-        String 설명 = "저희카페는 강남에 위치해있습니다.";
-        String 연락처  = "02-111-1111";
-        String 주소=  "서울시 강남구 1010동";
-
-        CafeInfo 카페프로필 = CafeInfo.of(카페명, 설명, 연락처, 주소);
+        BusinessHours 운영시간 = BusinessHoursFixture.운영시간_전체기본생성();
+        CafeInfo 카페프로필 = CafeInfoFixture.카페프로필_기본생성();
 
         Cafe 카페 = Cafe.of(카페프로필, 운영시간);
 
@@ -39,7 +34,7 @@ public class CafeTest {
     @Test
     public void create_error_cafeInfo_null() {
 
-        BusinessHours 운영시간 = BusinessHoursFixture.create_operationTimePerDayList();
+        BusinessHours 운영시간 = BusinessHoursFixture.운영시간_전체기본생성();
 
         CafeInfo 카페프로필_널 = null;
 
@@ -54,12 +49,7 @@ public class CafeTest {
 
        BusinessHours 운영시간_널 = null;
 
-        String 카페명 = "id123";
-        String 설명 = "저희카페는 강남에 위치해있습니다.";
-        String 연락처  = "02-111-1111";
-        String 주소=  "서울시 강남구 1010동";
-
-        CafeInfo 카페프로필 = CafeInfo.of(카페명, 설명, 연락처, 주소);
+        CafeInfo 카페프로필 = CafeInfoFixture.카페프로필_기본생성();
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> Cafe.of(카페프로필,운영시간_널))
@@ -70,26 +60,17 @@ public class CafeTest {
     @Test
     public void update() {
 
-        BusinessHours 운영시간 = BusinessHoursFixture.create_operationTimePerDayList();
-
-        String 카페명 = "id123";
-        String 설명 = "저희카페는 강남에 위치해있습니다.";
-        String 연락처  = "02-111-1111";
-        String 주소=  "서울시 강남구 1010동";
-
-        CafeInfo 카페프로필 = CafeInfo.of(카페명, 설명, 연락처, 주소);
-
+        BusinessHours 운영시간 = BusinessHoursFixture.운영시간_전체기본생성();
+        CafeInfo 카페프로필 = CafeInfoFixture.카페프로필_기본생성();
         Cafe 카페 = Cafe.of(카페프로필, 운영시간);
 
-        OperationTime 평일_운영시간 = OperationTime.of(Time.of(9, 0), Time.of(17, 0));
-        OperationTime 주말_운영시간 = OperationTime.of(Time.of(0, 0), Time.of(0, 0));
-        OperationTimePerDay 변경_월요일 =  OperationTimePerDay.of(Days.MONDAY, 주말_운영시간);
-        OperationTimePerDay 변경_화요일 =  OperationTimePerDay.of(Days.TUESDAY, 주말_운영시간);
-        OperationTimePerDay 변경_수요일 =  OperationTimePerDay.of(Days.WEDNESDAY, 주말_운영시간);
-        OperationTimePerDay 변경_목요일 =  OperationTimePerDay.of(Days.THURSDAY, 주말_운영시간);
-        OperationTimePerDay 변경_금요일 =  OperationTimePerDay.of(Days.FRIDAY, 주말_운영시간);
-        OperationTimePerDay 변경_토요일 =  OperationTimePerDay.of(Days.SATURDAY, 평일_운영시간);
-        OperationTimePerDay 변경_일요일 =  OperationTimePerDay.of(Days.SUNDAY, 평일_운영시간);
+        OperationTimePerDay 변경_월요일 =  OperationTimePerDay.of(Days.MONDAY, BusinessHoursFixture.주말_운영시간);
+        OperationTimePerDay 변경_화요일 =  OperationTimePerDay.of(Days.TUESDAY, BusinessHoursFixture.주말_운영시간);
+        OperationTimePerDay 변경_수요일 =  OperationTimePerDay.of(Days.WEDNESDAY, BusinessHoursFixture.주말_운영시간);
+        OperationTimePerDay 변경_목요일 =  OperationTimePerDay.of(Days.THURSDAY, BusinessHoursFixture.주말_운영시간);
+        OperationTimePerDay 변경_금요일 =  OperationTimePerDay.of(Days.FRIDAY, BusinessHoursFixture.주말_운영시간);
+        OperationTimePerDay 변경_토요일 =  OperationTimePerDay.of(Days.SATURDAY, BusinessHoursFixture.평일_운영시간);
+        OperationTimePerDay 변경_일요일 =  OperationTimePerDay.of(Days.SUNDAY, BusinessHoursFixture.평일_운영시간);
 
         List<OperationTimePerDay> 변경_운영시간_리스트 = new ArrayList<>();
 

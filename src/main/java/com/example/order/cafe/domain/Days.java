@@ -1,7 +1,5 @@
 package com.example.order.cafe.domain;
 
-import javax.swing.plaf.PanelUI;
-
 public enum Days {
     MONDAY("월"),
     TUESDAY("화"),

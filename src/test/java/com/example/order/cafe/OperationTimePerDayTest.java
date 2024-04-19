@@ -1,9 +1,6 @@
 package com.example.order.cafe;
 
-import com.example.order.cafe.domain.Days;
-import com.example.order.cafe.domain.OperationTimePerDay;
-import com.example.order.cafe.domain.OperationTime;
-import com.example.order.cafe.domain.Time;
+import com.example.order.cafe.domain.*;
 import com.example.order.cafe.errorMsg.OperationTimePerDayErrorMsg;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

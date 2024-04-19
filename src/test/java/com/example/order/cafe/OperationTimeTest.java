@@ -74,32 +74,6 @@ public class OperationTimeTest {
 
     }
 
-    @DisplayName("생성 : 오픈시간 = 마감시간")
-    @ParameterizedTest
-    @CsvSource({"1, 0, 1, 0"})
-    public void create_time_is_same(int 같은시간_오픈_시, int 같은시간_오픈_븐, int 같은시간_마감_시, int 같은시간_마감_분) {
-
-        Time 같은시간_오픈_시간 = Time.of(같은시간_오픈_시, 같은시간_오픈_븐);
-        Time 같은시간_마감_시간 = Time.of(같은시간_마감_시, 같은시간_마감_분);
-
-        OperationTime 다른_운영시간 = OperationTime.of(같은시간_오픈_시간, 같은시간_마감_시간);
-
-        assertThat(다른_운영시간.isOpenSameAsClose()).isTrue();
-    }
-
-    @DisplayName("생성 : 오픈시간 > 마감시간")
-    @ParameterizedTest
-    @CsvSource({"23, 59, 0, 0"})
-    public void create_open_after_close(int 이후_오픈_시, int 이후_오픈_븐, int 이전_마감_시, int 이전_마감_분) {
-
-        Time 이후_오픈_시간 = Time.of(이후_오픈_시, 이후_오픈_븐);
-        Time 이전_마감_시간 = Time.of(이전_마감_시, 이전_마감_분);
-
-        OperationTime 다른_운영시간 = OperationTime.of(이후_오픈_시간, 이전_마감_시간);
-
-        assertThat(다른_운영시간.isOpenAfterClose()).isTrue();
-    }
-
     @DisplayName("생성 : 운영시간 형식 - '00:00 - 23:59'")
     @Test
     public void create_minute_format() {

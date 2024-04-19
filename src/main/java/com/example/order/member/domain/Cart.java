@@ -1,56 +1,107 @@
 package com.example.order.member.domain;
 
-import com.example.order.cafe.domain.BusinessHours;
 import com.example.order.cafe.domain.Cafe;
-import com.example.order.cafe.domain.CafeInfo;
 import com.example.order.cafe.domain.CafeMenu;
-import com.example.order.cafe.errorMsg.CafeErrorMsg;
-import com.example.order.member.errorMsg.MemberErrorMsg;
-import com.example.order.member.repository.CartRepository;
+import com.example.order.member.errorMsg.CartErrorMsg;
+import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Objects;
 
-@Getter
+@Entity
 public class Cart {
 
-    private Member member;
-    private Cafe cafe;
-    private CafeMenu cafeMenu;
-    private CafeMenuOption cafeMenuOption;
-    private int amount;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    private int MIN_AMOUNT_LENGTH = 0;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private final Member member;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private final Cafe cafe;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private final CafeMenu cafeMenu;
 
-    public Cart(Member member, Cafe cafe, CafeMenu cafeMenu, CafeMenuOption cafeMenuOption,  int amount){
-        validation(cafe, cafeMenu, amount);
+    @Column(nullable = false)
+    @Getter
+    private final int amount;
+
+    @Transient
+    private static final int MIN_AMOUNT_LENGTH = 0;
+
+    private Cart(Member member, Cafe cafe, CafeMenu cafeMenu, int amount){
+        validation(member, cafe, cafeMenu, amount);
         this.member = member;
         this.cafe = cafe;
         this.cafeMenu = cafeMenu;
-        this.cafeMenuOption = cafeMenuOption;
         this.amount = amount;
     }
 
-    private void validation(Cafe cafe, CafeMenu cafeMenu, int amount) {
+    public static Cart of(Member member, Cafe cafe, CafeMenu cafeMenu, int amount){
+        return new Cart(member, cafe, cafeMenu, amount);
+    }
+
+    private void validation(Member member, Cafe cafe, CafeMenu cafeMenu, int amount) {
+        isMemberNull(member);
+        isCafeNull(cafe);
+        isCafeMenuNull(cafeMenu);
         validate_amount(amount);
     }
 
+    private void isMemberNull(Member member){
+        if(member == null){
+            throw new NullPointerException(CartErrorMsg.MEMBER_IS_NULL_ERROR_MESSAGE.getValue());
+        }
+    }
+
+    private void isCafeNull(Cafe cafe){
+        if(cafe == null){
+            throw new NullPointerException(CartErrorMsg.CAFE_IS_NULL_ERROR_MESSAGE.getValue());
+        }
+    }
+
+    private void isCafeMenuNull(CafeMenu cafeMenu){
+        if(cafeMenu == null){
+            throw new NullPointerException(CartErrorMsg.CAFE_MENU_IS_NULL_ERROR_MESSAGE.getValue());
+        }
+    }
+    
     private void validate_amount(int amount){
         if(amount < MIN_AMOUNT_LENGTH){
-            throw new IllegalArgumentException(MemberErrorMsg.AMOUNT_UNDER_ZERO_ERROR_MESSAGE.getValue());
+            throw new IllegalArgumentException(CartErrorMsg.AMOUNT_UNDER_ZERO_ERROR_MESSAGE.getValue());
         }
     }
 
-    private CartRepository cartRepository;
-
-    public Cart addMenu(List<Cart> cartList, Cafe cafe){
-        boolean checkCafe = cartList.stream().allMatch(cart -> cart.getCafe().equals(cafe));
-
-        if(!checkCafe) {
-            cartRepository.deleteAll(cartList);
-        }
-
-        return new Cart(member,cafe, '카페메뉴', "카페옵션", 2);
+    public boolean compareCafe(Cafe cafe){
+        return this.cafe.equals(cafe);
     }
+
+    public Member getMember(){
+        return Member.of(member.getMemberId(), member.getPassword(), member.getName(), member.getAuthType(), member.getPhoneNum());
+    }
+
+    public Cafe getCafe(){
+        return Cafe.of(cafe.getCafeInfo(), cafe.getBusinessHours());
+    }
+
+    public CafeMenu getCafeMenu(){
+        return CafeMenu.of(cafeMenu.getMenuName(), cafeMenu.getTemperatureOption(), cafeMenu.getExplain(), cafeMenu.getStock(), cafeMenu.getPrice());
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cart cart = (Cart) o;
+
+        return Objects.equals(member, cart.member) &&
+                Objects.equals(cafe, cart.cafe) &&
+                Objects.equals(cafeMenu, cart.cafeMenu)
+                ;
+    }
+
 
 }

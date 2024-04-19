@@ -130,6 +130,29 @@ public class TimeTest {
 
     }
 
+
+    @DisplayName("생성 : 오픈시간 = 마감시간")
+    @ParameterizedTest
+    @CsvSource({"1, 0, 1, 0"})
+    public void create_time_is_same(int 같은시간_오픈_시, int 같은시간_오픈_븐, int 같은시간_마감_시, int 같은시간_마감_분) {
+
+        Time 같은시간_오픈_시간 = Time.of(같은시간_오픈_시, 같은시간_오픈_븐);
+        Time 같은시간_마감_시간 = Time.of(같은시간_마감_시, 같은시간_마감_분);
+
+        assertThat(같은시간_오픈_시간.isThisTimeSameAsOtherTime(같은시간_마감_시간)).isTrue();
+    }
+
+    @DisplayName("생성 : 오픈시간 > 마감시간")
+    @ParameterizedTest
+    @CsvSource({"23, 59, 0, 0"})
+    public void create_open_after_close(int 이후_오픈_시, int 이후_오픈_븐, int 이전_마감_시, int 이전_마감_분) {
+
+        Time 이후_오픈_시간 = Time.of(이후_오픈_시, 이후_오픈_븐);
+        Time 이전_마감_시간 = Time.of(이전_마감_시, 이전_마감_분);
+
+        assertThat(이후_오픈_시간.isThisTimeAfterOtherTime(이전_마감_시간)).isTrue();
+    }
+
     @DisplayName("생성 : 시간 - 분으로 계산")
     @Test
     public void create_calculate_time() {

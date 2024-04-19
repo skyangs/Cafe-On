@@ -1,15 +1,26 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BusinessHours {
+@Getter
+@Entity
+public class BusinessHours extends BaseTimeEntity {
 
-    private final List<OperationTimePerDay> operationTimeList;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
+    @OneToMany(mappedBy = "businessHours", cascade = CascadeType.PERSIST)
+    private final List<OperationTimePerDay> operationTimeList ;
+
+    @Transient
     public static final int DISTINCT_DAY_SIZE = 7;
 
     private BusinessHours(List<OperationTimePerDay> operationTimeList){
@@ -23,11 +34,11 @@ public class BusinessHours {
 
     public void validation(List<OperationTimePerDay> operationTimePerDay){
 
-        checkOperationTimeList_length(isDuplicateDay(operationTimePerDay));
+        checkLengthOfOperationTimeList(getDistinctDays(operationTimePerDay));
 
     }
 
-    public List<Days> isDuplicateDay(List<OperationTimePerDay> operationTimePerDay){
+    public List<Days> getDistinctDays(List<OperationTimePerDay> operationTimePerDay){
 
         return operationTimePerDay.stream()
                 .map(OperationTimePerDay::getDays)
@@ -36,7 +47,7 @@ public class BusinessHours {
 
     }
 
-    public void checkOperationTimeList_length(List<Days> daysList){
+    public void checkLengthOfOperationTimeList(List<Days> daysList){
         if(daysList.size() != DISTINCT_DAY_SIZE){
             throw new IllegalArgumentException(BusinessHoursErrorMsg.OPERATION_TIME_PER_DAY_LIST_LENGTH_ERROR_MSG.getValue());
         }

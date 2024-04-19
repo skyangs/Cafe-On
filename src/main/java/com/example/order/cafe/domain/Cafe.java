@@ -1,14 +1,24 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.CafeErrorMsg;
-import lombok.Getter;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
-public class Cafe {
+@Entity
+public class Cafe extends BaseTimeEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(unique = true)
     private final CafeInfo cafeInfo;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(unique = true)
     private final BusinessHours businessHours;
 
     private Cafe(CafeInfo cafeInfo, BusinessHours businessHours){
@@ -23,17 +33,17 @@ public class Cafe {
 
     public void validation(CafeInfo cafeInfo, BusinessHours businessHours){
 
-        check_cafeInfo_null(cafeInfo);
-        check_businessHours_null(businessHours);
+        isCafeInfoNull(cafeInfo);
+        isBusinessHoursNull(businessHours);
     }
 
-    public void check_cafeInfo_null(CafeInfo cafeInfo){
+    public void isCafeInfoNull(CafeInfo cafeInfo){
         if(cafeInfo == null){
             throw new IllegalArgumentException(CafeErrorMsg.CAFE_INFO_NULL_ERROR_MESSAGE.getValue());
         }
     }
 
-    public void check_businessHours_null(BusinessHours businessHours){
+    public void isBusinessHoursNull(BusinessHours businessHours){
         if(businessHours == null){
             throw new IllegalArgumentException(CafeErrorMsg.BUSINESS_HOURS_NULL_ERROR_MESSAGE.getValue());
         }
