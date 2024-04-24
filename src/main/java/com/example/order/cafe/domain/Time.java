@@ -9,11 +9,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 @Getter
-@Entity
-public class Time extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@Embeddable
+public class Time{
 
     @Column(name = "\"hour\"", nullable = false)
     private final int hour;
