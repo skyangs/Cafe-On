@@ -64,13 +64,15 @@ public class CafeTest {
         CafeInfo 카페프로필 = CafeInfoFixture.카페프로필_기본생성();
         Cafe 카페 = Cafe.of(카페프로필, 운영시간);
 
-        OperationTimePerDay 변경_월요일 =  OperationTimePerDay.of(Days.MONDAY, BusinessHoursFixture.주말_운영시간);
-        OperationTimePerDay 변경_화요일 =  OperationTimePerDay.of(Days.TUESDAY, BusinessHoursFixture.주말_운영시간);
-        OperationTimePerDay 변경_수요일 =  OperationTimePerDay.of(Days.WEDNESDAY, BusinessHoursFixture.주말_운영시간);
-        OperationTimePerDay 변경_목요일 =  OperationTimePerDay.of(Days.THURSDAY, BusinessHoursFixture.주말_운영시간);
-        OperationTimePerDay 변경_금요일 =  OperationTimePerDay.of(Days.FRIDAY, BusinessHoursFixture.주말_운영시간);
-        OperationTimePerDay 변경_토요일 =  OperationTimePerDay.of(Days.SATURDAY, BusinessHoursFixture.평일_운영시간);
-        OperationTimePerDay 변경_일요일 =  OperationTimePerDay.of(Days.SUNDAY, BusinessHoursFixture.평일_운영시간);
+        long 운영시간_id = 운영시간.getOperationTimeList().get(0).getBusinessHoursId();
+
+        OperationTimePerDay 변경_월요일 =  OperationTimePerDay.of(Days.MONDAY, BusinessHoursFixture.주말_운영시간, 운영시간_id);
+        OperationTimePerDay 변경_화요일 =  OperationTimePerDay.of(Days.TUESDAY, BusinessHoursFixture.주말_운영시간, 운영시간_id);
+        OperationTimePerDay 변경_수요일 =  OperationTimePerDay.of(Days.WEDNESDAY, BusinessHoursFixture.주말_운영시간, 운영시간_id);
+        OperationTimePerDay 변경_목요일 =  OperationTimePerDay.of(Days.THURSDAY, BusinessHoursFixture.주말_운영시간, 운영시간_id);
+        OperationTimePerDay 변경_금요일 =  OperationTimePerDay.of(Days.FRIDAY, BusinessHoursFixture.주말_운영시간, 운영시간_id);
+        OperationTimePerDay 변경_토요일 =  OperationTimePerDay.of(Days.SATURDAY, BusinessHoursFixture.평일_운영시간, 운영시간_id);
+        OperationTimePerDay 변경_일요일 =  OperationTimePerDay.of(Days.SUNDAY, BusinessHoursFixture.평일_운영시간, 운영시간_id);
 
         List<OperationTimePerDay> 변경_운영시간_리스트 = new ArrayList<>();
 

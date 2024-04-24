@@ -37,8 +37,9 @@ public class BusinessHoursTest {
     @Test
     public void create_error_duplicate_dayOfWeek() {
         List<OperationTimePerDay> 운영시간_리스트 = BusinessHoursFixture.운영시간_리스트_월화수목금토();
+        long 운영시간_id = 운영시간_리스트.get(0).getBusinessHoursId();
 
-        OperationTimePerDay 중복_월요일 =  OperationTimePerDay.of(Days.MONDAY, BusinessHoursFixture.평일_운영시간);
+        OperationTimePerDay 중복_월요일 =  OperationTimePerDay.of(Days.MONDAY, BusinessHoursFixture.평일_운영시간, 운영시간_id);
         운영시간_리스트.add(중복_월요일);
 
         assertThatIllegalArgumentException()

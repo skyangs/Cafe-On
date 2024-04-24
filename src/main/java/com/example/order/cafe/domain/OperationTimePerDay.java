@@ -30,10 +30,6 @@ public class OperationTimePerDay extends BaseTimeEntity {
         this.businessHoursId = businessHoursId;
     }
 
-//    public static OperationTimePerDay of(Days days, OperationTime operationTime){
-//        return new OperationTimePerDay(days, operationTime);
-//    }
-
     public static OperationTimePerDay of(Days days, OperationTime operationTime, long businessHoursId){
         return new OperationTimePerDay(days, operationTime, businessHoursId);
     }
