@@ -1,7 +1,6 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
-import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -10,22 +9,19 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-@Entity
-public class BusinessHours extends BaseTimeEntity {
+@Embeddable
+public class BusinessHours {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @OneToMany(mappedBy = "businessHours", cascade = CascadeType.PERSIST)
-    private final List<OperationTimePerDay> operationTimeList ;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    private final List<OperationTimePerDay> operationTimePerDayList ;
 
     @Transient
     public static final int DISTINCT_DAY_SIZE = 7;
 
-    private BusinessHours(List<OperationTimePerDay> operationTimeList){
-        validation(operationTimeList);
-        this.operationTimeList = new ArrayList<>(operationTimeList);
+    private BusinessHours(List<OperationTimePerDay> operationTimePerDayList){
+        validation(operationTimePerDayList);
+        this.operationTimePerDayList = new ArrayList<>(operationTimePerDayList);
     }
 
     public static BusinessHours of(List<OperationTimePerDay> operationTimeList){
@@ -54,11 +50,11 @@ public class BusinessHours extends BaseTimeEntity {
     }
 
     public List<OperationTimePerDay> getOperationTimeList(){
-        return List.copyOf(operationTimeList);
+        return List.copyOf(operationTimePerDayList);
     }
 
     public String getTimePerDay(Days day){
-        return operationTimeList.get(day.ordinal()).getOperationTime().makeOperationTimeList();
+        return operationTimePerDayList.get(day.ordinal()).getOperationTime().makeOperationTimeList();
     }
 
     public boolean equals(Object o) {
@@ -66,7 +62,7 @@ public class BusinessHours extends BaseTimeEntity {
         if (o == null || getClass() != o.getClass()) return false;
 
         BusinessHours businessHours = (BusinessHours) o;
-        return Objects.equals(operationTimeList, businessHours.operationTimeList);
+        return Objects.equals(operationTimePerDayList, businessHours.operationTimePerDayList);
     }
 
 }

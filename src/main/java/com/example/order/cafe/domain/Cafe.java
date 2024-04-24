@@ -4,10 +4,11 @@ import com.example.order.cafe.errorMsg.CafeErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Cafe extends BaseTimeEntity {
+public class Cafe extends BaseTimeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +18,7 @@ public class Cafe extends BaseTimeEntity {
     @JoinColumn(unique = true)
     private final CafeInfo cafeInfo;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(unique = true)
+    @Embedded
     private final BusinessHours businessHours;
 
     private Cafe(CafeInfo cafeInfo, BusinessHours businessHours){

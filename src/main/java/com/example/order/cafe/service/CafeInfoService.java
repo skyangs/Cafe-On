@@ -23,7 +23,7 @@ public class CafeInfoService {
 
         CafeInfo cafeInfo = check_existCafeInfo(id);
 
-        return cafeInfoMapper.toCafeInfoResponse(cafeInfo);
+        return cafeInfoMapper.INSTANCE.toCafeInfoResponse(cafeInfo);
 
     }
     @Transactional
