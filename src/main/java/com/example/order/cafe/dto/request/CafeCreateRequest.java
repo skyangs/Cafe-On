@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class CafeCreateRequest {
-    private final CafeInfoRequest cafeInfoRequest;
-    private final BusinessHoursRequest businessHoursRequest;
+    private final CafeInfoRequest cafeInfo;
+    private final BusinessHoursRequest businessHours;
 
-    public CafeCreateRequest(CafeInfoRequest cafeInfoRequest, BusinessHoursRequest businessHoursRequest){
-        this.cafeInfoRequest = cafeInfoRequest;
-        this.businessHoursRequest = businessHoursRequest;
+    public CafeCreateRequest(CafeInfoRequest cafeInfo, BusinessHoursRequest businessHours){
+        this.cafeInfo = cafeInfo;
+        this.businessHours = businessHours;
     }
 
 }

@@ -7,10 +7,10 @@ import java.util.List;
 @Getter
 public class BusinessHoursUpdateRequest {
 
-    private final List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequests;
+    private final List<OperationTimePerDayUpdateRequest> operationTimeList;
 
-    public BusinessHoursUpdateRequest(List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequests){
-        this.operationTimePerDayUpdateRequests = operationTimePerDayUpdateRequests;
+    public BusinessHoursUpdateRequest(List<OperationTimePerDayUpdateRequest> operationTimeList){
+        this.operationTimeList = operationTimeList;
     }
 
 }

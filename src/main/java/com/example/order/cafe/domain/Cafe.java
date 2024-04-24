@@ -3,10 +3,12 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.CafeErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@NoArgsConstructor(force = true)
 @Entity
 public class Cafe extends BaseTimeEntity implements Serializable {
 
