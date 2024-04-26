@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.util.Objects;
+
 @Getter
 @Entity
 public class Member extends BaseTimeEntity {
@@ -32,8 +33,6 @@ public class Member extends BaseTimeEntity {
     @Transient
     public static final String MEMBER_ID_REG = "^(?=.*[a-zA-Z])(?=.*\\d).+$";
     @Transient
-    public static final String PHONE_NUM_FORMAT_REG = "^\\d{3}-\\d{4}-\\d{4}$";
-    @Transient
     public static final String PHONE_NUM_NUMBER_REG = "^\\d+$";
 
     @Transient
@@ -45,10 +44,16 @@ public class Member extends BaseTimeEntity {
     @Transient
     private static final int MAX_PASSWORD_LENGTH = 15;
     @Transient
-    private static final int PHONE_NUM_LENGTH = 11;
+    private static final int MIN_NAME_LENGTH = 1;
+    @Transient
+    private static final int MAX_NAME_LENGTH = 5;
+    @Transient
+    private static final int MIN_PHONE_NUM_LENGTH = 9;
+    @Transient
+    private static final int MAX_PHONE_NUM_LENGTH = 11;
 
     private Member(String memberId, String password, String name, AuthType authType, String phoneNum){
-        validation(memberId, password, phoneNum);
+        validation(memberId, password, name, phoneNum);
         this.memberId = memberId;
         this.password = password;
         this.name = name;
@@ -60,16 +65,18 @@ public class Member extends BaseTimeEntity {
         return new Member(memberId, password, name, authType, phoneNum);
     }
 
-    public void validation(String memberId, String password, String phoneNum){
+    public void validation(String memberId, String password, String name, String phoneNum){
         check_id_length(memberId);
         check_id_regex(memberId);
 
         isPasswordNull(password);
         check_password_length(password);
 
+        isNameNull(name);
+        check_name_length(name);
+
         check_phone_num_length(phoneNum);
         check_phone_num_only_number_regex(phoneNum);
-        check_phone_num_format_regex(phoneNum);
     }
 
     public void check_id_length(String memberId){
@@ -102,34 +109,36 @@ public class Member extends BaseTimeEntity {
         }
     }
 
-    public void check_phone_num_length(String phoneNum){
-        String phoneNumAfterDeleteDash = removeHyphens(phoneNum);
+    public void isNameNull(String name){
 
-        if(phoneNumAfterDeleteDash.length() != PHONE_NUM_LENGTH){
+        if(name == null){
+            throw new NullPointerException(MemberErrorMsg.MEMBER_NAME_NULL_ERROR_MESSAGE.getValue());
+        }
+    }
+
+    public void check_name_length(String name){
+
+        if(name.isEmpty() || name.length() > MAX_NAME_LENGTH){
+            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_NAME_LENGTH_ERROR_MESSAGE.getValue());
+        }
+
+    }
+
+    public void check_phone_num_length(String phoneNum){
+
+        if(phoneNum.length() < MIN_PHONE_NUM_LENGTH || phoneNum.length() > MAX_PHONE_NUM_LENGTH){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
         }
 
     }
 
     public void check_phone_num_only_number_regex(String phoneNum){
-        String phoneNumAfterDeleteDash = removeHyphens(phoneNum);
 
-        if(!phoneNumAfterDeleteDash.matches(PHONE_NUM_NUMBER_REG)){
+        if(!phoneNum.matches(PHONE_NUM_NUMBER_REG)){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
 
         }
 
-    }
-
-    public void check_phone_num_format_regex(String phoneNum){
-
-        if(!phoneNum.matches(PHONE_NUM_FORMAT_REG)){
-            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
-        }
-    }
-
-    public String removeHyphens(String phoneNum){
-        return phoneNum.replaceAll("-", "");
     }
 
     public boolean equals(Object o) {

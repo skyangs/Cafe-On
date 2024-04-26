@@ -1,7 +1,9 @@
 package com.example.order.member.dto.response;
 
 import com.example.order.member.domain.AuthType;
+import lombok.Getter;
 
+@Getter
 public class MemberInfoResponse {
 
     private final String memberId;
@@ -18,23 +20,4 @@ public class MemberInfoResponse {
         this.phoneNum = phoneNum;
     }
 
-    public String getMemberId(){
-        return memberId;
-    }
-
-    public String getPassword(){
-        return password;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public AuthType getAuthType(){
-        return authType;
-    }
-
-    public String getPhoneNum(){
-        return phoneNum;
-    }
 }
