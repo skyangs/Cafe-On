@@ -51,7 +51,9 @@ public class MemberService {
 
         Member member = check_existMember(id);
 
-        Member updateMember = Member.of(member.getMemberId(),
+        Member updateMember = Member.of(
+                member.getId(),
+                member.getMemberId(),
                 password,
                 member.getName(),
                 authType,

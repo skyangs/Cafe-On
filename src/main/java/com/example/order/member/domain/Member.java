@@ -65,6 +65,20 @@ public class Member extends BaseTimeEntity {
         return new Member(memberId, password, name, authType, phoneNum);
     }
 
+    private Member(long id, String memberId, String password, String name, AuthType authType, String phoneNum){
+        validation(memberId, password, name, phoneNum);
+        this.id = id;
+        this.memberId = memberId;
+        this.password = password;
+        this.name = name;
+        this.authType = authType;
+        this.phoneNum = phoneNum;
+    }
+
+    public static Member of(long id, String memberId, String password, String name, AuthType authType, String phoneNum){
+        return new Member(id, memberId, password, name, authType, phoneNum);
+    }
+
     public void validation(String memberId, String password, String name, String phoneNum){
         check_id_length(memberId);
         check_id_regex(memberId);

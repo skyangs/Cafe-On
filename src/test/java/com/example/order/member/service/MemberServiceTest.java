@@ -18,7 +18,6 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 
-
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
@@ -111,5 +110,53 @@ public class MemberServiceTest {
         assertThat(memberInfoList).isEmpty();
     }
 
+    @Test
+    @DisplayName("정상 : 회원 정보 수정")
+    public void updateMemberInfo(){
 
+        Member 첫번째_회원 = MemberFixture.회원_기본생성();
+        Member 가입된_첫번째_회원 = memberRepository.save(첫번째_회원);
+
+        String 변경_비밀번호  = "updatePassword";
+        AuthType 변경_권한 = AuthType.CAFE_OWNER;
+        String 변경_연락처 = "11122222222";
+
+        memberService.updateMemberInfo(가입된_첫번째_회원.getId(), 변경_비밀번호, 변경_권한, 변경_연락처);
+
+        Member 변경된_회원 = memberRepository.findById(가입된_첫번째_회원.getId())
+                .orElseThrow(NoSuchElementException::new);
+
+        assertThat(변경된_회원.getPassword()).isEqualTo(변경_비밀번호);
+        assertThat(변경된_회원.getAuthType()).isEqualTo(변경_권한);
+        assertThat(변경된_회원.getPhoneNum()).isEqualTo(변경_연락처);
+
+    }
+
+    @Test
+    @DisplayName("예외 : 회원 정보 수정 - id 값 없을때")
+    public void updateMemberInfo_error_memberNotFound() {
+
+        long 확인할_회원_id = 1L;
+        String 변경_비밀번호  = "updatePassword";
+        AuthType 변경_권한 = AuthType.CAFE_OWNER;
+        String 변경_연락처 = "111-2222-2222";
+
+        assertThatRuntimeException()
+                .isThrownBy(() -> memberService.updateMemberInfo(확인할_회원_id, 변경_비밀번호, 변경_권한, 변경_연락처))
+                .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    @DisplayName("정상 : 회원 정보 탈퇴")
+    public void deleteMember(){
+
+        Member 첫번째_회원 = MemberFixture.회원_기본생성();
+        memberRepository.save(첫번째_회원);
+
+        memberService.deleteMember(첫번째_회원.getId());
+
+        assertThat(memberRepository.findAll().size()).isEqualTo(0);
+
+
+    }
 }
