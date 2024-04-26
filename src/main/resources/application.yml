@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: local
+    include: test
 
 server:
   address: localhost
