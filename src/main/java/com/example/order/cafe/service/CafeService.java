@@ -1,6 +1,6 @@
 package com.example.order.cafe.service;
 
-import com.example.order.cafe.domain.Cafe;
+import com.example.order.cafe.domain.*;
 import com.example.order.cafe.dto.request.CafeCreateRequest;
 import com.example.order.cafe.dto.request.CafeUpdateRequest;
 import com.example.order.cafe.dto.response.CafeResponse;
@@ -19,28 +19,27 @@ import java.util.NoSuchElementException;
 public class CafeService {
     private final CafeRepository cafeRepository;
 
-    private final CafeMapper cafeMapper;
-
     public CafeResponse getCafeById(long cafeId){
 
         Cafe cafe = check_existCafe(cafeId);
 
-        return cafeMapper.INSTANCE.toCafeResponse(cafe);
+        return CafeMapper.INSTANCE.toCafeResponse(cafe);
     }
 
     public List<CafeResponse> getAllCafe(){
 
         return cafeRepository.findAll()
                 .stream()
-                .map(cafeMapper.INSTANCE::toCafeResponse)
+                .map(CafeMapper.INSTANCE::toCafeResponse)
                 .toList();
     }
 
     @Transactional
-    public void registerCafe(CafeCreateRequest cafeCreateRequest) {
+    public Cafe registerCafe(CafeCreateRequest cafeCreateRequest) {
 
-        Cafe cafe = cafeMapper.INSTANCE.toCafe(cafeCreateRequest);
-        cafeRepository.save(cafe);
+        Cafe cafe = CafeMapper.INSTANCE.toCafe(cafeCreateRequest);
+
+        return cafeRepository.save(cafe);
 
     }
 
@@ -49,7 +48,7 @@ public class CafeService {
 
         check_existCafe(cafeId);
 
-        Cafe updateCafe = cafeMapper.INSTANCE.toCafe(cafeUpdateRequest);
+        Cafe updateCafe = CafeMapper.INSTANCE.toCafe(cafeUpdateRequest);
 
         cafeRepository.save(updateCafe);
     }

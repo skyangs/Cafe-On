@@ -1,19 +1,16 @@
 package com.example.order.cafe.mapper;
 
-import com.example.order.cafe.domain.Cafe;
-import com.example.order.cafe.domain.OperationTimePerDay;
-import com.example.order.cafe.dto.request.CafeCreateRequest;
-import com.example.order.cafe.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.domain.*;
+import com.example.order.cafe.dto.request.*;
 import com.example.order.cafe.dto.response.CafeResponse;
 import com.example.order.cafe.dto.response.OperationTimePerDayResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",
+        unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface CafeMapper {
     CafeMapper INSTANCE = Mappers.getMapper(CafeMapper.class);
 
@@ -22,7 +19,23 @@ public interface CafeMapper {
 
     List<OperationTimePerDayResponse> toOperationTimePerDayList(List<OperationTimePerDay> operationTimePerDayList);
 
-    Cafe toCafe(CafeCreateRequest cafeCreateRequest);
+    default Cafe toCafe(CafeCreateRequest cafeCreateRequest) {
+        if ( cafeCreateRequest == null) {
+            return null;
+        }
+
+        CafeInfo cafeInfo = CafeInfoMapper.INSTANCE.toCafeInfo(cafeCreateRequest.getCafeInfo());
+        BusinessHours businessHours = BusinessHoursMapper.INSTANCE.toBusinessHours(cafeCreateRequest.getBusinessHours());
+
+        return Cafe.of(cafeInfo, businessHours);
+    }
+
+    default CafeInfo mapCafeInfo(CafeInfoCreateRequest cafeInfoCreateRequest) {
+        return CafeMapper.INSTANCE.toCafeInfo(cafeInfoCreateRequest);
+    }
+
+    CafeInfo toCafeInfo(CafeInfoCreateRequest cafeInfoCreateRequest);
+
     Cafe toCafe(CafeUpdateRequest cafeUpdateRequest);
 
 }

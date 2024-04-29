@@ -8,11 +8,11 @@ public class OperationTimePerDayRequest {
     @NotNull
     private final DaysRequest days;
     @NotNull
-    private final OperationTimeRequest operationTimeRequest;
+    private final OperationTimeRequest operationTime;
 
-    public OperationTimePerDayRequest(DaysRequest days, OperationTimeRequest operationTimeRequest){
+    public OperationTimePerDayRequest(DaysRequest days, OperationTimeRequest operationTime){
         this.days = days;
-        this.operationTimeRequest = operationTimeRequest;
+        this.operationTime = operationTime;
     }
 
 }

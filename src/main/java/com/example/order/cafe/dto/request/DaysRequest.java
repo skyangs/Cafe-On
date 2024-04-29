@@ -8,10 +8,10 @@ import lombok.Getter;
 public class DaysRequest {
 
     @NotBlank(message = "요일은 필수 입력 값입니다.")
-    private final Days dayOfWeek;
+    private final Days days;
 
-    public DaysRequest(Days dayOfWeek){
-        this.dayOfWeek = dayOfWeek;
+    public DaysRequest(Days days){
+        this.days = days;
     }
 
 }

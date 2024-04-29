@@ -4,7 +4,9 @@ import com.example.order.cafe.errorMsg.OperationTimePerDayErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(force = true)
 @Getter
 @Entity
 public class OperationTimePerDay extends BaseTimeEntity {
@@ -32,6 +34,16 @@ public class OperationTimePerDay extends BaseTimeEntity {
 
     public static OperationTimePerDay of(Days days, OperationTime operationTime, long businessHoursId){
         return new OperationTimePerDay(days, operationTime, businessHoursId);
+    }
+
+    private OperationTimePerDay(Days days, OperationTime operationTime){
+        validation(operationTime);
+        this.days = days;
+        this.operationTime = operationTime;
+    }
+
+    public static OperationTimePerDay of(Days days, OperationTime operationTime){
+        return new OperationTimePerDay(days, operationTime);
     }
 
     public void validation(OperationTime operationTime){

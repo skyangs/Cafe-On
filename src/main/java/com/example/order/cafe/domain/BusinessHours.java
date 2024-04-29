@@ -3,11 +3,13 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@NoArgsConstructor(force = true)
 @Getter
 @Embeddable
 public class BusinessHours {
