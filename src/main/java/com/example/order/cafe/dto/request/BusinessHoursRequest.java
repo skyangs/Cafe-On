@@ -9,10 +9,10 @@ import java.util.List;
 public class BusinessHoursRequest {
 
     @Size(min = 7, max = 7)
-    private final List<OperationTimePerDayRequest> operationTimeList;
+    private final List<OperationTimePerDayRequest> operationTimePerDayList;
 
-    public BusinessHoursRequest(List<OperationTimePerDayRequest> operationTimeList){
-        this.operationTimeList = operationTimeList;
+    public BusinessHoursRequest(List<OperationTimePerDayRequest> operationTimePerDayList){
+        this.operationTimePerDayList = operationTimePerDayList;
     }
 
 }

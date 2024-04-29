@@ -1,6 +1,7 @@
 package com.example.order.cafe.fixture;
 
 import com.example.order.cafe.domain.*;
+import com.example.order.cafe.dto.request.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,5 +40,39 @@ public class BusinessHoursFixture {
         운영시간_리스트.add(일요일);
 
         return BusinessHours.of(운영시간_리스트);
+    }
+
+    public static List<OperationTimePerDayRequest> 운영시간_리스트_REQUEST_DTO(){
+        OperationTimeRequest 평일_운영시간 = new OperationTimeRequest(new TimeRequest(9, 0), new TimeRequest(17, 0));
+        OperationTimeRequest 주말_운영시간 = new OperationTimeRequest(new TimeRequest(0, 0), new TimeRequest(0, 0));
+
+        OperationTimePerDayRequest 월요일 =  new OperationTimePerDayRequest(new DaysRequest(Days.MONDAY), 평일_운영시간);
+        OperationTimePerDayRequest 화요일 =  new OperationTimePerDayRequest(new DaysRequest(Days.TUESDAY), 평일_운영시간);
+        OperationTimePerDayRequest 수요일 =  new OperationTimePerDayRequest(new DaysRequest(Days.WEDNESDAY), 평일_운영시간);
+        OperationTimePerDayRequest 목요일 =  new OperationTimePerDayRequest(new DaysRequest(Days.THURSDAY), 평일_운영시간);
+        OperationTimePerDayRequest 금요일 =  new OperationTimePerDayRequest(new DaysRequest(Days.FRIDAY), 평일_운영시간);
+        OperationTimePerDayRequest 토요일 =  new OperationTimePerDayRequest(new DaysRequest(Days.SATURDAY), 주말_운영시간);
+        OperationTimePerDayRequest 일요일 =  new OperationTimePerDayRequest(new DaysRequest(Days.SUNDAY), 주말_운영시간);
+
+        List<OperationTimePerDayRequest> 운영시간_리스트 = new ArrayList<>();
+
+        운영시간_리스트.add(월요일);
+        운영시간_리스트.add(화요일);
+        운영시간_리스트.add(수요일);
+        운영시간_리스트.add(목요일);
+        운영시간_리스트.add(금요일);
+        운영시간_리스트.add(토요일);
+        운영시간_리스트.add(일요일);
+
+        return 운영시간_리스트;
+    }
+
+    public static OperationTimeRequest 운영시간_REQUEST_DTO(TimeRequest open, TimeRequest close){
+        return new OperationTimeRequest(open, close);
+    }
+
+
+    public static BusinessHoursRequest 카페운영시간_REQUEST_DTO(){
+        return new BusinessHoursRequest(운영시간_리스트_REQUEST_DTO());
     }
 }

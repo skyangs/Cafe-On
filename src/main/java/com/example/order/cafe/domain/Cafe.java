@@ -3,6 +3,7 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.CafeErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -11,12 +12,12 @@ import java.util.Objects;
 @NoArgsConstructor(force = true)
 @Entity
 public class Cafe extends BaseTimeEntity implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private final CafeInfo cafeInfo;
 
