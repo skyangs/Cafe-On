@@ -4,9 +4,11 @@ import com.example.order.global.common.BaseTimeEntity;
 import com.example.order.member.errorMsg.MemberErrorMsg;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+@NoArgsConstructor(force = true)
 @Getter
 @Entity
 public class Member extends BaseTimeEntity {
@@ -31,7 +33,7 @@ public class Member extends BaseTimeEntity {
     private final String phoneNum;
 
     @Transient
-    public static final String MEMBER_ID_REG = "^(?=.*[a-zA-Z])(?=.*\\d).+$";
+    public static final String MEMBER_ID_REG = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$";
     @Transient
     public static final String PHONE_NUM_NUMBER_REG = "^\\d+$";
 

@@ -35,7 +35,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void signUp(String memberId, String password, String name, AuthType authType,String phoneNum){
+    public Member signUp(String memberId, String password, String name, AuthType authType,String phoneNum){
 
         memberRepository.findByMemberId(memberId)
                 .ifPresent(member -> {
@@ -43,7 +43,7 @@ public class MemberService {
                 });
 
         Member newMember = Member.of(memberId, password, name, authType, phoneNum);
-        memberRepository.save(newMember);
+        return memberRepository.save(newMember);
     }
 
     @Transactional
@@ -52,7 +52,7 @@ public class MemberService {
         Member member = check_existMember(id);
 
         Member updateMember = Member.of(
-                member.getId(),
+                id,
                 member.getMemberId(),
                 password,
                 member.getName(),
