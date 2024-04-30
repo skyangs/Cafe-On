@@ -3,7 +3,9 @@ package com.example.order.cafe.dto.request;
 import com.example.order.cafe.domain.Days;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(force = true)
 @Getter
 public class DaysRequest {
 

@@ -2,9 +2,11 @@ package com.example.order.cafe.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor(force = true)
 @Getter
 public class BusinessHoursRequest {
 
