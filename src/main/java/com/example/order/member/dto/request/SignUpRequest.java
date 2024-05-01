@@ -14,7 +14,7 @@ public class SignUpRequest {
 
     @NotBlank(message = "아이디는 필수 입력 값 입니다.")
     @Size(min = 4, max = 10, message = "아이디는 4-10자여야 합니다.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$", message = "아이디는 영문과 숫자로 이루어져야 합니다.")
+    @Pattern(regexp = "^[a-zA-Z0-9]{4,10}$", message = "아이디는 영문과 숫자로 이루어져야 합니다.")
     private String memberId;
     @NotBlank(message = "비밀번호는 필수 입력 값 입니다.")
     @Size(min = 8, max = 15, message = "비밀번호는 8-15자여야 합니다.")

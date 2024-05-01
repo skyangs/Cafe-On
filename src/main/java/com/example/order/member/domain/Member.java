@@ -33,7 +33,7 @@ public class Member extends BaseTimeEntity {
     private final String phoneNum;
 
     @Transient
-    public static final String MEMBER_ID_REG = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$";
+    public static final String MEMBER_ID_REG = "^[a-zA-Z0-9]{4,10}$";
     @Transient
     public static final String PHONE_NUM_NUMBER_REG = "^\\d+$";
 

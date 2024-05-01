@@ -58,7 +58,7 @@ public class MemberController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @Operation(summary = "회원 정보 수정", description = "특정 회원의 정보를 수정한다.")
     public ResponseEntity<Object> updateMemberInfo(@PathVariable("id") long id, @Validated @RequestBody UpdateMemberInfoRequest updateMemberInfoRequest){
 
@@ -73,6 +73,7 @@ public class MemberController {
     @DeleteMapping("/{id}")
     @Operation(summary = "회원 탈퇴", description = "회원의 정보를 삭제한다.")
     public ResponseEntity<Object> deleteMember(@PathVariable("id") long id){
+
         memberService.deleteMember(id);
 
         return ResponseEntity.noContent().build();
