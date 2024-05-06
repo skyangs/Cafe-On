@@ -93,9 +93,26 @@ public class MemberTest {
 
     }
 
-    @DisplayName("생성 예외 : 휴대폰번호 자릿수 - 11자리")
+    @DisplayName("생성 예외 : 이름 자릿수 - 1-5자 사이")
     @ParameterizedTest
-    @ValueSource(strings = {"010-1111-111", "010-1111-11111"})
+    @ValueSource(strings = {"", "김박최이정장"})
+    public void create_error_name(String 이름_자릿수){
+
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> {
+                    Member.of(MemberFixture.아이디,
+                            MemberFixture.비밀번호,
+                            이름_자릿수,
+                            MemberFixture.권한,
+                            MemberFixture.연락처);
+                })
+                .withMessage(MemberErrorMsg.MEMBER_NAME_LENGTH_ERROR_MESSAGE.getValue());
+
+    }
+
+    @DisplayName("생성 예외 : 휴대폰번호 자릿수 - 9-11자리 사이")
+    @ParameterizedTest
+    @ValueSource(strings = {"01011111", "010111111111"})
     public void create_error_phoneNum_length(String 연락처_자릿수){
 
         assertThatIllegalArgumentException()
@@ -111,7 +128,7 @@ public class MemberTest {
 
     @DisplayName("생성 예외 : 휴대폰번호 유효문자 - 숫자")
     @ParameterizedTest
-    @ValueSource(strings = {"연락처-열한자리-한글일때", "aaa-aaaa-aaaa"})     
+    @ValueSource(strings = {"연락처열한자리한글일때", "aaaaaaaaaaa"})
     public void create_error_phoneNum_only_number_regex(String 연락처_유효문자){
 
         assertThatIllegalArgumentException()
@@ -126,26 +143,9 @@ public class MemberTest {
 
     }
 
-    @DisplayName("생성 예외 : 휴대폰번호 형식 - 000-0000-0000")
+    @DisplayName("생성 예외 : 휴대폰번호 자릿수 + 유효문자 - 9-11자리 숫자")
     @ParameterizedTest
-    @ValueSource(strings = {"01000000000", "0100000-0000", "010-00000000"})
-    public void create_error_phoneNum_format(String 연락처_형식){
-
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> {
-                    Member.of(MemberFixture.아이디,
-                            MemberFixture.비밀번호,
-                            MemberFixture.이름,
-                            MemberFixture.권한,
-                            연락처_형식);
-                })
-                .withMessage(MemberErrorMsg.MEMBER_PHONE_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());
-
-    }
-
-    @DisplayName("생성 예외 : 휴대폰번호 자릿수 + 유효문자 + 형식 - 000-0000-0000 11자리 숫자")
-    @ParameterizedTest
-    @ValueSource(strings = {"가나다라마바사아자차", "가나다라마바사아자차카타"})
+    @ValueSource(strings = {"가나다라마바사아", "가나다라마바사아자차카타"})
     public void create_error_phoneNum(String 예외_연락처){
 
         assertThatIllegalArgumentException()

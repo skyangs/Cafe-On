@@ -1,17 +1,20 @@
 package com.example.order.cafe.dto.request;
 
-import com.example.order.cafe.domain.OperationTimePerDay;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor(force = true)
 @Getter
 public class BusinessHoursRequest {
 
-    private final List<OperationTimePerDayRequest> operationTimeList;
+    @Size(min = 7, max = 7)
+    private final List<OperationTimePerDayRequest> operationTimePerDayList;
 
-    public BusinessHoursRequest(List<OperationTimePerDayRequest> operationTimeList){
-        this.operationTimeList = operationTimeList;
+    public BusinessHoursRequest(List<OperationTimePerDayRequest> operationTimePerDayList){
+        this.operationTimePerDayList = operationTimePerDayList;
     }
 
 }

@@ -1,19 +1,16 @@
 package com.example.order.cafe.domain;
 
 import com.example.order.cafe.errorMsg.TimeErrorMsg;
-import com.example.order.global.common.BaseTimeEntity;
-import jakarta.persistence.Entity;
 
 import java.util.Objects;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(force = true)
 @Getter
-@Entity
-public class Time extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@Embeddable
+public class Time{
 
     @Column(name = "\"hour\"", nullable = false)
     private final int hour;

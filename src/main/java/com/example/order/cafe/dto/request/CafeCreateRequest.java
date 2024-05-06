@@ -1,16 +1,21 @@
 package com.example.order.cafe.dto.request;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(force = true)
 @Getter
 public class CafeCreateRequest {
-    private final CafeInfoRequest cafeInfoRequest;
-    private final BusinessHoursRequest businessHoursRequest;
+    @NotNull
+    private final CafeInfoCreateRequest cafeInfo;
+    @NotNull
+    private final BusinessHoursRequest businessHours;
 
-    public CafeCreateRequest(CafeInfoRequest cafeInfoRequest, BusinessHoursRequest businessHoursRequest){
-        this.cafeInfoRequest = cafeInfoRequest;
-        this.businessHoursRequest = businessHoursRequest;
+    public CafeCreateRequest(CafeInfoCreateRequest cafeInfo, BusinessHoursRequest businessHours){
+        this.cafeInfo = cafeInfo;
+        this.businessHours = businessHours;
     }
 
 }

@@ -4,10 +4,13 @@ import com.example.order.cafe.errorMsg.OperationTimePerDayErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(force = true)
 @Getter
 @Entity
 public class OperationTimePerDay extends BaseTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -19,9 +22,19 @@ public class OperationTimePerDay extends BaseTimeEntity {
     @JoinColumn(unique = true)
     private final OperationTime operationTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BusinessHoursId")
-    private BusinessHours businessHours;
+    @Column(nullable = false)
+    private long businessHoursId;
+
+    private OperationTimePerDay(Days days, OperationTime operationTime, long businessHoursId){
+        validation(operationTime);
+        this.days = days;
+        this.operationTime = operationTime;
+        this.businessHoursId = businessHoursId;
+    }
+
+    public static OperationTimePerDay of(Days days, OperationTime operationTime, long businessHoursId){
+        return new OperationTimePerDay(days, operationTime, businessHoursId);
+    }
 
     private OperationTimePerDay(Days days, OperationTime operationTime){
         validation(operationTime);
@@ -29,19 +42,8 @@ public class OperationTimePerDay extends BaseTimeEntity {
         this.operationTime = operationTime;
     }
 
-    private OperationTimePerDay(Days days, OperationTime operationTime, BusinessHours businessHours){
-        validation(operationTime);
-        this.days = days;
-        this.operationTime = operationTime;
-        this.businessHours = businessHours;
-    }
-
     public static OperationTimePerDay of(Days days, OperationTime operationTime){
         return new OperationTimePerDay(days, operationTime);
-    }
-
-    public static OperationTimePerDay of(Days days, OperationTime operationTime, BusinessHours businessHours){
-        return new OperationTimePerDay(days, operationTime, businessHours);
     }
 
     public void validation(OperationTime operationTime){

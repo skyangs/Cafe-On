@@ -4,7 +4,9 @@ import com.example.order.cafe.errorMsg.OperationTimeErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(force = true)
 @Getter
 @Entity
 public class OperationTime extends BaseTimeEntity {
@@ -12,12 +14,18 @@ public class OperationTime extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "hour", column = @Column(name = "open_hour")),
+            @AttributeOverride(name = "minute", column = @Column(name = "open_minute"))
+    })
     private final Time open;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "hour", column = @Column(name = "close_hour")),
+            @AttributeOverride(name = "minute", column = @Column(name = "close_minute"))
+    })
     private final Time close;
 
     @Transient

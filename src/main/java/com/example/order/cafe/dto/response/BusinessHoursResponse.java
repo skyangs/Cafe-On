@@ -1,6 +1,5 @@
 package com.example.order.cafe.dto.response;
 
-import com.example.order.cafe.domain.OperationTimePerDay;
 import lombok.Getter;
 
 import java.util.List;

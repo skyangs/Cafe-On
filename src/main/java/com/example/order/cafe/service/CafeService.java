@@ -1,40 +1,69 @@
 package com.example.order.cafe.service;
 
-import com.example.order.cafe.domain.Cafe;
-import com.example.order.member.domain.Cart;
-import com.example.order.member.domain.Member;
-import com.example.order.member.dto.CartRequest;
-import com.example.order.member.repository.CartRepository;
+import com.example.order.cafe.domain.*;
+import com.example.order.cafe.dto.request.CafeCreateRequest;
+import com.example.order.cafe.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.mapper.CafeMapper;
+import com.example.order.cafe.repository.CafeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class CafeService {
+    private final CafeRepository cafeRepository;
 
-    private MemberRepository memberRepository;
-    private CartRepository cartRepository;
-    private CafeRepository cafeRepository;
-    private Cart cart;
+    public CafeResponse getCafeById(long cafeId){
 
-    public void addCart(long memberId, CartRequest cartRequest){
-        Member member = memberRepository.findById(memberId);
+        Cafe cafe = check_existCafe(cafeId);
 
-        List<Cart> cartList = cartRepository.findByMember(member);
+        return CafeMapper.INSTANCE.toCafeResponse(cafe);
+    }
 
-        Cafe cafe = cafeRepository.findById(cartRequest.getCafeId());
+    public List<CafeResponse> getAllCafe(){
 
-        Cart cart1 = cart.addMenu(cartList, cafe);
-//        boolean checkCafe = cartList.stream().allMatch(cart -> cart.getCafe().equals(cafe));
-//        if(!checkCafe) {
-//            cartRepository.deleteAll(cartList);
-//        }
-//        cart.addMenu(new Cart(member,cafe, '카페메뉴', "카페옵션", 2));
-        cartRepository.save(cart1);
+        return cafeRepository.findAll()
+                .stream()
+                .map(CafeMapper.INSTANCE::toCafeResponse)
+                .toList();
+    }
 
+    @Transactional
+    public Cafe registerCafe(CafeCreateRequest cafeCreateRequest) {
 
+        Cafe cafe = CafeMapper.INSTANCE.toCafe(cafeCreateRequest);
+
+        return cafeRepository.save(cafe);
 
     }
 
+    @Transactional
+    public void updateCafe(long cafeId, CafeUpdateRequest cafeUpdateRequest) {
+
+        check_existCafe(cafeId);
+
+        Cafe updateCafe = CafeMapper.INSTANCE.toCafe(cafeUpdateRequest);
+
+        cafeRepository.save(updateCafe);
+    }
+
+    @Transactional
+    public void deleteCafe(long cafeId){
+
+        Cafe cafe = check_existCafe(cafeId);
+
+        cafeRepository.delete(cafe);
+    }
+
+    public Cafe check_existCafe(long cafeId){
+        return cafeRepository.findById(cafeId)
+                .orElseThrow(NoSuchElementException::new);
+    }
 
 }

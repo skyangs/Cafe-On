@@ -25,24 +25,25 @@ public class MemberService {
 
         Member member = check_existMember(id);
 
-        return memberMapper.toMemberInfoResponse(member);
+        return memberMapper.INSTANCE.toMemberInfoResponse(member);
     }
 
     public List<MemberInfoResponse> getMemberInfoList(){
         List<Member> memberList = memberRepository.findAll();
 
-        return memberMapper.toMemberInfoResponseList(memberList);
+        return memberMapper.INSTANCE.toMemberInfoResponseList(memberList);
     }
 
     @Transactional
-    public void signUp(String memberId, String password, String name, AuthType authType,String phoneNum){
+    public Member signUp(String memberId, String password, String name, AuthType authType,String phoneNum){
 
-        if(memberRepository.findByMemberId(memberId).isPresent()){
-            throw new RuntimeException(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.toString());
-        }
+        memberRepository.findByMemberId(memberId)
+                .ifPresent(member -> {
+                    throw new RuntimeException(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
+                });
 
         Member newMember = Member.of(memberId, password, name, authType, phoneNum);
-        memberRepository.save(newMember);
+        return memberRepository.save(newMember);
     }
 
     @Transactional
@@ -50,7 +51,9 @@ public class MemberService {
 
         Member member = check_existMember(id);
 
-        Member updateMember = Member.of(member.getMemberId(),
+        Member updateMember = Member.of(
+                id,
+                member.getMemberId(),
                 password,
                 member.getName(),
                 authType,
@@ -68,9 +71,9 @@ public class MemberService {
 
     }
 
-    public Member check_existMember(long memberId){
+    public Member check_existMember(long id){
 
-        return memberRepository.findById(memberId)
+        return memberRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
     }
 }

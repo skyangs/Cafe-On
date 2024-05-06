@@ -4,9 +4,11 @@ import com.example.order.cafe.errorMsg.CafeInfoErrorMsg;
 import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+@NoArgsConstructor(force = true)
 @Getter
 @Entity
 public class CafeInfo extends BaseTimeEntity {
@@ -59,7 +61,7 @@ public class CafeInfo extends BaseTimeEntity {
     }
 
     public void check_name_length(String name){
-        if(name.length() < MIN_NAME_LENGTH){
+        if(name.isEmpty()){
             throw new IllegalArgumentException(CafeInfoErrorMsg.CAFE_NAME_LENGTH_ERROR_MESSAGE.getValue());
         }
     }
