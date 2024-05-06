@@ -21,16 +21,16 @@ public class Member extends BaseTimeEntity {
     private final String memberId;
 
     @Column(nullable = false)
-    private final String password;
+    private String password;
 
     @Column(nullable = false)
     private final String name;
 
     @Enumerated(EnumType.STRING)
-    private final AuthType authType;
+    private AuthType authType;
 
     @Column(nullable = false)
-    private final String phoneNum;
+    private String phoneNum;
 
     @Transient
     public static final String MEMBER_ID_REG = "^[a-zA-Z0-9]{4,10}$";
@@ -168,5 +168,12 @@ public class Member extends BaseTimeEntity {
                 Objects.equals(phoneNum, member.phoneNum)
                 ;
     }
+
+    public void updateMember(String password, AuthType authType, String phoneNum){
+        this.password = password;
+        this.authType = authType;
+        this.phoneNum = phoneNum;
+    }
+
 
 }
