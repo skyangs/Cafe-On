@@ -4,7 +4,7 @@ import com.example.order.member.domain.AuthType;
 import lombok.Getter;
 
 @Getter
-public class MemberInfoResponse {
+public class MemberResponse {
 
     private final String memberId;
     private final String password;
@@ -12,7 +12,7 @@ public class MemberInfoResponse {
     private final AuthType authType;
     private final String phoneNum;
 
-    public MemberInfoResponse(String memberId, String password, String name, AuthType authType, String phoneNum){
+    public MemberResponse(String memberId, String password, String name, AuthType authType, String phoneNum){
         this.memberId = memberId;
         this.password = password;
         this.name = name;

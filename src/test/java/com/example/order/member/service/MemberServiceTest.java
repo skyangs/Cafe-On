@@ -2,7 +2,7 @@ package com.example.order.member.service;
 
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.response.MemberInfoResponse;
+import com.example.order.member.dto.response.MemberResponse;
 import com.example.order.member.exception.MemberException;
 import com.example.order.member.fixture.MemberFixture;
 import com.example.order.member.repository.MemberRepository;
@@ -47,8 +47,7 @@ public class MemberServiceTest {
     @DisplayName("예외 : 존재하는 아이디 회원가입 테스트")
     public void signUp_error_alreadyExist_id(){
 
-        Member 가입된_회원 = MemberFixture.회원_기본생성();
-        memberRepository.save(가입된_회원);
+        memberService.signUp(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름, MemberFixture.권한, MemberFixture.연락처);
 
         assertThatRuntimeException()
                 .isThrownBy(() -> memberService.signUp(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름, MemberFixture.권한, MemberFixture.연락처))
@@ -60,27 +59,33 @@ public class MemberServiceTest {
     @DisplayName("정상 : 회원 정보 조회")
     public void getMemberInfoTest(){
 
-        Member 첫번째_회원 = MemberFixture.회원_기본생성();
-        Member 가입된_첫번째_회원 = memberRepository.save(첫번째_회원);
+        Member 첫번째_회원 = memberService.signUp(
+                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
+                MemberFixture.권한, MemberFixture.연락처);
 
-        MemberInfoResponse memberInfoResponse = memberService.getMemberInfo(가입된_첫번째_회원.getId());
+        MemberResponse memberInfoResponse = memberService.getMember(첫번째_회원.getId());
 
         assertThat(memberInfoResponse.getName()).isEqualTo(첫번째_회원.getName());
     }
 
     @Test
     @DisplayName("예외 : 회원 정보 없을 때")
-    public void signUp_error_getMemberInfo(){
+    public void signUp_error_getMember(){
 
         assertThatRuntimeException()
-                .isThrownBy(() -> memberService.getMemberInfo(anyLong()))
+                .isThrownBy(() -> memberService.getMember(anyLong()))
                 .isInstanceOf(NoSuchElementException.class);
 
     }
 
     @Test
     @DisplayName("정상 : 회원 정보 전체 조회")
-    public void getMemberInfoTestList(){
+    public void getMemberTestList(){
+
+
+        Member 첫번째_회원 = memberService.signUp(
+                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
+                MemberFixture.권한, MemberFixture.연락처);
 
         String 두번째_회원_아이디 = "second12";
         String 두번째_회원_비밀번호 = "secondPW";
@@ -88,42 +93,40 @@ public class MemberServiceTest {
         AuthType 두번째_회원_권한 = AuthType.ADMIN;
         String 두번째_회원_연락처 = "0109999999";
 
-        Member 첫번째_회원 = MemberFixture.회원_기본생성();
-        Member 두번째_회원 = Member.of(두번째_회원_아이디,두번째_회원_비밀번호, 두번째_회원_이름, 두번째_회원_권한, 두번째_회원_연락처);
+        Member 두번째_회원 = memberService.signUp(두번째_회원_아이디,두번째_회원_비밀번호, 두번째_회원_이름, 두번째_회원_권한, 두번째_회원_연락처);
 
-        memberRepository.save(첫번째_회원);
-        memberRepository.save(두번째_회원);
 
-        List<MemberInfoResponse> memberInfoResponseList = memberService.getMemberInfoList();
+        List<MemberResponse> 회원정보_리스트 = memberService.getMemberList();
 
-        assertThat(memberInfoResponseList.size()).isEqualTo(2);
-        assertThat(memberInfoResponseList.get(1).getAuthType()).isEqualTo(두번째_회원.getAuthType());
+        assertThat(회원정보_리스트.size()).isEqualTo(2);
+        assertThat(회원정보_리스트.get(1).getAuthType()).isEqualTo(두번째_회원.getAuthType());
 
     }
 
     @Test
     @DisplayName("예외 : 회원 정보 리스트 사이즈 0 일때")
-    public void signUp_error_getMemberInfoTestList(){
+    public void signUp_error_getMemberTestList(){
 
-        List<MemberInfoResponse> memberInfoList = memberService.getMemberInfoList();
+        List<MemberResponse> memberInfoList = memberService.getMemberList();
 
         assertThat(memberInfoList).isEmpty();
     }
 
     @Test
     @DisplayName("정상 : 회원 정보 수정")
-    public void updateMemberInfo(){
+    public void updateMember(){
 
-        Member 첫번째_회원 = MemberFixture.회원_기본생성();
-        Member 가입된_첫번째_회원 = memberRepository.save(첫번째_회원);
+        Member 첫번째_회원 = memberService.signUp(
+                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
+                MemberFixture.권한, MemberFixture.연락처);
 
         String 변경_비밀번호  = "updatePassword";
         AuthType 변경_권한 = AuthType.CAFE_OWNER;
         String 변경_연락처 = "11122222222";
 
-        memberService.updateMemberInfo(가입된_첫번째_회원.getId(), 변경_비밀번호, 변경_권한, 변경_연락처);
+        memberService.updateMember(첫번째_회원.getId(), 변경_비밀번호, 변경_권한, 변경_연락처);
 
-        Member 변경된_회원 = memberRepository.findById(가입된_첫번째_회원.getId())
+        Member 변경된_회원 = memberRepository.findById(첫번째_회원.getId())
                 .orElseThrow(NoSuchElementException::new);
 
         assertThat(변경된_회원.getPassword()).isEqualTo(변경_비밀번호);
@@ -134,7 +137,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("예외 : 회원 정보 수정 - id 값 없을때")
-    public void updateMemberInfo_error_memberNotFound() {
+    public void updateMember_error_memberNotFound() {
 
         long 확인할_회원_id = 1L;
         String 변경_비밀번호  = "updatePassword";
@@ -142,7 +145,7 @@ public class MemberServiceTest {
         String 변경_연락처 = "111-2222-2222";
 
         assertThatRuntimeException()
-                .isThrownBy(() -> memberService.updateMemberInfo(확인할_회원_id, 변경_비밀번호, 변경_권한, 변경_연락처))
+                .isThrownBy(() -> memberService.updateMember(확인할_회원_id, 변경_비밀번호, 변경_권한, 변경_연락처))
                 .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -150,12 +153,13 @@ public class MemberServiceTest {
     @DisplayName("정상 : 회원 정보 탈퇴")
     public void deleteMember(){
 
-        Member 첫번째_회원 = MemberFixture.회원_기본생성();
-        memberRepository.save(첫번째_회원);
+        Member 첫번째_회원 = memberService.signUp(
+                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
+                MemberFixture.권한, MemberFixture.연락처);
 
         memberService.deleteMember(첫번째_회원.getId());
 
-        assertThat(memberRepository.findAll().size()).isEqualTo(0);
+        assertThat(memberRepository.findAll()).isEmpty();
 
 
     }

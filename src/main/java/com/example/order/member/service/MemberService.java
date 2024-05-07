@@ -2,7 +2,7 @@ package com.example.order.member.service;
 
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.response.MemberInfoResponse;
+import com.example.order.member.dto.response.MemberResponse;
 import com.example.order.member.exception.MemberException;
 import com.example.order.member.mapper.MemberMapper;
 import com.example.order.member.repository.MemberRepository;
@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -21,59 +22,48 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
 
-    public MemberInfoResponse getMemberInfo(long id){
+    public MemberResponse getMember(long id){
 
-        Member member = check_existMember(id);
+        Member member = checkExistMember(id);
 
-        return memberMapper.INSTANCE.toMemberInfoResponse(member);
+        return memberMapper.INSTANCE.toMemberResponse(member);
     }
 
-    public List<MemberInfoResponse> getMemberInfoList(){
+    public List<MemberResponse> getMemberList(){
         List<Member> memberList = memberRepository.findAll();
 
-        return memberMapper.INSTANCE.toMemberInfoResponseList(memberList);
+        return memberMapper.INSTANCE.toMemberResponseList(memberList);
     }
 
     @Transactional
     public Member signUp(String memberId, String password, String name, AuthType authType,String phoneNum){
 
-        memberRepository.findByMemberId(memberId)
-                .ifPresent(member -> {
-                    throw new RuntimeException(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
-                });
+        Optional<Member> member = memberRepository.findByMemberId(memberId);
+
+        if(member.isPresent()){
+            throw new RuntimeException(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
+        }
 
         Member newMember = Member.of(memberId, password, name, authType, phoneNum);
         return memberRepository.save(newMember);
     }
 
     @Transactional
-    public void updateMemberInfo(long id, String password, AuthType authType, String phoneNum){
+    public void updateMember(long id, String password, AuthType authType, String phoneNum){
 
-        Member member = check_existMember(id);
-
-        Member updateMember = Member.of(
-                id,
-                member.getMemberId(),
-                password,
-                member.getName(),
-                authType,
-                phoneNum);
-
-        memberRepository.save(updateMember);
+        Member member = checkExistMember(id);
+        member.updateMember(password, authType, phoneNum);
     }
 
     @Transactional
     public void deleteMember(long id){
-
-        Member member = check_existMember(id);
-
-        memberRepository.delete(member);
-
+        memberRepository.delete(checkExistMember(id));
     }
 
-    public Member check_existMember(long id){
+    private Member checkExistMember(long id){
 
         return memberRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
     }
+
 }
