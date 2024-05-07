@@ -2,8 +2,8 @@ package com.example.order.member.controller;
 
 import com.example.order.member.domain.Member;
 import com.example.order.member.dto.request.SignUpRequest;
-import com.example.order.member.dto.request.UpdateMemberInfoRequest;
-import com.example.order.member.dto.response.MemberInfoResponse;
+import com.example.order.member.dto.request.UpdateMemberRequest;
+import com.example.order.member.dto.response.MemberResponse;
 import com.example.order.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,18 +25,18 @@ public class MemberController {
 
     @GetMapping("/{id}")
     @Operation(summary = "회원 정보 조회", description = "특정 회원의 정보를 조회한다.")
-    public ResponseEntity<MemberInfoResponse> getMemberInfo(@PathVariable("id") long id){
+    public ResponseEntity<MemberResponse> getMemberInfo(@PathVariable("id") long id){
 
         return ResponseEntity.ok()
-                .body(memberService.getMemberInfo(id));
+                .body(memberService.getMember(id));
     }
 
     @GetMapping("/all")
     @Operation(summary = "회원 정보 전체 조회", description = "모든 회원의 정보를 조회한다.")
-    public ResponseEntity<List<MemberInfoResponse>> getMemberInfoList(){
+    public ResponseEntity<List<MemberResponse>> getMemberInfoList(){
 
         return ResponseEntity.ok()
-                .body(memberService.getMemberInfoList());
+                .body(memberService.getMemberList());
     }
 
     @PostMapping("/signup")
@@ -53,12 +53,12 @@ public class MemberController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "회원 정보 수정", description = "특정 회원의 정보를 수정한다.")
-    public ResponseEntity<Object> updateMemberInfo(@PathVariable("id") long id, @Validated @RequestBody UpdateMemberInfoRequest updateMemberInfoRequest){
+    public ResponseEntity<Object> updateMemberInfo(@PathVariable("id") long id, @Validated @RequestBody UpdateMemberRequest updateMemberRequest){
 
-        memberService.updateMemberInfo(id,
-                updateMemberInfoRequest.getPassword(),
-                updateMemberInfoRequest.getAuthType(),
-                updateMemberInfoRequest.getPhoneNum());
+        memberService.updateMember(id,
+                updateMemberRequest.getPassword(),
+                updateMemberRequest.getAuthType(),
+                updateMemberRequest.getPhoneNum());
 
         return ResponseEntity.ok().build();
     }

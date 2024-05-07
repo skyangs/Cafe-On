@@ -20,6 +20,4 @@ public class MemberFixture {
         return new SignUpRequest(아이디, 비밀번호, 이름, 권한, 연락처);
     }
 
-
-
 }

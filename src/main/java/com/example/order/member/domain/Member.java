@@ -157,6 +157,12 @@ public class Member extends BaseTimeEntity {
 
     }
 
+    public void updateMember(String password, AuthType authType, String phoneNum){
+        this.password = password;
+        this.authType = authType;
+        this.phoneNum = phoneNum;
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -165,15 +171,9 @@ public class Member extends BaseTimeEntity {
         return Objects.equals(memberId, member.memberId) &&
                 Objects.equals(password, member.password) &&
                 Objects.equals(authType, member.authType) &&
-                Objects.equals(phoneNum, member.phoneNum)
-                ;
+                Objects.equals(phoneNum, member.phoneNum);
     }
 
-    public void updateMember(String password, AuthType authType, String phoneNum){
-        this.password = password;
-        this.authType = authType;
-        this.phoneNum = phoneNum;
-    }
 
 
 }
