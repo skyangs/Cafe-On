@@ -6,6 +6,8 @@ import com.example.order.cafe.dto.request.CafeUpdateRequest;
 import com.example.order.cafe.dto.response.CafeResponse;
 import com.example.order.cafe.service.CafeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,11 @@ public class CafeController {
     private final CafeService cafeService;
 
     @GetMapping("/{cafeId}")
-    @Operation(summary = "카페 정보 조회", description = "카페의 정보를 조회한다.")
+    @Operation(summary = "카페 정보 조회", description = "카페의 정보를 조회한다.",
+        responses = {
+                @ApiResponse(responseCode = "200", description = "카페 정보 조회 성공"),
+                @ApiResponse(responseCode = "404", description = "카페 정보 조회 실패")
+        })
     public ResponseEntity<CafeResponse> getMemberInfo(@PathVariable("cafeId") long cafeId){
 
         return ResponseEntity.ok()
@@ -33,7 +39,11 @@ public class CafeController {
     }
 
     @GetMapping("/all")
-    @Operation(summary = "카페 정보 전체 조회", description = "모든 카페의 정보를 조회한다.")
+    @Operation(summary = "카페 정보 전체 조회", description = "모든 카페의 정보를 조회한다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "카페 정보 전체 조회 성공"),
+                    @ApiResponse(responseCode = "404", description = "카페 정보 전체 조회 실패")
+            })
     public ResponseEntity<List<CafeResponse>> getAllCafe(){
 
         return ResponseEntity.ok()
@@ -41,7 +51,11 @@ public class CafeController {
     }
 
     @PostMapping
-    @Operation(summary = "카페 등록", description = "새로운 카페의 프로필, 운영시간 정보를 등록한다.")
+    @Operation(summary = "카페 등록", description = "새로운 카페의 프로필, 운영시간 정보를 등록한다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "카페 정보 등록 성공"),
+                    @ApiResponse(responseCode = "404", description = "카페 정보 등록 실패")
+            })
     public ResponseEntity<Cafe> registerCafe(@Validated @RequestBody CafeCreateRequest cafeCreateRequest){
         Cafe cafe = cafeService.registerCafe(cafeCreateRequest);
 
@@ -54,7 +68,11 @@ public class CafeController {
     }
 
     @PutMapping("/{cafeId}")
-    @Operation(summary = "회원 정보 수정", description = "특정 회원의 정보를 수정한다.")
+    @Operation(summary = "회원 정보 수정", description = "특정 회원의 정보를 수정한다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "카페 정보 수정 성공"),
+                    @ApiResponse(responseCode = "404", description = "카페 정보 수정 실패")
+            })
     public ResponseEntity<Object> updateCafe(@PathVariable("cafeId") long cafeId, @Validated @RequestBody CafeUpdateRequest cafeUpdateRequest){
 
         cafeService.updateCafe(cafeId, cafeUpdateRequest);
@@ -63,7 +81,11 @@ public class CafeController {
     }
 
     @DeleteMapping("/{cafeId}")
-    @Operation(summary = "카페 정보 삭제", description = "카페의 정보를 삭제한다.")
+    @Operation(summary = "카페 정보 삭제", description = "카페의 정보를 삭제한다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "카페 정보 삭제 성공"),
+                    @ApiResponse(responseCode = "404", description = "카페 정보 삭제 실패")
+            })
     public ResponseEntity<Object> deleteCafe(@PathVariable("cafeId") long cafeId){
         cafeService.deleteCafe(cafeId);
 
