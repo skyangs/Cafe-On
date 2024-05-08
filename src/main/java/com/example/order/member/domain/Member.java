@@ -32,6 +32,9 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false)
     private String phoneNum;
 
+    @Column(nullable = false)
+    private Grade grade;
+
     @Transient
     public static final String MEMBER_ID_REG = "^[a-zA-Z0-9]{4,10}$";
     @Transient
@@ -161,6 +164,10 @@ public class Member extends BaseTimeEntity {
         this.password = password;
         this.authType = authType;
         this.phoneNum = phoneNum;
+    }
+
+    public void updateMemberGrade(Grade grade){
+        this.grade = grade;
     }
 
     public boolean equals(Object o) {
