@@ -9,17 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@NoArgsConstructor(force = true)
 @Getter
-@Embeddable
+@Entity
 public class BusinessHours {
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
-    private final List<OperationTimePerDay> operationTimePerDayList ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToMany(mappedBy = "businessHours", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OperationTimePerDay> operationTimePerDayList ;
 
     @Transient
     public static final int DISTINCT_DAY_SIZE = 7;
+
+    private BusinessHours(){
+        validation(operationTimePerDayList);
+    }
+
+    public static BusinessHours of(){
+        return new BusinessHours();
+    }
 
     private BusinessHours(List<OperationTimePerDay> operationTimePerDayList){
         validation(operationTimePerDayList);
@@ -57,6 +67,12 @@ public class BusinessHours {
 
     public String getTimePerDay(Days day){
         return operationTimePerDayList.get(day.ordinal()).getOperationTime().makeOperationTimeList();
+    }
+
+    public void addBusinessHoursList(List<OperationTimePerDay> operationTimePerDayList){
+//        operationTimePerDayList.add(operationTimePerDay);
+//        OperationTimePerDay.of(operationTimePerDay.getDays(), operationTimePerDay.getOperationTime(), this);
+        this.operationTimePerDayList = operationTimePerDayList;
     }
 
     public boolean equals(Object o) {

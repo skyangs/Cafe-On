@@ -1,9 +1,6 @@
 package com.example.order.cafe.service;
 
-import com.example.order.cafe.domain.Cafe;
-import com.example.order.cafe.domain.CafeInfo;
-import com.example.order.cafe.domain.OperationTime;
-import com.example.order.cafe.domain.Time;
+import com.example.order.cafe.domain.*;
 import com.example.order.cafe.dto.request.CafeCreateRequest;
 import com.example.order.cafe.dto.request.OperationTimeRequest;
 import com.example.order.cafe.dto.request.TimeRequest;
@@ -67,7 +64,7 @@ public class CafeServiceTest {
 
         Optional<Cafe> 등록_카페 = cafeRepository.findById(카페.getId());
         CafeInfo 등록_카페_프로필 = cafeInfoRepository.findById(카페.getId())
-                .orElseThrow(() -> new RuntimeException("dd"));
+                .orElseThrow(() -> new RuntimeException("카페 프로필이 존재하지 않습니다."));
 
         assertNotNull(등록_카페);
         assertNotNull(등록_카페_프로필);

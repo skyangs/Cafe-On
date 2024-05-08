@@ -2,6 +2,7 @@ package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.CafeInfo;
 import com.example.order.cafe.dto.request.CafeInfoCreateRequest;
+import com.example.order.cafe.dto.request.CafeInfoUpdateRequest;
 import com.example.order.cafe.dto.response.CafeInfoResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -19,6 +20,14 @@ public interface CafeInfoMapper {
             }
 
         return CafeInfo.of(cafeInfoCreateRequest.getName(), cafeInfoCreateRequest.getExplain(), cafeInfoCreateRequest.getContactNumber(), cafeInfoCreateRequest.getAddress());
+    }
+
+    default CafeInfo toCafeInfo(CafeInfoUpdateRequest cafeInfoUpdateRequest){
+        if ( cafeInfoUpdateRequest == null ) {
+            return null;
+        }
+
+        return CafeInfo.of(cafeInfoUpdateRequest.getName(), cafeInfoUpdateRequest.getExplain(), cafeInfoUpdateRequest.getContactNumber(), cafeInfoUpdateRequest.getAddress());
     }
 
 }

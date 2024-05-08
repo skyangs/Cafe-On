@@ -3,7 +3,9 @@ package com.example.order.cafe.mapper;
 import com.example.order.cafe.domain.BusinessHours;
 import com.example.order.cafe.domain.OperationTimePerDay;
 import com.example.order.cafe.dto.request.BusinessHoursRequest;
+import com.example.order.cafe.dto.request.BusinessHoursUpdateRequest;
 import com.example.order.cafe.dto.request.OperationTimePerDayRequest;
+import com.example.order.cafe.dto.request.OperationTimePerDayUpdateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -21,7 +23,7 @@ public interface BusinessHoursMapper {
         List<OperationTimePerDay> operationTimeList =
                 toOperationTimePerDayList( businessHoursRequest.getOperationTimePerDayList() );
 
-        return BusinessHours.of( operationTimeList );
+        return BusinessHours.of(operationTimeList);
     }
 
     default List<OperationTimePerDay> toOperationTimePerDayList(List<OperationTimePerDayRequest> operationTimePerDayRequestList) {
@@ -29,11 +31,37 @@ public interface BusinessHoursMapper {
             return null;
         }
 
-        List<OperationTimePerDay> list = new ArrayList<OperationTimePerDay>( operationTimePerDayRequestList.size() );
+        List<OperationTimePerDay> operationTimePerDayList = new ArrayList<>( operationTimePerDayRequestList.size() );
+
         for ( OperationTimePerDayRequest operationTimePerDayRequest : operationTimePerDayRequestList ) {
-            list.add( OperationTimePerDayMapper.INSTANCE.toOperationTimePerDay(operationTimePerDayRequest) );
+            OperationTimePerDay operationTimePerDay = OperationTimePerDayMapper.INSTANCE.toOperationTimePerDay(operationTimePerDayRequest);
+            operationTimePerDayList.add( operationTimePerDay );
         }
 
-        return list;
+        return operationTimePerDayList;
     }
+
+
+//    default BusinessHours toBusinessHours(BusinessHoursUpdateRequest businessHoursUpdateRequest){
+//
+//        List<OperationTimePerDay> operationTimeList =
+//                toOperationTimePerDayList( businessHoursUpdateRequest.getOperationTimePerDayList() );
+//
+//        return BusinessHours.of(operationTimeList);
+//    }
+//
+//    default List<OperationTimePerDay> toOperationTimePerDayList(List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequestList) {
+//        if ( operationTimePerDayUpdateRequestList == null ) {
+//            return null;
+//        }
+//
+//        List<OperationTimePerDay> operationTimePerDayList = new ArrayList<>( operationTimePerDayUpdateRequestList.size() );
+//
+//        for ( OperationTimePerDayUpdateRequest operationTimePerDayUpdateRequest : operationTimePerDayUpdateRequestList ) {
+//            OperationTimePerDay operationTimePerDay = OperationTimePerDayMapper.INSTANCE.toOperationTimePerDay(operationTimePerDayUpdateRequest);
+//            operationTimePerDayList.add( operationTimePerDay );
+//        }
+//
+//        return operationTimePerDayList;
+//    }
 }

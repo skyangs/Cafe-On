@@ -14,18 +14,17 @@ import java.util.List;
 public interface CafeMapper {
     CafeMapper INSTANCE = Mappers.getMapper(CafeMapper.class);
 
-    @Mapping(source = "businessHours", target = "businessHours")
     CafeResponse toCafeResponse(Cafe cafe);
 
     List<OperationTimePerDayResponse> toOperationTimePerDayList(List<OperationTimePerDay> operationTimePerDayList);
 
-    default Cafe toCafe(CafeCreateRequest cafeCreateRequest) {
-        if ( cafeCreateRequest == null) {
+    default Cafe toCafe(CafeInfoCreateRequest cafeInfoCreateRequest, BusinessHoursRequest businessHoursRequest) {
+        if ( cafeInfoCreateRequest == null && businessHoursRequest == null) {
             return null;
         }
 
-        CafeInfo cafeInfo = CafeInfoMapper.INSTANCE.toCafeInfo(cafeCreateRequest.getCafeInfo());
-        BusinessHours businessHours = BusinessHoursMapper.INSTANCE.toBusinessHours(cafeCreateRequest.getBusinessHours());
+        CafeInfo cafeInfo = CafeInfoMapper.INSTANCE.toCafeInfo(cafeInfoCreateRequest);
+        BusinessHours businessHours = BusinessHoursMapper.INSTANCE.toBusinessHours(businessHoursRequest);
 
         return Cafe.of(cafeInfo, businessHours);
     }

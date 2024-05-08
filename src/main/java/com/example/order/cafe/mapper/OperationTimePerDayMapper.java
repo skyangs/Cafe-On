@@ -13,7 +13,7 @@ public interface OperationTimePerDayMapper {
 
     OperationTimePerDayMapper INSTANCE = Mappers.getMapper(OperationTimePerDayMapper.class);
 
-//    @Mapping(target = "businessHoursId", ignore = true)
+    @Mapping(target = "businessHoursId", ignore = true)
     default OperationTimePerDay toOperationTimePerDay(OperationTimePerDayRequest operationTimePerDayRequest){
         if ( operationTimePerDayRequest == null ) {
             return null;
@@ -21,8 +21,7 @@ public interface OperationTimePerDayMapper {
 
         Days days = DaysMapper.INSTANCE.toDays(operationTimePerDayRequest.getDays());
         OperationTime operationTime = OperationTimeMapper.INSTANCE.toOperationTime(operationTimePerDayRequest.getOperationTime());
-        long businessId = 1L;
 
-        return OperationTimePerDay.of(days, operationTime, businessId);
+        return OperationTimePerDay.of(days, operationTime);
     }
 }
