@@ -3,7 +3,7 @@ package com.example.order.member.service;
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
 import com.example.order.member.dto.response.MemberResponse;
-import com.example.order.member.exception.MemberException;
+import com.example.order.member.errorCode.MemberErrorCode;
 import com.example.order.member.mapper.MemberMapper;
 import com.example.order.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class MemberService {
         Optional<Member> member = memberRepository.findByMemberId(memberId);
 
         if(member.isPresent()){
-            throw new RuntimeException(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
+            throw new RuntimeException(MemberErrorCode.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
         }
 
         Member newMember = Member.of(memberId, password, name, authType, phoneNum);

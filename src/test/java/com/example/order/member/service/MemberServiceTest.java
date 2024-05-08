@@ -3,7 +3,7 @@ package com.example.order.member.service;
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
 import com.example.order.member.dto.response.MemberResponse;
-import com.example.order.member.exception.MemberException;
+import com.example.order.member.errorCode.MemberErrorCode;
 import com.example.order.member.fixture.MemberFixture;
 import com.example.order.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -51,7 +51,7 @@ public class MemberServiceTest {
 
         assertThatRuntimeException()
                 .isThrownBy(() -> memberService.signUp(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름, MemberFixture.권한, MemberFixture.연락처))
-                        .withMessage(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
+                        .withMessage(MemberErrorCode.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
 
     }
 

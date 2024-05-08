@@ -4,7 +4,7 @@ import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
 import com.example.order.member.dto.request.SignUpRequest;
 import com.example.order.member.dto.request.UpdateMemberRequest;
-import com.example.order.member.exception.MemberException;
+import com.example.order.member.errorCode.MemberErrorCode;
 import com.example.order.member.fixture.MemberFixture;
 import com.example.order.member.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -79,7 +79,7 @@ public class MemberControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().isBadRequest())
                         .andExpect(result -> assertTrue(result.getResolvedException().getClass().isAssignableFrom(RuntimeException.class)))
-                        .andExpect(result -> assertEquals(MemberException.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue(),
+                        .andExpect(result -> assertEquals(MemberErrorCode.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue(),
                             Objects.requireNonNull(result.getResolvedException()).getMessage()));
     }
 
