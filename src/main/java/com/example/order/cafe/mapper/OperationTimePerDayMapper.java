@@ -4,6 +4,7 @@ import com.example.order.cafe.domain.Days;
 import com.example.order.cafe.domain.OperationTime;
 import com.example.order.cafe.domain.OperationTimePerDay;
 import com.example.order.cafe.dto.request.OperationTimePerDayRequest;
+import com.example.order.cafe.dto.request.OperationTimePerDayUpdateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -21,6 +22,18 @@ public interface OperationTimePerDayMapper {
 
         Days days = DaysMapper.INSTANCE.toDays(operationTimePerDayRequest.getDays());
         OperationTime operationTime = OperationTimeMapper.INSTANCE.toOperationTime(operationTimePerDayRequest.getOperationTime());
+
+        return OperationTimePerDay.of(days, operationTime);
+    }
+
+    @Mapping(target = "businessHoursId", ignore = true)
+    default OperationTimePerDay toOperationTimePerDay(OperationTimePerDayUpdateRequest operationTimePerDayUpdateRequest){
+        if ( operationTimePerDayUpdateRequest == null ) {
+            return null;
+        }
+
+        Days days = DaysMapper.INSTANCE.toDays(operationTimePerDayUpdateRequest.getDays());
+        OperationTime operationTime = OperationTimeMapper.INSTANCE.toOperationTime(operationTimePerDayUpdateRequest.getOperationTime());
 
         return OperationTimePerDay.of(days, operationTime);
     }

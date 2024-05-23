@@ -41,10 +41,6 @@ public class CafeService {
 
         Cafe cafe = CafeMapper.INSTANCE.toCafe(cafeCreateRequest.getCafeInfo(), cafeCreateRequest.getBusinessHours());
 
-        BusinessHours businessHours = BusinessHoursMapper.INSTANCE.toBusinessHours(cafeCreateRequest.getBusinessHours());
-
-        businessHours.addBusinessHoursList(businessHours.getOperationTimePerDayList());
-
         return cafeRepository.save(cafe);
 
     }
@@ -54,10 +50,9 @@ public class CafeService {
 
         Cafe cafe = check_existCafe(cafeId);
 
-        CafeInfo cafeInfo = CafeInfoMapper.INSTANCE.toCafeInfo(cafeUpdateRequest.getCafeInfo());
-//        BusinessHours businessHours = BusinessHoursMapper.INSTANCE.toBusinessHours(cafeUpdateRequest.getBusinessHours());
-//
-//        cafe.updateCafe(cafeInfo, businessHours);
+        Cafe cafe_update = CafeMapper.INSTANCE.toCafe(cafeUpdateRequest.getCafeInfo(), cafeUpdateRequest.getBusinessHours());
+
+        cafe.updateCafe(cafe_update.getCafeInfo(), cafe_update.getBusinessHours());
 
     }
 

@@ -26,29 +26,6 @@ public class CafeController {
 
     private final CafeService cafeService;
 
-    @GetMapping("/{cafeId}")
-    @Operation(summary = "카페 정보 조회", description = "카페의 정보를 조회한다.",
-        responses = {
-                @ApiResponse(responseCode = "200", description = "카페 정보 조회 성공"),
-                @ApiResponse(responseCode = "404", description = "카페 정보 조회 실패")
-        })
-    public ResponseEntity<CafeResponse> getMemberInfo(@PathVariable("cafeId") long cafeId){
-
-        return ResponseEntity.ok()
-                .body(cafeService.getCafeById(cafeId));
-    }
-
-    @GetMapping("/all")
-    @Operation(summary = "카페 정보 전체 조회", description = "모든 카페의 정보를 조회한다.",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "카페 정보 전체 조회 성공"),
-                    @ApiResponse(responseCode = "404", description = "카페 정보 전체 조회 실패")
-            })
-    public ResponseEntity<List<CafeResponse>> getAllCafe(){
-
-        return ResponseEntity.ok()
-                .body(cafeService.getAllCafe());
-    }
 
     @PostMapping
     @Operation(summary = "카페 등록", description = "새로운 카페의 프로필, 운영시간 정보를 등록한다.",
@@ -92,6 +69,28 @@ public class CafeController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{cafeId}")
+    @Operation(summary = "카페 정보 조회", description = "카페의 정보를 조회한다.",
+        responses = {
+                @ApiResponse(responseCode = "200", description = "카페 정보 조회 성공"),
+                @ApiResponse(responseCode = "404", description = "카페 정보 조회 실패")
+        })
+    public ResponseEntity<CafeResponse> getMemberInfo(@PathVariable("cafeId") long cafeId){
 
+        return ResponseEntity.ok()
+                .body(cafeService.getCafeById(cafeId));
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "카페 정보 전체 조회", description = "모든 카페의 정보를 조회한다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "카페 정보 전체 조회 성공"),
+                    @ApiResponse(responseCode = "404", description = "카페 정보 전체 조회 실패")
+            })
+    public ResponseEntity<List<CafeResponse>> getAllCafe(){
+
+        return ResponseEntity.ok()
+                .body(cafeService.getAllCafe());
+    }
 
 }

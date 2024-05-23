@@ -22,19 +22,19 @@ public class OperationTimePerDay extends BaseTimeEntity {
     @JoinColumn(unique = true)
     private final OperationTime operationTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "businessHoursId")
-    private BusinessHours businessHours;
+    @ManyToOne
+    @JoinColumn(name = "cafeId")
+    private Cafe cafe;
 
-    private OperationTimePerDay(Days days, OperationTime operationTime, BusinessHours businessHours){
+    private OperationTimePerDay(Days days, OperationTime operationTime, Cafe cafe){
         validation(operationTime);
         this.days = days;
         this.operationTime = operationTime;
-        this.businessHours = businessHours;
+        this.cafe = cafe;
     }
 
-    public static OperationTimePerDay of(Days days, OperationTime operationTime, BusinessHours businessHours){
-        return new OperationTimePerDay(days, operationTime, businessHours);
+    public static OperationTimePerDay of(Days days, OperationTime operationTime, Cafe cafe){
+        return new OperationTimePerDay(days, operationTime, cafe);
     }
 
     private OperationTimePerDay(Days days, OperationTime operationTime){
@@ -46,10 +46,6 @@ public class OperationTimePerDay extends BaseTimeEntity {
     public static OperationTimePerDay of(Days days, OperationTime operationTime){
         return new OperationTimePerDay(days, operationTime);
     }
-
-//    public void addBusinessHours(BusinessHours businessHours){
-//        this.businessHours = businessHours;
-//    }
 
     public void validation(OperationTime operationTime){
         if(operationTime == null){

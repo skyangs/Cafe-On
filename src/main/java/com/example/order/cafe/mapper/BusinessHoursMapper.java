@@ -41,27 +41,26 @@ public interface BusinessHoursMapper {
         return operationTimePerDayList;
     }
 
+    default BusinessHours toBusinessHours(BusinessHoursUpdateRequest businessHoursUpdateRequest){
 
-//    default BusinessHours toBusinessHours(BusinessHoursUpdateRequest businessHoursUpdateRequest){
-//
-//        List<OperationTimePerDay> operationTimeList =
-//                toOperationTimePerDayList( businessHoursUpdateRequest.getOperationTimePerDayList() );
-//
-//        return BusinessHours.of(operationTimeList);
-//    }
-//
-//    default List<OperationTimePerDay> toOperationTimePerDayList(List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequestList) {
-//        if ( operationTimePerDayUpdateRequestList == null ) {
-//            return null;
-//        }
-//
-//        List<OperationTimePerDay> operationTimePerDayList = new ArrayList<>( operationTimePerDayUpdateRequestList.size() );
-//
-//        for ( OperationTimePerDayUpdateRequest operationTimePerDayUpdateRequest : operationTimePerDayUpdateRequestList ) {
-//            OperationTimePerDay operationTimePerDay = OperationTimePerDayMapper.INSTANCE.toOperationTimePerDay(operationTimePerDayUpdateRequest);
-//            operationTimePerDayList.add( operationTimePerDay );
-//        }
-//
-//        return operationTimePerDayList;
-//    }
+        List<OperationTimePerDay> operationTimeList =
+                toOperationTimePerDayList_forUpdate( businessHoursUpdateRequest.getOperationTimeList() );
+
+        return BusinessHours.of(operationTimeList);
+    }
+
+    default List<OperationTimePerDay> toOperationTimePerDayList_forUpdate(List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequestList) {
+        if ( operationTimePerDayUpdateRequestList == null ) {
+            return null;
+        }
+
+        List<OperationTimePerDay> operationTimePerDayList = new ArrayList<>( operationTimePerDayUpdateRequestList.size() );
+
+        for ( OperationTimePerDayUpdateRequest operationTimePerDayRequest : operationTimePerDayUpdateRequestList ) {
+            OperationTimePerDay operationTimePerDay = OperationTimePerDayMapper.INSTANCE.toOperationTimePerDay(operationTimePerDayRequest);
+            operationTimePerDayList.add( operationTimePerDay );
+        }
+
+        return operationTimePerDayList;
+    }
 }

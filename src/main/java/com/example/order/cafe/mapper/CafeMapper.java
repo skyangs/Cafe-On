@@ -29,6 +29,17 @@ public interface CafeMapper {
         return Cafe.of(cafeInfo, businessHours);
     }
 
+    default Cafe toCafe(CafeInfoUpdateRequest cafeInfoUpdateRequest, BusinessHoursUpdateRequest businessHoursUpdateRequest) {
+        if ( cafeInfoUpdateRequest == null && businessHoursUpdateRequest == null) {
+            return null;
+        }
+
+        CafeInfo cafeInfo = CafeInfoMapper.INSTANCE.toCafeInfo(cafeInfoUpdateRequest);
+        BusinessHours businessHours = BusinessHoursMapper.INSTANCE.toBusinessHours(businessHoursUpdateRequest);
+
+        return Cafe.of(cafeInfo, businessHours);
+    }
+
     default CafeInfo mapCafeInfo(CafeInfoCreateRequest cafeInfoCreateRequest) {
         return CafeMapper.INSTANCE.toCafeInfo(cafeInfoCreateRequest);
     }

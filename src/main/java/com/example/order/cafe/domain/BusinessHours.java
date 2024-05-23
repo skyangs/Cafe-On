@@ -3,21 +3,16 @@ package com.example.order.cafe.domain;
 import com.example.order.cafe.errorMsg.BusinessHoursErrorMsg;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
-@Entity
+@Embeddable
 public class BusinessHours {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @OneToMany(mappedBy = "businessHours", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationTimePerDay> operationTimePerDayList ;
 
     @Transient
@@ -74,6 +69,12 @@ public class BusinessHours {
 //        OperationTimePerDay.of(operationTimePerDay.getDays(), operationTimePerDay.getOperationTime(), this);
         this.operationTimePerDayList = operationTimePerDayList;
     }
+
+    public void addOperationTimePerDay(OperationTimePerDay operationTimePerDay){
+//        operationTimePerDay.addBusinessHours(this);
+        operationTimePerDayList.add(operationTimePerDay);
+    }
+
 
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -13,6 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor(force = true)
 @Entity
 public class Cafe extends BaseTimeEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -25,7 +26,7 @@ public class Cafe extends BaseTimeEntity implements Serializable {
     @JoinColumn(unique = true)
     private CafeInfo cafeInfo;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @Embedded
     @JoinColumn(unique = true)
     private BusinessHours businessHours;
 
