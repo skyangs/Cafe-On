@@ -66,6 +66,31 @@ public class BusinessHoursFixture {
         return 운영시간_리스트;
     }
 
+    public static List<OperationTimePerDayUpdateRequest> 운영시간_리스트_UPDATE_REQUEST_DTO(){
+        OperationTimeRequest 평일_운영시간 = new OperationTimeRequest(new TimeRequest(9, 0), new TimeRequest(17, 0));
+        OperationTimeRequest 주말_운영시간 = new OperationTimeRequest(new TimeRequest(0, 0), new TimeRequest(0, 0));
+
+        OperationTimePerDayUpdateRequest 월요일 =  new OperationTimePerDayUpdateRequest(new DaysRequest(Days.MONDAY), 주말_운영시간);
+        OperationTimePerDayUpdateRequest 화요일 =  new OperationTimePerDayUpdateRequest(new DaysRequest(Days.TUESDAY), 주말_운영시간);
+        OperationTimePerDayUpdateRequest 수요일 =  new OperationTimePerDayUpdateRequest(new DaysRequest(Days.WEDNESDAY), 주말_운영시간);
+        OperationTimePerDayUpdateRequest 목요일 =  new OperationTimePerDayUpdateRequest(new DaysRequest(Days.THURSDAY), 주말_운영시간);
+        OperationTimePerDayUpdateRequest 금요일 =  new OperationTimePerDayUpdateRequest(new DaysRequest(Days.FRIDAY), 주말_운영시간);
+        OperationTimePerDayUpdateRequest 토요일 =  new OperationTimePerDayUpdateRequest(new DaysRequest(Days.SATURDAY), 평일_운영시간);
+        OperationTimePerDayUpdateRequest 일요일 =  new OperationTimePerDayUpdateRequest(new DaysRequest(Days.SUNDAY), 평일_운영시간);
+
+        List<OperationTimePerDayUpdateRequest> 운영시간_리스트 = new ArrayList<>();
+
+        운영시간_리스트.add(월요일);
+        운영시간_리스트.add(화요일);
+        운영시간_리스트.add(수요일);
+        운영시간_리스트.add(목요일);
+        운영시간_리스트.add(금요일);
+        운영시간_리스트.add(토요일);
+        운영시간_리스트.add(일요일);
+
+        return 운영시간_리스트;
+    }
+
     public static OperationTimeRequest 운영시간_REQUEST_DTO(TimeRequest open, TimeRequest close){
         return new OperationTimeRequest(open, close);
     }
@@ -73,5 +98,8 @@ public class BusinessHoursFixture {
 
     public static BusinessHoursRequest 카페운영시간_REQUEST_DTO(){
         return new BusinessHoursRequest(운영시간_리스트_REQUEST_DTO());
+    }
+    public static BusinessHoursUpdateRequest 카페운영시간_UPDATE_REQUEST_DTO(){
+        return new BusinessHoursUpdateRequest(운영시간_리스트_UPDATE_REQUEST_DTO());
     }
 }
