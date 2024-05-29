@@ -2,7 +2,7 @@ package com.example.order.member.mapper;
 
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.response.MemberInfoResponse;
+import com.example.order.member.dto.response.MemberResponse;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-01T01:09:34+0900",
+    date = "2024-05-07T19:40:51+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.8 (Oracle Corporation)"
 )
 @Component
 public class MemberMapperImpl implements MemberMapper {
 
     @Override
-    public MemberInfoResponse toMemberInfoResponse(Member member) {
+    public MemberResponse toMemberResponse(Member member) {
         if ( member == null ) {
             return null;
         }
@@ -34,20 +34,20 @@ public class MemberMapperImpl implements MemberMapper {
         authType = member.getAuthType();
         phoneNum = member.getPhoneNum();
 
-        MemberInfoResponse memberInfoResponse = new MemberInfoResponse( memberId, password, name, authType, phoneNum );
+        MemberResponse memberResponse = new MemberResponse( memberId, password, name, authType, phoneNum );
 
-        return memberInfoResponse;
+        return memberResponse;
     }
 
     @Override
-    public List<MemberInfoResponse> toMemberInfoResponseList(List<Member> member) {
+    public List<MemberResponse> toMemberResponseList(List<Member> member) {
         if ( member == null ) {
             return null;
         }
 
-        List<MemberInfoResponse> list = new ArrayList<MemberInfoResponse>( member.size() );
+        List<MemberResponse> list = new ArrayList<MemberResponse>( member.size() );
         for ( Member member1 : member ) {
-            list.add( toMemberInfoResponse( member1 ) );
+            list.add( toMemberResponse( member1 ) );
         }
 
         return list;

@@ -4,6 +4,8 @@ import com.example.order.cafe.domain.*;
 import com.example.order.cafe.dto.request.CafeCreateRequest;
 import com.example.order.cafe.dto.request.CafeUpdateRequest;
 import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.mapper.BusinessHoursMapper;
+import com.example.order.cafe.mapper.CafeInfoMapper;
 import com.example.order.cafe.mapper.CafeMapper;
 import com.example.order.cafe.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,7 @@ public class CafeService {
     @Transactional
     public Cafe registerCafe(CafeCreateRequest cafeCreateRequest) {
 
-        Cafe cafe = CafeMapper.INSTANCE.toCafe(cafeCreateRequest);
+        Cafe cafe = CafeMapper.INSTANCE.toCafe(cafeCreateRequest.getCafeInfo(), cafeCreateRequest.getBusinessHours());
 
         return cafeRepository.save(cafe);
 
@@ -46,11 +48,12 @@ public class CafeService {
     @Transactional
     public void updateCafe(long cafeId, CafeUpdateRequest cafeUpdateRequest) {
 
-        check_existCafe(cafeId);
+        Cafe cafe = check_existCafe(cafeId);
 
-        Cafe updateCafe = CafeMapper.INSTANCE.toCafe(cafeUpdateRequest);
+        Cafe cafe_update = CafeMapper.INSTANCE.toCafe(cafeUpdateRequest.getCafeInfo(), cafeUpdateRequest.getBusinessHours());
 
-        cafeRepository.save(updateCafe);
+        cafe.updateCafe(cafe_update.getCafeInfo(), cafe_update.getBusinessHours());
+
     }
 
     @Transactional
