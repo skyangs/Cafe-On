@@ -18,7 +18,7 @@ public class OperationTimePerDay extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private final Days days;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @Embedded
     @JoinColumn(unique = true)
     private final OperationTime operationTime;
 
