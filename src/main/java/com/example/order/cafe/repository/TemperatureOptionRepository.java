@@ -1,12 +1,10 @@
 package com.example.order.cafe.repository;
 
-import com.example.order.cafe.domain.CafeMenu;
+import com.example.order.cafe.domain.TemperatureOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface CafeMenuRepository extends JpaRepository<CafeMenu, Long> {
+public interface TemperatureOptionRepository extends JpaRepository<TemperatureOption, Long> {
 
 }

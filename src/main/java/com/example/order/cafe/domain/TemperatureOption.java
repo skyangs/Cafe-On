@@ -1,17 +1,28 @@
 package com.example.order.cafe.domain;
 
-public enum TemperatureOption {
-    ICE("아이스"),
-    HOT("핫")
-    ;
+import com.example.order.global.common.BaseTimeEntity;
+import jakarta.persistence.*;
 
-    private final String value;
+@Entity
+public class TemperatureOption extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    TemperatureOption(String value){
-        this.value = value;
+    @ManyToOne
+    @JoinColumn(name = "cafeMenuId")
+    private final CafeMenu cafeMenu;
+
+    @Enumerated(EnumType.STRING)
+    private final TemperatureType temperatureType;
+
+    private TemperatureOption(CafeMenu cafeMenu, TemperatureType temperatureType){
+        this.cafeMenu = cafeMenu;
+        this.temperatureType = temperatureType;
     }
 
-    public String getValue(){
-        return this.value;
+    public static TemperatureOption of(CafeMenu cafeMenu, TemperatureType temperatureType){
+        return new TemperatureOption(cafeMenu, temperatureType);
     }
+
 }
