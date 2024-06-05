@@ -47,6 +47,10 @@ public class OperationTimePerDay extends BaseTimeEntity {
         return new OperationTimePerDay(days, operationTime);
     }
 
+    public void addCafe(Cafe cafe){
+        this.cafe = cafe;
+    }
+
     public void validation(OperationTime operationTime){
         if(operationTime == null){
             throw new IllegalArgumentException(OperationTimePerDayErrorMsg.OPERATION_TIME_NON_NULL_ERROR_MSG.getValue());

@@ -24,28 +24,21 @@ public class CafeService {
 
     private final CafeMapper cafeMapper;
 
-    public CafeResponse getCafeById(long cafeId){
-
-        Cafe cafe = check_existCafe(cafeId);
-        List<OperationTimePerDay> operationTimePerDay = operationTimePerDayRepository.findByCafeId(cafeId);
-
-        return cafeMapper.toCafeResponse(cafe);
-    }
-
-    public List<CafeResponse> getAllCafe(){
-
-        return cafeRepository.findAll()
-                .stream()
-                .map(cafeMapper::toCafeResponse)
-                .toList();
-    }
-
     @Transactional
     public Cafe registerCafe(CafeCreateRequest cafeCreateRequest) {
 
         Cafe cafe = cafeMapper.toCafe(cafeCreateRequest.getCafeInfo(), cafeCreateRequest.getBusinessHours());
 
-        return cafeRepository.save(cafe);
+        Cafe savedCafe = cafeRepository.save(cafe);
+
+        List<OperationTimePerDay> operationTimePerDayList = savedCafe.getBusinessHours().getOperationTimePerDayList();
+        for (OperationTimePerDay operationTimePerDay : operationTimePerDayList) {
+            operationTimePerDay.addCafe(savedCafe);
+        }
+
+        operationTimePerDayRepository.saveAll(operationTimePerDayList);
+
+        return savedCafe;
 
     }
 
@@ -66,6 +59,21 @@ public class CafeService {
         Cafe cafe = check_existCafe(cafeId);
 
         cafeRepository.delete(cafe);
+    }
+
+    public CafeResponse getCafeById(long cafeId){
+
+        Cafe cafe = check_existCafe(cafeId);
+
+        return cafeMapper.toCafeResponse(cafe);
+    }
+
+    public List<CafeResponse> getAllCafe(){
+
+        return cafeRepository.findAll()
+                .stream()
+                .map(cafeMapper::toCafeResponse)
+                .toList();
     }
 
     public Cafe check_existCafe(long cafeId){
