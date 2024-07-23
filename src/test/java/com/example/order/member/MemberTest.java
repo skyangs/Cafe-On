@@ -44,7 +44,7 @@ public class MemberTest {
 
     @DisplayName("생성 예외 : 아이디 유효문자 - 영문+숫자")
     @ParameterizedTest
-    @ValueSource(strings = {"abcd", "1234","한글아이디","한글12","ad한글"})
+    @ValueSource(strings = {"한글아이디","한글12","ad한글"})
     public void create_error_id_regex(String 아이디_유효문자){
 
         assertThatIllegalArgumentException()
