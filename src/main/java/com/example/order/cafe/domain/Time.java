@@ -54,19 +54,19 @@ public class Time{
     }
 
     public void validation(int hour, int minute){
-        check_hour_range(hour);
+        checkHourRange(hour);
 
-        check_minute_range(minute);
+        checkMinuteRange(minute);
     }
 
-    public void check_hour_range(int hour){
+    public void checkHourRange(int hour){
 
         if(hour < MIN_HOUR || hour > MAX_HOUR){
             throw new IllegalArgumentException(TimeErrorMsg.TIME_HOUR_RANGE_OUT_ERROR_MESSAGE.getValue());
         }
     }
 
-    public void check_minute_range(int minute){
+    public void checkMinuteRange(int minute){
 
         if(minute < MIN_MINUTE || minute > MAX_MINUTE){
             throw new IllegalArgumentException(TimeErrorMsg.TIME_MINUTE_RANGE_OUT_ERROR_MESSAGE.getValue());

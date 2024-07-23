@@ -34,7 +34,7 @@ public class OperationTimePerDayTest {
 
     @DisplayName("생성 예외 : 운영시간 null")
     @Test
-    public void create_makeOperationTimeList_sameOpenClose() {
+    public void createMakeOperationTimeListSameOpenClose() {
 
         Days 월요일 = Days.MONDAY;
         OperationTime 운영시간_널 = null;

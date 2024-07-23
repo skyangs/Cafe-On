@@ -30,17 +30,17 @@ public class TemperatureOption extends BaseTimeEntity {
     }
 
     public void validation(CafeMenu cafeMenu, TemperatureType temperatureType){
-        validate_cafeMenu(cafeMenu);
-        validate_temperatureType(temperatureType);
+        validateCafeMenu(cafeMenu);
+        validateTemperatureType(temperatureType);
     }
 
-    private void validate_cafeMenu(CafeMenu cafeMenu){
+    private void validateCafeMenu(CafeMenu cafeMenu){
         if (cafeMenu == null) {
             throw new IllegalArgumentException(TemperatureOptionErrorMsg.CAFE_MENU_NON_NULL_ERROR_MSG.getValue());
         }
     }
 
-    private void validate_temperatureType(TemperatureType temperatureType){
+    private void validateTemperatureType(TemperatureType temperatureType){
         if (temperatureType == null || temperatureType == TemperatureType.UNKNOWN) {
             throw new IllegalArgumentException(TemperatureOptionErrorMsg.TEMPERATURE_TYPE_INVALID_ERROR_MSG.getValue());
         }
