@@ -24,7 +24,7 @@ public class CafeMenuTest {
 
     @DisplayName("생성 예외 : 메뉴명 - 최소 1자 이상")
     @Test
-    public void create_error_menu_name_length() {
+    public void createErrorMenuNameLength() {
 
         String 빈_메뉴명 = "";
 
@@ -42,7 +42,7 @@ public class CafeMenuTest {
 
     @DisplayName("생성 예외 : 재고 - 0개 이상")
     @Test
-    public void create_error_stock(){
+    public void createErrorStock(){
 
         int 음수_재고 = -1;
 
@@ -59,7 +59,7 @@ public class CafeMenuTest {
 
     @DisplayName("생성 예외 : 가격 - 0원 이상")
     @Test
-    public void create_error_price(){
+    public void createErrorPrice(){
 
         int 음수_가격 = -1;
 
@@ -78,7 +78,7 @@ public class CafeMenuTest {
 
     @DisplayName("생성 : 객체 비교 - 설명, 재고만 다를 때")
     @Test
-    public void create_equal() {
+    public void createEqual() {
 
         String 다른_설명 = "산미가 있고 시원합니다.";
         int 다른_재고 = 0;

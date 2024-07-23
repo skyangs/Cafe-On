@@ -32,7 +32,7 @@ public class CafeTest {
 
     @DisplayName("생성 예외 : 카페프로필 null")
     @Test
-    public void create_error_cafeInfo_null() {
+    public void createErrorCafeInfoNull() {
 
         BusinessHours 운영시간 = BusinessHoursFixture.운영시간_전체기본생성();
 
@@ -45,7 +45,7 @@ public class CafeTest {
 
     @DisplayName("생성 예외 : 운영시간 null")
     @Test
-    public void create_error_businessHours_null() {
+    public void createErrorBusinessHoursNull() {
 
        BusinessHours 운영시간_널 = null;
 

@@ -28,7 +28,7 @@ public class TimeTest {
     @DisplayName("생성 예외 : Hour 범위 (0-23)")
     @ParameterizedTest
     @ValueSource(ints = {-1, 24})
-    public void create_error_hour_range(int 비정상_시_범위) {
+    public void createErrorHourRange(int 비정상_시_범위) {
 
         int 분 = 30;
 
@@ -42,7 +42,7 @@ public class TimeTest {
     @DisplayName("생성 예외 : Minute 범위 (0-59)")
     @ParameterizedTest
     @ValueSource(ints = {-1, 60})
-    public void create_error_minute_range(int 비정상_분_범위){
+    public void createErrorMinuteRange(int 비정상_분_범위){
 
         int 시 = 15;
 
@@ -56,7 +56,7 @@ public class TimeTest {
     @DisplayName("생성 예외 : Minute 범위 (0-59)")
     @ParameterizedTest
     @CsvSource({"-1, -1", "-1, 60", "24, -1", "24, 60"})
-    public void create_error_hour_minute_range(int 비정상_시_범위, int 비정상_분_범위){
+    public void createErrorHourMinuteRange(int 비정상_시_범위, int 비정상_분_범위){
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> {
@@ -67,7 +67,7 @@ public class TimeTest {
 
     @DisplayName("생성 : Hour 형식 - 10 이하의 수")
     @Test
-    public void create_hour_format() {
+    public void createHourFormat() {
 
         int 한자리수_시 = 9;
         int 분 = 30;
@@ -80,7 +80,7 @@ public class TimeTest {
 
     @DisplayName("생성 : Minute 형식 - 10 이하의 수")
     @Test
-    public void create_minute_format() {
+    public void createMinuteFormat() {
 
         int 시 = 10;
         int 한자리수_분 = 9;
@@ -93,7 +93,7 @@ public class TimeTest {
 
     @DisplayName("생성 : 시간 형식 리턴")
     @Test
-    public void create_hour_minute_format() {
+    public void createHourMinuteFormat() {
 
         int 한자리수_시 = 9;
         int 한자리수_분 = 9;
@@ -111,7 +111,7 @@ public class TimeTest {
     @DisplayName("생성 : 시간 비교")
     @ParameterizedTest
     @CsvSource({"0, 30, 23, 0,", "23, 59, 1, 0","12, 0, 12, 0"})
-    public void create_compare_to_time(int 오픈_시, int 오픈_분, int 마감_시, int 마감_분 ) {
+    public void createCompareToTime(int 오픈_시, int 오픈_분, int 마감_시, int 마감_분 ) {
 
         Time 오픈_시간 = Time.of(오픈_시, 오픈_분);
         Time 마감_시간 = Time.of(마감_시, 마감_분);
@@ -134,7 +134,7 @@ public class TimeTest {
     @DisplayName("생성 : 오픈시간 = 마감시간")
     @ParameterizedTest
     @CsvSource({"1, 0, 1, 0"})
-    public void create_time_is_same(int 같은시간_오픈_시, int 같은시간_오픈_븐, int 같은시간_마감_시, int 같은시간_마감_분) {
+    public void createTimeIsSame(int 같은시간_오픈_시, int 같은시간_오픈_븐, int 같은시간_마감_시, int 같은시간_마감_분) {
 
         Time 같은시간_오픈_시간 = Time.of(같은시간_오픈_시, 같은시간_오픈_븐);
         Time 같은시간_마감_시간 = Time.of(같은시간_마감_시, 같은시간_마감_분);
@@ -145,7 +145,7 @@ public class TimeTest {
     @DisplayName("생성 : 오픈시간 > 마감시간")
     @ParameterizedTest
     @CsvSource({"23, 59, 0, 0"})
-    public void create_open_after_close(int 이후_오픈_시, int 이후_오픈_븐, int 이전_마감_시, int 이전_마감_분) {
+    public void createOpenAfterClose(int 이후_오픈_시, int 이후_오픈_븐, int 이전_마감_시, int 이전_마감_분) {
 
         Time 이후_오픈_시간 = Time.of(이후_오픈_시, 이후_오픈_븐);
         Time 이전_마감_시간 = Time.of(이전_마감_시, 이전_마감_분);
@@ -155,7 +155,7 @@ public class TimeTest {
 
     @DisplayName("생성 : 시간 - 분으로 계산")
     @Test
-    public void create_calculate_time() {
+    public void createCalculateTime() {
 
         int 시 = 12;
         int 분 = 30;

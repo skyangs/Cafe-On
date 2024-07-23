@@ -5,7 +5,6 @@ import com.example.order.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -57,25 +56,25 @@ public class CafeMenu extends BaseTimeEntity {
     }
 
     private void validation(String menuName, int stock, int price) {
-        validate_menuName(menuName);
-        validate_stock(stock);
-        validate_price(price);
+        validateMenuName(menuName);
+        validateStock(stock);
+        validatePrice(price);
 
     }
 
-    private void validate_menuName(String menuName){
+    private void validateMenuName(String menuName){
         if(menuName.length() < MIN_NAME_LENGTH){
             throw new IllegalArgumentException(CafeMenuErrorMsg.MENU_NAME_LENGTH_ERROR_MESSAGE.getValue());
         }
     }
 
-    private void validate_stock(int stock){
+    private void validateStock(int stock){
         if(stock < MIN_STOCK_LENGTH){
             throw new IllegalArgumentException(CafeMenuErrorMsg.STOCK_UNDER_ZERO_ERROR_MESSAGE.getValue());
         }
     }
 
-    private void validate_price(int price){
+    private void validatePrice(int price){
         if(price < MIN_PRICE_LENGTH){
             throw new IllegalArgumentException(CafeMenuErrorMsg.PRICE_UNDER_ZERO_ERROR_MESSAGE.getValue());
         }
