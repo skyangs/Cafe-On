@@ -24,7 +24,7 @@ public class BusinessHoursTest {
 
     @DisplayName("생성 예외 : 리스트 길이 - 7")
     @Test
-    public void create_error_operationTimePerDay_length() {
+    public void createErrorOperationTimePerDayLength() {
         List<OperationTimePerDay> 운영시간_리스트 = BusinessHoursFixture.운영시간_리스트_월화수목금토();
 
         assertThatIllegalArgumentException()
@@ -35,7 +35,7 @@ public class BusinessHoursTest {
 
     @DisplayName("생성 예외 : 요일 - 중복 삽입 불가")
     @Test
-    public void create_error_duplicate_dayOfWeek() {
+    public void createErrorDuplicateDayOfWeek() {
         List<OperationTimePerDay> 운영시간_리스트 = BusinessHoursFixture.운영시간_리스트_월화수목금토();
 
         OperationTimePerDay 중복_월요일 =  OperationTimePerDay.of(Days.MONDAY, BusinessHoursFixture.평일_운영시간);

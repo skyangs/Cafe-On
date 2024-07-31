@@ -35,7 +35,7 @@ public class OperationTimeTest {
     @DisplayName("생성 : 오픈시간 = 마감시간")
     @ParameterizedTest
     @CsvSource({"12, 0, 12, 0"})
-    public void create_makeOperationTimeList_sameOpenClose(int 같은_오픈_시, int 같은_오픈_븐, int 같은_마감_시, int 같은_마감_분) {
+    public void createMakeOperationTimeListSameOpenClose(int 같은_오픈_시, int 같은_오픈_븐, int 같은_마감_시, int 같은_마감_분) {
 
         Time 같은_오픈_시간 = Time.of(같은_오픈_시, 같은_오픈_븐);
         Time 같은_마감_시간 = Time.of(같은_마감_시, 같은_마감_분);
@@ -48,7 +48,7 @@ public class OperationTimeTest {
     @DisplayName("생성 : 오픈시간 > 마감시간")
     @ParameterizedTest
     @CsvSource({"23, 59, 0, 0", "12, 59, 12, 0"})
-    public void create_makeOperationTimeList_openAfterClose(int 이후_오픈_시, int 이후_오픈_븐, int 이전_마감_시, int 이전_마감_분) {
+    public void createMakeOperationTimeListOpenAfterClose(int 이후_오픈_시, int 이후_오픈_븐, int 이전_마감_시, int 이전_마감_분) {
 
         Time 이후_오픈_시간 = Time.of(이후_오픈_시, 이후_오픈_븐);
         Time 이전_마감_시간 = Time.of(이전_마감_시, 이전_마감_분);
@@ -63,7 +63,7 @@ public class OperationTimeTest {
     @DisplayName("생성 : 오픈시간 < 마감시간")
     @ParameterizedTest
     @CsvSource({"0, 0, 23, 59", "12, 0, 12, 59"})
-    public void create_makeOperationTimeList_openBeforeClose(int 이전_오픈_시, int 이전_오픈_븐, int 이후_마감_시, int 이후_마감_분) {
+    public void createMakeOperationTimeListOpenBeforeClose(int 이전_오픈_시, int 이전_오픈_븐, int 이후_마감_시, int 이후_마감_분) {
 
         Time 이전_오픈_시간 = Time.of(이전_오픈_시, 이전_오픈_븐);
         Time 이후_마감_시간 = Time.of(이후_마감_시, 이후_마감_분);
@@ -76,7 +76,7 @@ public class OperationTimeTest {
 
     @DisplayName("생성 : 운영시간 형식 - '00:00 - 23:59'")
     @Test
-    public void create_minute_format() {
+    public void createMinuteFormat() {
 
         int 오픈_시 = 00;
         int 오픈_분 = 00;

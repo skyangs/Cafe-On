@@ -25,12 +25,12 @@ public class  BusinessHoursMapper {
     public BusinessHours toBusinessHours(BusinessHoursRequest businessHoursRequest){
 
         List<OperationTimePerDay> operationTimeList =
-                toOperationTimePerDayList_forCreate( businessHoursRequest.getOperationTimePerDayList() );
+                toOperationTimePerDayListForCreate( businessHoursRequest.getOperationTimePerDayList() );
 
         return BusinessHours.of(operationTimeList);
     }
 
-    public List<OperationTimePerDay> toOperationTimePerDayList_forCreate(List<OperationTimePerDayRequest> operationTimePerDayRequestList) {
+    public List<OperationTimePerDay> toOperationTimePerDayListForCreate(List<OperationTimePerDayRequest> operationTimePerDayRequestList) {
         if ( operationTimePerDayRequestList == null ) {
             return null;
         }
@@ -48,12 +48,12 @@ public class  BusinessHoursMapper {
     public BusinessHours toBusinessHours(BusinessHoursUpdateRequest businessHoursUpdateRequest){
 
         List<OperationTimePerDay> operationTimeList =
-                toOperationTimePerDayList_forUpdate( businessHoursUpdateRequest.getOperationTimePerDayList() );
+                toOperationTimePerDayListForUpdate( businessHoursUpdateRequest.getOperationTimePerDayList() );
 
         return BusinessHours.of(operationTimeList);
     }
 
-    public List<OperationTimePerDay> toOperationTimePerDayList_forUpdate(List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequestList) {
+    public List<OperationTimePerDay> toOperationTimePerDayListForUpdate(List<OperationTimePerDayUpdateRequest> operationTimePerDayUpdateRequestList) {
         if ( operationTimePerDayUpdateRequestList == null ) {
             return null;
         }
