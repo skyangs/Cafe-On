@@ -28,7 +28,7 @@ public class TemperatureOptionTest {
 
     @DisplayName("생성 예외 : 카페 메뉴 null")
     @Test
-    public void create_error_menu_name_length() {
+    public void createErrorMenuNameLength() {
 
         TemperatureType temperatureType = TemperatureType.HOT;
 
@@ -41,7 +41,7 @@ public class TemperatureOptionTest {
 
     @DisplayName("생성 예외 : 온도 타입 유효하지 않을 때")
     @Test
-    public void create_error_stock(){
+    public void createErrorStock(){
 
         CafeMenu 메뉴 = CafeMenuFixture.카페메뉴_기본생성();
 

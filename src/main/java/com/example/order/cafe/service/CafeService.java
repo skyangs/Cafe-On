@@ -45,7 +45,7 @@ public class CafeService {
     @Transactional
     public void updateCafe(long cafeId, CafeUpdateRequest cafeUpdateRequest) {
 
-        Cafe cafe = check_existCafe(cafeId);
+        Cafe cafe = checkExistCafe(cafeId);
 
         Cafe cafe_update = cafeMapper.toCafe(cafeUpdateRequest.getCafeInfo(), cafeUpdateRequest.getBusinessHours());
 
@@ -56,14 +56,14 @@ public class CafeService {
     @Transactional
     public void deleteCafe(long cafeId){
 
-        Cafe cafe = check_existCafe(cafeId);
+        Cafe cafe = checkExistCafe(cafeId);
 
         cafeRepository.delete(cafe);
     }
 
     public CafeResponse getCafeById(long cafeId){
 
-        Cafe cafe = check_existCafe(cafeId);
+        Cafe cafe = checkExistCafe(cafeId);
 
         return cafeMapper.toCafeResponse(cafe);
     }
@@ -76,7 +76,7 @@ public class CafeService {
                 .toList();
     }
 
-    public Cafe check_existCafe(long cafeId){
+    public Cafe checkExistCafe(long cafeId){
         return cafeRepository.findById(cafeId)
                 .orElseThrow(NoSuchElementException::new);
     }

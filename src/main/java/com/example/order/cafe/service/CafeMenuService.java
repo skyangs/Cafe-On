@@ -1,9 +1,6 @@
 package com.example.order.cafe.service;
 
 import com.example.order.cafe.domain.*;
-import com.example.order.cafe.dto.request.CafeMenuCreateRequest;
-import com.example.order.cafe.dto.response.CafeMenuDetailResponse;
-import com.example.order.cafe.dto.response.CafeMenuResponse;
 import com.example.order.cafe.mapper.CafeMenuMapper;
 import com.example.order.cafe.mapper.TemperatureOptionMapper;
 import com.example.order.cafe.repository.CafeMenuRepository;
@@ -37,7 +34,7 @@ public class CafeMenuService {
     }
 
 
-    public CafeMenu check_existCafeMenu(long menuId){
+    public CafeMenu checkExistCafeMenu(long menuId){
         return cafeMenuRepository.findById(menuId)
                 .orElseThrow(NoSuchElementException::new);
     }

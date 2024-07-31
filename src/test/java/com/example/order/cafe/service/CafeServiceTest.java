@@ -115,12 +115,12 @@ public class CafeServiceTest {
 
     @Test
     @DisplayName("정상 : 카페 상세 조회")
-    public void error_check_existCafeTest(){
+    public void errorCheckExistCafeTest(){
 
         long 카페_ID = 1L;
 
         assertThatExceptionOfType(NoSuchElementException.class)
-                .isThrownBy(() -> cafeService.check_existCafe(카페_ID));
+                .isThrownBy(() -> cafeService.checkExistCafe(카페_ID));
     }
 
 }

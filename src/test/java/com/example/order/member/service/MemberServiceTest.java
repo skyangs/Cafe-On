@@ -46,7 +46,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("예외 : 존재하는 아이디 회원가입 테스트")
-    public void signUp_error_alreadyExist_id(){
+    public void signUpErrorAlreadyExistId(){
 
         memberService.signUp(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름, MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급);
 
@@ -71,7 +71,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("예외 : 회원 정보 없을 때")
-    public void signUp_error_getMember(){
+    public void signUpErrorGetMember(){
 
         assertThatRuntimeException()
                 .isThrownBy(() -> memberService.getMember(anyLong()))
@@ -107,7 +107,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("예외 : 회원 정보 리스트 사이즈 0 일때")
-    public void signUp_error_getMemberTestList(){
+    public void signUpErrorGetMemberTestList(){
 
         List<MemberResponse> memberInfoList = memberService.getMemberList();
 
@@ -139,7 +139,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("예외 : 회원 정보 수정 - id 값 없을때")
-    public void updateMember_error_memberNotFound() {
+    public void updateMemberErrorMemberNotFound() {
 
         long 확인할_회원_id = 1L;
         String 변경_비밀번호  = "updatePassword";

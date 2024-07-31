@@ -49,19 +49,19 @@ public class CafeInfo {
     }
 
     private void validation(String name, String contactNumber){
-        check_name_length(name);
+        checkNameLength(name);
 
-        check_contact_num_length(contactNumber);
-        check_contact_num_only_number_regex(contactNumber);
-        check_phone_num_format_regex(contactNumber);
+        checkContactNumLength(contactNumber);
+        checkContactNumOnlyNumberRegex(contactNumber);
+        checkPhoneNumFormatRegex(contactNumber);
     }
 
-    public void check_name_length(String name){
+    public void checkNameLength(String name){
         if(name.isEmpty()){
             throw new IllegalArgumentException(CafeInfoErrorMsg.CAFE_NAME_LENGTH_ERROR_MESSAGE.getValue());
         }
     }
-    public void check_contact_num_length(String contactNumber){
+    public void checkContactNumLength(String contactNumber){
         String contactNumAfterDeleteDash = removeHyphens(contactNumber);
 
         if(contactNumAfterDeleteDash.length() < MIN_CONTACT_NUM_LENGTH || contactNumAfterDeleteDash.length() > MAX_CONTACT_NUM_LENGTH){
@@ -70,7 +70,7 @@ public class CafeInfo {
 
     }
 
-    public void check_contact_num_only_number_regex(String contactNumber){
+    public void checkContactNumOnlyNumberRegex(String contactNumber){
         String phoneNumAfterDeleteDash = removeHyphens(contactNumber);
 
         if(!phoneNumAfterDeleteDash.matches(CONTACT_NUM_NUMBER_REG)){
@@ -79,7 +79,7 @@ public class CafeInfo {
         }
     }
 
-    public void check_phone_num_format_regex(String contactNumber){
+    public void checkPhoneNumFormatRegex(String contactNumber){
 
         if(!contactNumber.matches(CONTACT_NUM_FORMAT_REG)){
             throw new IllegalArgumentException(CafeInfoErrorMsg.CAFE_CONTACT_NUM_FORMAT_REGEX_ERROR_MESSAGE.getValue());

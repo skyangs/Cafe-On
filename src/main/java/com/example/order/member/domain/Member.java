@@ -86,20 +86,20 @@ public class Member extends BaseTimeEntity {
     }
 
     public void validation(String memberId, String password, String name, String phoneNum){
-        check_id_length(memberId);
-        check_id_regex(memberId);
+        checkIdLength(memberId);
+        checkIdRegex(memberId);
 
         isPasswordNull(password);
-        check_password_length(password);
+        checkPasswordLength(password);
 
         isNameNull(name);
-        check_name_length(name);
+        checkNameLength(name);
 
-        check_phone_num_length(phoneNum);
-        check_phone_num_only_number_regex(phoneNum);
+        checkPhoneNumLength(phoneNum);
+        checkPhoneNumOnlyNumberRegex(phoneNum);
     }
 
-    public void check_id_length(String memberId){
+    public void checkIdLength(String memberId){
 
         if(memberId.length() < MIN_ID_LENGTH || memberId.length() > MAX_ID_LENGTH){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_LENGTH_ERROR_MESSAGE.getValue());
@@ -107,14 +107,14 @@ public class Member extends BaseTimeEntity {
 
     }
 
-    public void check_id_regex(String memberId){
+    public void checkIdRegex(String memberId){
 
         if(!memberId.matches(MEMBER_ID_REG)){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_REGEX_ERROR_MESSAGE.getValue());
         }
     }
 
-    public void check_password_length(String password){
+    public void checkPasswordLength(String password){
 
         if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE.getValue());
@@ -136,7 +136,7 @@ public class Member extends BaseTimeEntity {
         }
     }
 
-    public void check_name_length(String name){
+    public void checkNameLength(String name){
 
         if(name.isEmpty() || name.length() > MAX_NAME_LENGTH){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_NAME_LENGTH_ERROR_MESSAGE.getValue());
@@ -144,7 +144,7 @@ public class Member extends BaseTimeEntity {
 
     }
 
-    public void check_phone_num_length(String phoneNum){
+    public void checkPhoneNumLength(String phoneNum){
 
         if(phoneNum.length() < MIN_PHONE_NUM_LENGTH || phoneNum.length() > MAX_PHONE_NUM_LENGTH){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
@@ -152,7 +152,7 @@ public class Member extends BaseTimeEntity {
 
     }
 
-    public void check_phone_num_only_number_regex(String phoneNum){
+    public void checkPhoneNumOnlyNumberRegex(String phoneNum){
 
         if(!phoneNum.matches(PHONE_NUM_NUMBER_REG)){
             throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
