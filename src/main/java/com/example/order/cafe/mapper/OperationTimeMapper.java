@@ -2,12 +2,12 @@ package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.OperationTime;
 import com.example.order.cafe.domain.Time;
-import com.example.order.cafe.dto.request.OperationTimeRequest;
-import com.example.order.cafe.dto.request.OperationTimeUpdateRequest;
-import com.example.order.cafe.dto.request.TimeRequest;
-import com.example.order.cafe.dto.request.TimeUpdateRequest;
-import com.example.order.cafe.dto.response.OperationTimeResponse;
-import com.example.order.cafe.dto.response.TimeResponse;
+import com.example.order.cafe.service.dto.request.OperationTimeRequest;
+import com.example.order.cafe.service.dto.request.OperationTimeUpdateRequest;
+import com.example.order.cafe.service.dto.request.TimeRequest;
+import com.example.order.cafe.service.dto.request.TimeUpdateRequest;
+import com.example.order.cafe.service.dto.response.OperationTimeResponse;
+import com.example.order.cafe.service.dto.response.TimeResponse;
 import org.springframework.stereotype.Component;
 
 

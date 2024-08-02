@@ -1,9 +1,9 @@
 package com.example.order.cafe.service;
 
 import com.example.order.cafe.domain.*;
-import com.example.order.cafe.dto.request.CafeCreateRequest;
-import com.example.order.cafe.dto.request.CafeUpdateRequest;
-import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.service.dto.request.CafeCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.service.dto.response.CafeResponse;
 
 import com.example.order.cafe.mapper.CafeMapper;
 import com.example.order.cafe.repository.CafeRepository;

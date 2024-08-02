@@ -1,8 +1,8 @@
 package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.Days;
-import com.example.order.cafe.dto.request.DaysRequest;
-import com.example.order.cafe.dto.request.DaysUpdateRequest;
+import com.example.order.cafe.service.dto.request.DaysRequest;
+import com.example.order.cafe.service.dto.request.DaysUpdateRequest;
 import org.springframework.stereotype.Component;
 
 

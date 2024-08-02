@@ -1,9 +1,9 @@
 package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.CafeInfo;
-import com.example.order.cafe.dto.request.CafeInfoCreateRequest;
-import com.example.order.cafe.dto.request.CafeInfoUpdateRequest;
-import com.example.order.cafe.dto.response.CafeInfoResponse;
+import com.example.order.cafe.service.dto.request.CafeInfoCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeInfoUpdateRequest;
+import com.example.order.cafe.service.dto.response.CafeInfoResponse;
 import org.springframework.stereotype.Component;
 
 

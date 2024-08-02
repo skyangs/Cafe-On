@@ -2,9 +2,9 @@ package com.example.order.cafe.controller;
 
 import com.example.order.cafe.domain.Cafe;
 import com.example.order.cafe.domain.CafeMenu;
-import com.example.order.cafe.dto.request.CafeCreateRequest;
-import com.example.order.cafe.dto.request.CafeUpdateRequest;
-import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.service.dto.request.CafeCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.service.dto.response.CafeResponse;
 import com.example.order.cafe.service.CafeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

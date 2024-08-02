@@ -3,7 +3,7 @@ package com.example.order.member.fixture;
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Grade;
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.request.SignUpRequest;
+import com.example.order.member.service.dto.request.SignUpRequest;
 
 public class MemberFixture {
 

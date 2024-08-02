@@ -1,8 +1,10 @@
 package com.example.order.cafe.service;
 
 import com.example.order.cafe.domain.*;
-import com.example.order.cafe.dto.request.*;
-import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.service.dto.request.CafeCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeInfoUpdateRequest;
+import com.example.order.cafe.service.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.service.dto.response.CafeResponse;
 import com.example.order.cafe.fixture.BusinessHoursFixture;
 import com.example.order.cafe.fixture.CafeFixture;
 import com.example.order.cafe.fixture.CafeInfoFixture;
