@@ -90,6 +90,7 @@ public class MemberServiceTest {
         String 두번째_회원_연락처 = "0109999999";
         Grade 두번째_회원_등급 = Grade.SILVER;
 
+        memberService.signUp(MemberFixture.회원가입_REQEUST_DTO());
         SignUpRequest 두번째_회원_REQEUST = new SignUpRequest(두번째_회원_아이디, 두번째_회원_비밀번호, 두번째_회원_이름, 두번째_회원_권한, 두번째_회원_연락처, 두번째_회원_등급);
         Member 두번째_회원 = memberService.signUp(두번째_회원_REQEUST);
 

@@ -92,7 +92,7 @@ public class MemberControllerTest {
         List<Member> 회원_리스트 = List.of(첫번째_회원, 두번째_회원);
         when(memberRepository.findAll()).thenReturn(회원_리스트);
 
-        mockMvc.perform(get("/members/all"))
+        mockMvc.perform(get("/members"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(2)))
                 .andExpect(jsonPath("$[0].memberId").value(MemberFixture.아이디))

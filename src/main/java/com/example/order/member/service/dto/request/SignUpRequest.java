@@ -15,9 +15,7 @@ public record SignUpRequest(
         @Size(min = 8, max = 15, message = "비밀번호는 8-15자여야 합니다.") String password,
         @NotBlank(message = "이름은 필수 입력 값 입니다.")
         @Size(min = 1, max = 5, message = "이름은 1-5자여야 합니다.") String name,
-        @NotBlank(message = "휴대폰 번호는 필수 입력 값 입니다.")
-        @Size(min = 9, max = 11, message = "휴대폰 번호는 9-11자여야 합니다.")
-        @Pattern(regexp = "^\\d+$", message = "휴대폰 번호는 숫자로 이루어져야 합니다.") AuthType authType,
+        @NotNull(message = "권한은 필수 입력 값 입니다.") AuthType authType,
         @NotBlank(message = "휴대폰 번호는 필수 입력 값 입니다.")
         @Size(min = 9, max = 11, message = "휴대폰 번호는 9-11자여야 합니다.")
         @Pattern(regexp = "^\\d+$", message = "휴대폰 번호는 숫자로 이루어져야 합니다.") String phoneNum,

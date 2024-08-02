@@ -60,9 +60,7 @@ public class CafeServiceTest {
     @DisplayName("정상 : 카페 수정")
     public void updateCafeTest(){
 
-        cafeService.registerCafe(CafeFixture.카페_등록_REQUEST_DTO());
-
-        long 카페_ID = 1L;
+        Cafe 카페 = cafeService.registerCafe(CafeFixture.카페_등록_REQUEST_DTO());
 
         String 수정_카페명 = "카페명수정";
         String 수정_설명 = "일요일은 휴무입니다";
@@ -73,10 +71,8 @@ public class CafeServiceTest {
         CafeUpdateRequest 카페_수정_request = new CafeUpdateRequest(카페_프로필_수정_request,
                 BusinessHoursFixture.카페운영시간_UPDATE_REQUEST_DTO());
 
-
-        cafeService.updateCafe(카페_ID, 카페_수정_request);
-
-        Optional<Cafe> 수정_카페 = cafeRepository.findById(카페_ID);
+        cafeService.updateCafe(카페.getId(), 카페_수정_request);
+        Optional<Cafe> 수정_카페 = cafeRepository.findById(카페.getId());
 
         assertThat(수정_카페.get().getCafeInfo().getAddress()).isEqualTo(수정_주소);
 
@@ -101,13 +97,11 @@ public class CafeServiceTest {
     @DisplayName("정상 : 카페 상세 조회")
     public void getCafeByIdTest(){
 
-        int 목요일_번호  = 3;
+        int 목요일_번호 = 3;
         CafeCreateRequest 카페_등록_REQUEST = CafeFixture.카페_등록_REQUEST_DTO();
         Cafe 저장된_카페 = cafeService.registerCafe(카페_등록_REQUEST);
 
-        long 카페_ID = 1L;
-
-        CafeResponse 카페_RESPONSE = cafeService.getCafeById(카페_ID);
+        CafeResponse 카페_RESPONSE = cafeService.getCafeById(저장된_카페.getId());
 
         assertEquals(카페_RESPONSE.getCafeInfo().getName(), 저장된_카페.getCafeInfo().getName());
         assertEquals(카페_RESPONSE.getBusinessHours().getOperationTimeList().get(목요일_번호).getDays().getValue(),
@@ -116,7 +110,7 @@ public class CafeServiceTest {
     }
 
     @Test
-    @DisplayName("정상 : 카페 상세 조회")
+    @DisplayName("예외 : 카페가 존재하지 않을 때")
     public void errorCheckExistCafeTest(){
 
         long 카페_ID = 1L;
