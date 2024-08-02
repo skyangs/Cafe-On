@@ -35,7 +35,7 @@ public class MemberController {
                 .body(memberService.getMember(id));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @Operation(summary = "회원 정보 전체 조회", description = "모든 회원의 정보를 조회한다.",
         responses = {
             @ApiResponse(responseCode = "200", description = "회원 정보 전체 조회 성공"),

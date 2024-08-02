@@ -80,7 +80,7 @@ public class CafeController {
                 .body(cafeService.getCafeById(cafeId));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @Operation(summary = "카페 정보 전체 조회", description = "모든 카페의 정보를 조회한다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "카페 정보 전체 조회 성공"),
