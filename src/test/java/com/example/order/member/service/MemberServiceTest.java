@@ -3,7 +3,9 @@ package com.example.order.member.service;
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Grade;
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.response.MemberResponse;
+import com.example.order.member.service.dto.request.SignUpRequest;
+import com.example.order.member.service.dto.request.UpdateMemberRequest;
+import com.example.order.member.service.dto.response.MemberResponse;
 import com.example.order.member.errorCode.MemberErrorCode;
 import com.example.order.member.fixture.MemberFixture;
 import com.example.order.member.repository.MemberRepository;
@@ -35,7 +37,7 @@ public class MemberServiceTest {
     @DisplayName("정상 : 회원가입 테스트")
     public void signUp(){
 
-        memberService.signUp(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름, MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급);
+        memberService.signUp(MemberFixture.회원가입_REQEUST_DTO());
 
         Optional<Member> 회원가입_회원 = memberRepository.findByMemberId(MemberFixture.아이디);
 
@@ -48,10 +50,10 @@ public class MemberServiceTest {
     @DisplayName("예외 : 존재하는 아이디 회원가입 테스트")
     public void signUpErrorAlreadyExistId(){
 
-        memberService.signUp(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름, MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급);
+        memberService.signUp(MemberFixture.회원가입_REQEUST_DTO());
 
         assertThatRuntimeException()
-                .isThrownBy(() -> memberService.signUp(MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름, MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급))
+                .isThrownBy(() ->         memberService.signUp(MemberFixture.회원가입_REQEUST_DTO()))
                         .withMessage(MemberErrorCode.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
 
     }
@@ -60,13 +62,11 @@ public class MemberServiceTest {
     @DisplayName("정상 : 회원 정보 조회")
     public void getMemberInfoTest(){
 
-        Member 첫번째_회원 = memberService.signUp(
-                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
-                MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급);
+        Member 첫번째_회원 = memberService.signUp(MemberFixture.회원가입_REQEUST_DTO());
 
         MemberResponse memberInfoResponse = memberService.getMember(첫번째_회원.getId());
 
-        assertThat(memberInfoResponse.getName()).isEqualTo(첫번째_회원.getName());
+        assertThat(memberInfoResponse.name()).isEqualTo(첫번째_회원.getName());
     }
 
     @Test
@@ -83,11 +83,6 @@ public class MemberServiceTest {
     @DisplayName("정상 : 회원 정보 전체 조회")
     public void getMemberTestList(){
 
-
-        Member 첫번째_회원 = memberService.signUp(
-                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
-                MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급);
-
         String 두번째_회원_아이디 = "second12";
         String 두번째_회원_비밀번호 = "secondPW";
         String 두번째_회원_이름 = "두번째회원";
@@ -95,13 +90,15 @@ public class MemberServiceTest {
         String 두번째_회원_연락처 = "0109999999";
         Grade 두번째_회원_등급 = Grade.SILVER;
 
-        Member 두번째_회원 = memberService.signUp(두번째_회원_아이디,두번째_회원_비밀번호, 두번째_회원_이름, 두번째_회원_권한, 두번째_회원_연락처, 두번째_회원_등급);
+        memberService.signUp(MemberFixture.회원가입_REQEUST_DTO());
+        SignUpRequest 두번째_회원_REQEUST = new SignUpRequest(두번째_회원_아이디, 두번째_회원_비밀번호, 두번째_회원_이름, 두번째_회원_권한, 두번째_회원_연락처, 두번째_회원_등급);
+        Member 두번째_회원 = memberService.signUp(두번째_회원_REQEUST);
 
 
         List<MemberResponse> 회원정보_리스트 = memberService.getMemberList();
 
         assertThat(회원정보_리스트.size()).isEqualTo(2);
-        assertThat(회원정보_리스트.get(1).getAuthType()).isEqualTo(두번째_회원.getAuthType());
+        assertThat(회원정보_리스트.get(1).authType()).isEqualTo(두번째_회원.getAuthType());
 
     }
 
@@ -118,15 +115,14 @@ public class MemberServiceTest {
     @DisplayName("정상 : 회원 정보 수정")
     public void updateMember(){
 
-        Member 첫번째_회원 = memberService.signUp(
-                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
-                MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급);
+        Member 첫번째_회원 = memberService.signUp(MemberFixture.회원가입_REQEUST_DTO());
 
         String 변경_비밀번호  = "updatePassword";
         AuthType 변경_권한 = AuthType.CAFE_OWNER;
         String 변경_연락처 = "11122222222";
 
-        memberService.updateMember(첫번째_회원.getId(), 변경_비밀번호, 변경_권한, 변경_연락처);
+        UpdateMemberRequest 변경_회원_REQUEST = new UpdateMemberRequest(변경_비밀번호, 변경_권한, 변경_연락처);
+        memberService.updateMember(첫번째_회원.getId(), 변경_회원_REQUEST);
 
         Member 변경된_회원 = memberRepository.findById(첫번째_회원.getId())
                 .orElseThrow(NoSuchElementException::new);
@@ -146,8 +142,10 @@ public class MemberServiceTest {
         AuthType 변경_권한 = AuthType.CAFE_OWNER;
         String 변경_연락처 = "111-2222-2222";
 
+        UpdateMemberRequest 변경_회원_REQUEST = new UpdateMemberRequest(변경_비밀번호, 변경_권한, 변경_연락처);
+
         assertThatRuntimeException()
-                .isThrownBy(() -> memberService.updateMember(확인할_회원_id, 변경_비밀번호, 변경_권한, 변경_연락처))
+                .isThrownBy(() -> memberService.updateMember(확인할_회원_id, 변경_회원_REQUEST))
                 .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -155,9 +153,7 @@ public class MemberServiceTest {
     @DisplayName("정상 : 회원 정보 탈퇴")
     public void deleteMember(){
 
-        Member 첫번째_회원 = memberService.signUp(
-                MemberFixture.아이디, MemberFixture.비밀번호, MemberFixture.이름,
-                MemberFixture.권한, MemberFixture.연락처, MemberFixture.등급);
+        Member 첫번째_회원 = memberService.signUp(MemberFixture.회원가입_REQEUST_DTO());
 
         memberService.deleteMember(첫번째_회원.getId());
 

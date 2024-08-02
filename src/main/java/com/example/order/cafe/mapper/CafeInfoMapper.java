@@ -1,9 +1,9 @@
 package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.CafeInfo;
-import com.example.order.cafe.dto.request.CafeInfoCreateRequest;
-import com.example.order.cafe.dto.request.CafeInfoUpdateRequest;
-import com.example.order.cafe.dto.response.CafeInfoResponse;
+import com.example.order.cafe.service.dto.request.CafeInfoCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeInfoUpdateRequest;
+import com.example.order.cafe.service.dto.response.CafeInfoResponse;
 import org.springframework.stereotype.Component;
 
 
@@ -22,10 +22,10 @@ public class CafeInfoMapper {
                 return null;
             }
 
-        return CafeInfo.of(cafeInfoCreateRequest.getName(),
-                cafeInfoCreateRequest.getExplain(),
-                cafeInfoCreateRequest.getContactNumber(),
-                cafeInfoCreateRequest.getAddress());
+        return CafeInfo.of(cafeInfoCreateRequest.name(),
+                cafeInfoCreateRequest.explain(),
+                cafeInfoCreateRequest.contactNumber(),
+                cafeInfoCreateRequest.address());
     }
 
     public CafeInfo toCafeInfo(CafeInfoUpdateRequest cafeInfoUpdateRequest){
@@ -33,10 +33,10 @@ public class CafeInfoMapper {
             return null;
         }
 
-        return CafeInfo.of(cafeInfoUpdateRequest.getName(),
-                cafeInfoUpdateRequest.getExplain(),
-                cafeInfoUpdateRequest.getContactNumber(),
-                cafeInfoUpdateRequest.getAddress());
+        return CafeInfo.of(cafeInfoUpdateRequest.name(),
+                cafeInfoUpdateRequest.explain(),
+                cafeInfoUpdateRequest.contactNumber(),
+                cafeInfoUpdateRequest.address());
     }
 
 }

@@ -2,9 +2,9 @@ package com.example.order.cafe.controller;
 
 import com.example.order.cafe.domain.Cafe;
 import com.example.order.cafe.domain.CafeMenu;
-import com.example.order.cafe.dto.request.CafeCreateRequest;
-import com.example.order.cafe.dto.request.CafeUpdateRequest;
-import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.service.dto.request.CafeCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.service.dto.response.CafeResponse;
 import com.example.order.cafe.service.CafeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -80,7 +80,7 @@ public class CafeController {
                 .body(cafeService.getCafeById(cafeId));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @Operation(summary = "카페 정보 전체 조회", description = "모든 카페의 정보를 조회한다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "카페 정보 전체 조회 성공"),
