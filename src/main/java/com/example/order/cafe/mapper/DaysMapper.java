@@ -14,7 +14,7 @@ public class DaysMapper {
             return null;
         }
 
-        return Days.valueOf(String.valueOf(daysRequest.getDays()));
+        return Days.valueOf(String.valueOf(daysRequest.days()));
 
     }
 
@@ -23,7 +23,7 @@ public class DaysMapper {
             return null;
         }
 
-        return Days.valueOf(String.valueOf(daysUpdateRequest.getDays()));
+        return Days.valueOf(String.valueOf(daysUpdateRequest.days()));
 
     }
 

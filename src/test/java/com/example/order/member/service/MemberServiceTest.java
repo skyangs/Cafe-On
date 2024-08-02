@@ -66,7 +66,7 @@ public class MemberServiceTest {
 
         MemberResponse memberInfoResponse = memberService.getMember(첫번째_회원.getId());
 
-        assertThat(memberInfoResponse.getName()).isEqualTo(첫번째_회원.getName());
+        assertThat(memberInfoResponse.name()).isEqualTo(첫번째_회원.getName());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class MemberServiceTest {
         List<MemberResponse> 회원정보_리스트 = memberService.getMemberList();
 
         assertThat(회원정보_리스트.size()).isEqualTo(2);
-        assertThat(회원정보_리스트.get(1).getAuthType()).isEqualTo(두번째_회원.getAuthType());
+        assertThat(회원정보_리스트.get(1).authType()).isEqualTo(두번째_회원.getAuthType());
 
     }
 

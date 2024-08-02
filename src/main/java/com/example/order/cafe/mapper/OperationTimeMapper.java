@@ -18,8 +18,8 @@ public class OperationTimeMapper {
             if ( operationTimeRequest == null ) {
                 return null;
             }
-        TimeRequest open = operationTimeRequest.getOpen();
-        TimeRequest close = operationTimeRequest.getClose();
+        TimeRequest open = operationTimeRequest.open();
+        TimeRequest close = operationTimeRequest.close();
 
         return OperationTime.of(toTime(open), toTime(close));
     }
@@ -30,7 +30,7 @@ public class OperationTimeMapper {
             return null;
         }
 
-        return Time.of(timeRequest.getHour(), timeRequest.getMinute());
+        return Time.of(timeRequest.hour(), timeRequest.minute());
 
     }
 
@@ -38,8 +38,8 @@ public class OperationTimeMapper {
         if ( operationTimeUpdateRequest == null ) {
             return null;
         }
-        TimeUpdateRequest open = operationTimeUpdateRequest.getOpen();
-        TimeUpdateRequest close = operationTimeUpdateRequest.getClose();
+        TimeUpdateRequest open = operationTimeUpdateRequest.open();
+        TimeUpdateRequest close = operationTimeUpdateRequest.close();
 
         return OperationTime.of(toTime(open), toTime(close));
     }
@@ -50,7 +50,7 @@ public class OperationTimeMapper {
             return null;
         }
 
-        return Time.of(timeUpdateRequest.getHour(), timeUpdateRequest.getMinute());
+        return Time.of(timeUpdateRequest.hour(), timeUpdateRequest.minute());
 
     }
 

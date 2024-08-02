@@ -1,21 +1,8 @@
 package com.example.order.cafe.service.dto.request;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.Valid;
 
-@NoArgsConstructor(force = true)
-@Getter
-public class OperationTimeRequest {
-
-    @NotNull
-    private final TimeRequest open;
-    @NotNull
-    private final TimeRequest close;
-
-    public OperationTimeRequest(TimeRequest open, TimeRequest close){
-        this.open = open;
-        this.close = close;
-    }
-
-}
+public record OperationTimeRequest(
+        @Valid TimeRequest open,
+        @Valid TimeRequest close
+){}

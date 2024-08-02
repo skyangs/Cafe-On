@@ -1,21 +1,8 @@
 package com.example.order.cafe.service.dto.request;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.Valid;
 
-@NoArgsConstructor(force = true)
-@Getter
-public class OperationTimePerDayUpdateRequest {
-
-    @NotNull
-    private final DaysUpdateRequest days;
-    @NotNull
-    private final OperationTimeUpdateRequest operationTime;
-
-    public OperationTimePerDayUpdateRequest(DaysUpdateRequest days, OperationTimeUpdateRequest operationTime){
-        this.days = days;
-        this.operationTime = operationTime;
-    }
-
-}
+public record OperationTimePerDayUpdateRequest(
+        @Valid DaysUpdateRequest days,
+        @Valid OperationTimeUpdateRequest operationTime
+) {}

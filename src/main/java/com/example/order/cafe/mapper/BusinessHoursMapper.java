@@ -25,7 +25,7 @@ public class  BusinessHoursMapper {
     public BusinessHours toBusinessHours(BusinessHoursRequest businessHoursRequest){
 
         List<OperationTimePerDay> operationTimeList =
-                toOperationTimePerDayListForCreate( businessHoursRequest.getOperationTimePerDayList() );
+                toOperationTimePerDayListForCreate( businessHoursRequest.operationTimePerDayList() );
 
         return BusinessHours.of(operationTimeList);
     }
@@ -48,7 +48,7 @@ public class  BusinessHoursMapper {
     public BusinessHours toBusinessHours(BusinessHoursUpdateRequest businessHoursUpdateRequest){
 
         List<OperationTimePerDay> operationTimeList =
-                toOperationTimePerDayListForUpdate( businessHoursUpdateRequest.getOperationTimePerDayList() );
+                toOperationTimePerDayListForUpdate( businessHoursUpdateRequest.operationTimePerDayList() );
 
         return BusinessHours.of(operationTimeList);
     }

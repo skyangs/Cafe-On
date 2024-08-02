@@ -22,10 +22,10 @@ public class CafeInfoMapper {
                 return null;
             }
 
-        return CafeInfo.of(cafeInfoCreateRequest.getName(),
-                cafeInfoCreateRequest.getExplain(),
-                cafeInfoCreateRequest.getContactNumber(),
-                cafeInfoCreateRequest.getAddress());
+        return CafeInfo.of(cafeInfoCreateRequest.name(),
+                cafeInfoCreateRequest.explain(),
+                cafeInfoCreateRequest.contactNumber(),
+                cafeInfoCreateRequest.address());
     }
 
     public CafeInfo toCafeInfo(CafeInfoUpdateRequest cafeInfoUpdateRequest){
@@ -33,10 +33,10 @@ public class CafeInfoMapper {
             return null;
         }
 
-        return CafeInfo.of(cafeInfoUpdateRequest.getName(),
-                cafeInfoUpdateRequest.getExplain(),
-                cafeInfoUpdateRequest.getContactNumber(),
-                cafeInfoUpdateRequest.getAddress());
+        return CafeInfo.of(cafeInfoUpdateRequest.name(),
+                cafeInfoUpdateRequest.explain(),
+                cafeInfoUpdateRequest.contactNumber(),
+                cafeInfoUpdateRequest.address());
     }
 
 }

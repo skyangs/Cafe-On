@@ -27,7 +27,7 @@ public class CafeService {
     @Transactional
     public Cafe registerCafe(CafeCreateRequest cafeCreateRequest) {
 
-        Cafe cafe = cafeMapper.toCafe(cafeCreateRequest.getCafeInfo(), cafeCreateRequest.getBusinessHours());
+        Cafe cafe = cafeMapper.toCafe(cafeCreateRequest.cafeInfo(), cafeCreateRequest.businessHours());
 
         Cafe savedCafe = cafeRepository.save(cafe);
 
@@ -47,7 +47,7 @@ public class CafeService {
 
         Cafe cafe = checkExistCafe(cafeId);
 
-        Cafe cafe_update = cafeMapper.toCafe(cafeUpdateRequest.getCafeInfo(), cafeUpdateRequest.getBusinessHours());
+        Cafe cafe_update = cafeMapper.toCafe(cafeUpdateRequest.cafeInfo(), cafeUpdateRequest.businessHours());
 
         cafe.updateCafe(cafe_update.getCafeInfo(), cafe_update.getBusinessHours());
 

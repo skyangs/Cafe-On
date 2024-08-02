@@ -23,8 +23,8 @@ public class OperationTimePerDayMapper {
             return null;
         }
 
-        Days days = daysMapper.toDays(operationTimePerDayRequest.getDays());
-        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayRequest.getOperationTime());
+        Days days = daysMapper.toDays(operationTimePerDayRequest.days());
+        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayRequest.operationTime());
 
         return OperationTimePerDay.of(days, operationTime);
     }
@@ -34,8 +34,8 @@ public class OperationTimePerDayMapper {
             return null;
         }
 
-        Days days = daysMapper.toDays(operationTimePerDayUpdateRequest.getDays());
-        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayUpdateRequest.getOperationTime());
+        Days days = daysMapper.toDays(operationTimePerDayUpdateRequest.days());
+        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayUpdateRequest.operationTime());
 
         return OperationTimePerDay.of(days, operationTime);
     }
