@@ -1,7 +1,7 @@
 package com.example.order.cafe.fixture;
 
 import com.example.order.cafe.domain.Cafe;
-import com.example.order.cafe.dto.request.CafeCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeCreateRequest;
 
 public class CafeFixture {
 

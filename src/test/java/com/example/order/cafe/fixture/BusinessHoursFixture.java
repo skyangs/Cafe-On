@@ -1,7 +1,7 @@
 package com.example.order.cafe.fixture;
 
 import com.example.order.cafe.domain.*;
-import com.example.order.cafe.dto.request.*;
+import com.example.order.cafe.service.dto.request.*;
 
 import java.util.ArrayList;
 import java.util.List;

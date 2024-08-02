@@ -42,6 +42,7 @@ public class Cafe extends BaseTimeEntity implements Serializable {
     }
 
     private Cafe(CafeInfo cafeInfo, BusinessHours businessHours){
+        validation(cafeInfo, businessHours);
         this.cafeInfo = cafeInfo;
         this.businessHours = businessHours;
     }
@@ -52,6 +53,11 @@ public class Cafe extends BaseTimeEntity implements Serializable {
 
     public void validation(Member member, CafeInfo cafeInfo, BusinessHours businessHours){
         isMemberInfoNull(member);
+        isCafeInfoNull(cafeInfo);
+        isBusinessHoursNull(businessHours);
+    }
+
+    public void validation(CafeInfo cafeInfo, BusinessHours businessHours){
         isCafeInfoNull(cafeInfo);
         isBusinessHoursNull(businessHours);
     }
