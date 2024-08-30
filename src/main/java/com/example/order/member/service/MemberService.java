@@ -1,9 +1,9 @@
 package com.example.order.member.service;
 
-import com.example.order.member.domain.AuthType;
-import com.example.order.member.domain.Grade;
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.response.MemberResponse;
+import com.example.order.member.service.dto.request.SignUpRequest;
+import com.example.order.member.service.dto.request.UpdateMemberRequest;
+import com.example.order.member.service.dto.response.MemberResponse;
 import com.example.order.member.errorCode.MemberErrorCode;
 import com.example.order.member.mapper.MemberMapper;
 import com.example.order.member.repository.MemberRepository;
@@ -37,23 +37,22 @@ public class MemberService {
     }
 
     @Transactional
-    public Member signUp(String memberId, String password, String name, AuthType authType, String phoneNum, Grade grade){
-
-        Optional<Member> member = memberRepository.findByMemberId(memberId);
+    public Member signUp(SignUpRequest request){
+        Optional<Member> member = memberRepository.findByMemberId(request.memberId());
 
         if(member.isPresent()){
             throw new RuntimeException(MemberErrorCode.ALREADY_EXIST_MEMBER_ID_EXCEPTION.getValue());
         }
 
-        Member newMember = Member.of(memberId, password, name, authType, phoneNum, grade);
+        Member newMember = Member.of(request.memberId(), request.password(), request.name(), request.authType(), request.phoneNum(), request.grade());
         return memberRepository.save(newMember);
     }
 
     @Transactional
-    public void updateMember(long id, String password, AuthType authType, String phoneNum){
+    public void updateMember(long id, UpdateMemberRequest request){
 
         Member member = checkExistMember(id);
-        member.updateMember(password, authType, phoneNum);
+        member.updateMember(request.password(), request.authType(), request.phoneNum());
     }
 
     @Transactional

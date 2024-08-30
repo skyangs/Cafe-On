@@ -2,12 +2,12 @@ package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.BusinessHours;
 import com.example.order.cafe.domain.OperationTimePerDay;
-import com.example.order.cafe.dto.request.BusinessHoursRequest;
-import com.example.order.cafe.dto.request.BusinessHoursUpdateRequest;
-import com.example.order.cafe.dto.request.OperationTimePerDayRequest;
-import com.example.order.cafe.dto.request.OperationTimePerDayUpdateRequest;
-import com.example.order.cafe.dto.response.BusinessHoursResponse;
-import com.example.order.cafe.dto.response.OperationTimePerDayResponse;
+import com.example.order.cafe.service.dto.request.BusinessHoursRequest;
+import com.example.order.cafe.service.dto.request.BusinessHoursUpdateRequest;
+import com.example.order.cafe.service.dto.request.OperationTimePerDayRequest;
+import com.example.order.cafe.service.dto.request.OperationTimePerDayUpdateRequest;
+import com.example.order.cafe.service.dto.response.BusinessHoursResponse;
+import com.example.order.cafe.service.dto.response.OperationTimePerDayResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class  BusinessHoursMapper {
     public BusinessHours toBusinessHours(BusinessHoursRequest businessHoursRequest){
 
         List<OperationTimePerDay> operationTimeList =
-                toOperationTimePerDayListForCreate( businessHoursRequest.getOperationTimePerDayList() );
+                toOperationTimePerDayListForCreate( businessHoursRequest.operationTimePerDayList() );
 
         return BusinessHours.of(operationTimeList);
     }
@@ -48,7 +48,7 @@ public class  BusinessHoursMapper {
     public BusinessHours toBusinessHours(BusinessHoursUpdateRequest businessHoursUpdateRequest){
 
         List<OperationTimePerDay> operationTimeList =
-                toOperationTimePerDayListForUpdate( businessHoursUpdateRequest.getOperationTimePerDayList() );
+                toOperationTimePerDayListForUpdate( businessHoursUpdateRequest.operationTimePerDayList() );
 
         return BusinessHours.of(operationTimeList);
     }

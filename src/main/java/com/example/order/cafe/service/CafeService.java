@@ -1,9 +1,9 @@
 package com.example.order.cafe.service;
 
 import com.example.order.cafe.domain.*;
-import com.example.order.cafe.dto.request.CafeCreateRequest;
-import com.example.order.cafe.dto.request.CafeUpdateRequest;
-import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.service.dto.request.CafeCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeUpdateRequest;
+import com.example.order.cafe.service.dto.response.CafeResponse;
 
 import com.example.order.cafe.mapper.CafeMapper;
 import com.example.order.cafe.repository.CafeRepository;
@@ -27,7 +27,7 @@ public class CafeService {
     @Transactional
     public Cafe registerCafe(CafeCreateRequest cafeCreateRequest) {
 
-        Cafe cafe = cafeMapper.toCafe(cafeCreateRequest.getCafeInfo(), cafeCreateRequest.getBusinessHours());
+        Cafe cafe = cafeMapper.toCafe(cafeCreateRequest.cafeInfo(), cafeCreateRequest.businessHours());
 
         Cafe savedCafe = cafeRepository.save(cafe);
 
@@ -47,7 +47,7 @@ public class CafeService {
 
         Cafe cafe = checkExistCafe(cafeId);
 
-        Cafe cafe_update = cafeMapper.toCafe(cafeUpdateRequest.getCafeInfo(), cafeUpdateRequest.getBusinessHours());
+        Cafe cafe_update = cafeMapper.toCafe(cafeUpdateRequest.cafeInfo(), cafeUpdateRequest.businessHours());
 
         cafe.updateCafe(cafe_update.getCafeInfo(), cafe_update.getBusinessHours());
 

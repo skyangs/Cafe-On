@@ -3,10 +3,10 @@ package com.example.order.cafe.mapper;
 import com.example.order.cafe.domain.Days;
 import com.example.order.cafe.domain.OperationTime;
 import com.example.order.cafe.domain.OperationTimePerDay;
-import com.example.order.cafe.dto.request.OperationTimePerDayRequest;
-import com.example.order.cafe.dto.request.OperationTimePerDayUpdateRequest;
-import com.example.order.cafe.dto.response.OperationTimePerDayResponse;
-import com.example.order.cafe.dto.response.OperationTimeResponse;
+import com.example.order.cafe.service.dto.request.OperationTimePerDayRequest;
+import com.example.order.cafe.service.dto.request.OperationTimePerDayUpdateRequest;
+import com.example.order.cafe.service.dto.response.OperationTimePerDayResponse;
+import com.example.order.cafe.service.dto.response.OperationTimeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +23,8 @@ public class OperationTimePerDayMapper {
             return null;
         }
 
-        Days days = daysMapper.toDays(operationTimePerDayRequest.getDays());
-        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayRequest.getOperationTime());
+        Days days = daysMapper.toDays(operationTimePerDayRequest.days());
+        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayRequest.operationTime());
 
         return OperationTimePerDay.of(days, operationTime);
     }
@@ -34,8 +34,8 @@ public class OperationTimePerDayMapper {
             return null;
         }
 
-        Days days = daysMapper.toDays(operationTimePerDayUpdateRequest.getDays());
-        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayUpdateRequest.getOperationTime());
+        Days days = daysMapper.toDays(operationTimePerDayUpdateRequest.days());
+        OperationTime operationTime = operationTimeMapper.toOperationTime(operationTimePerDayUpdateRequest.operationTime());
 
         return OperationTimePerDay.of(days, operationTime);
     }

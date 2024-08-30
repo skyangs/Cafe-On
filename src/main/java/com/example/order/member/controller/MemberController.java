@@ -1,9 +1,8 @@
 package com.example.order.member.controller;
 
-import com.example.order.member.domain.Member;
-import com.example.order.member.dto.request.SignUpRequest;
-import com.example.order.member.dto.request.UpdateMemberRequest;
-import com.example.order.member.dto.response.MemberResponse;
+import com.example.order.member.service.dto.request.SignUpRequest;
+import com.example.order.member.service.dto.request.UpdateMemberRequest;
+import com.example.order.member.service.dto.response.MemberResponse;
 import com.example.order.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,7 +35,7 @@ public class MemberController {
                 .body(memberService.getMember(id));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @Operation(summary = "회원 정보 전체 조회", description = "모든 회원의 정보를 조회한다.",
         responses = {
             @ApiResponse(responseCode = "200", description = "회원 정보 전체 조회 성공"),
@@ -56,12 +55,7 @@ public class MemberController {
     })
     public ResponseEntity<Object> signup(@Validated @RequestBody SignUpRequest signUpRequest){
 
-        memberService.signUp(signUpRequest.getMemberId(),
-                signUpRequest.getPassword(),
-                signUpRequest.getName(),
-                signUpRequest.getAuthType(),
-                signUpRequest.getPhoneNum(),
-                signUpRequest.getGrade());
+        memberService.signUp(signUpRequest);
 
         return ResponseEntity.created(URI.create("/members/signup")).build();
     }
@@ -74,10 +68,7 @@ public class MemberController {
         })
     public ResponseEntity<Object> updateMemberInfo(@PathVariable("id") long id, @Validated @RequestBody UpdateMemberRequest updateMemberRequest){
 
-        memberService.updateMember(id,
-                updateMemberRequest.getPassword(),
-                updateMemberRequest.getAuthType(),
-                updateMemberRequest.getPhoneNum());
+        memberService.updateMember(id, updateMemberRequest);
 
         return ResponseEntity.ok().build();
     }

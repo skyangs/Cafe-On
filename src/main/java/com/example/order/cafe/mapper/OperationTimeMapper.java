@@ -2,12 +2,12 @@ package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.OperationTime;
 import com.example.order.cafe.domain.Time;
-import com.example.order.cafe.dto.request.OperationTimeRequest;
-import com.example.order.cafe.dto.request.OperationTimeUpdateRequest;
-import com.example.order.cafe.dto.request.TimeRequest;
-import com.example.order.cafe.dto.request.TimeUpdateRequest;
-import com.example.order.cafe.dto.response.OperationTimeResponse;
-import com.example.order.cafe.dto.response.TimeResponse;
+import com.example.order.cafe.service.dto.request.OperationTimeRequest;
+import com.example.order.cafe.service.dto.request.OperationTimeUpdateRequest;
+import com.example.order.cafe.service.dto.request.TimeRequest;
+import com.example.order.cafe.service.dto.request.TimeUpdateRequest;
+import com.example.order.cafe.service.dto.response.OperationTimeResponse;
+import com.example.order.cafe.service.dto.response.TimeResponse;
 import org.springframework.stereotype.Component;
 
 
@@ -18,8 +18,8 @@ public class OperationTimeMapper {
             if ( operationTimeRequest == null ) {
                 return null;
             }
-        TimeRequest open = operationTimeRequest.getOpen();
-        TimeRequest close = operationTimeRequest.getClose();
+        TimeRequest open = operationTimeRequest.open();
+        TimeRequest close = operationTimeRequest.close();
 
         return OperationTime.of(toTime(open), toTime(close));
     }
@@ -30,7 +30,7 @@ public class OperationTimeMapper {
             return null;
         }
 
-        return Time.of(timeRequest.getHour(), timeRequest.getMinute());
+        return Time.of(timeRequest.hour(), timeRequest.minute());
 
     }
 
@@ -38,8 +38,8 @@ public class OperationTimeMapper {
         if ( operationTimeUpdateRequest == null ) {
             return null;
         }
-        TimeUpdateRequest open = operationTimeUpdateRequest.getOpen();
-        TimeUpdateRequest close = operationTimeUpdateRequest.getClose();
+        TimeUpdateRequest open = operationTimeUpdateRequest.open();
+        TimeUpdateRequest close = operationTimeUpdateRequest.close();
 
         return OperationTime.of(toTime(open), toTime(close));
     }
@@ -50,7 +50,7 @@ public class OperationTimeMapper {
             return null;
         }
 
-        return Time.of(timeUpdateRequest.getHour(), timeUpdateRequest.getMinute());
+        return Time.of(timeUpdateRequest.hour(), timeUpdateRequest.minute());
 
     }
 

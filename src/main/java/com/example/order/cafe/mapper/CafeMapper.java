@@ -1,10 +1,13 @@
 package com.example.order.cafe.mapper;
 
 import com.example.order.cafe.domain.*;
-import com.example.order.cafe.dto.request.*;
-import com.example.order.cafe.dto.response.BusinessHoursResponse;
-import com.example.order.cafe.dto.response.CafeInfoResponse;
-import com.example.order.cafe.dto.response.CafeResponse;
+import com.example.order.cafe.service.dto.request.BusinessHoursRequest;
+import com.example.order.cafe.service.dto.request.BusinessHoursUpdateRequest;
+import com.example.order.cafe.service.dto.request.CafeInfoCreateRequest;
+import com.example.order.cafe.service.dto.request.CafeInfoUpdateRequest;
+import com.example.order.cafe.service.dto.response.BusinessHoursResponse;
+import com.example.order.cafe.service.dto.response.CafeInfoResponse;
+import com.example.order.cafe.service.dto.response.CafeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

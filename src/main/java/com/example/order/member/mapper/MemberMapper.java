@@ -1,7 +1,7 @@
 package com.example.order.member.mapper;
 
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.response.MemberResponse;
+import com.example.order.member.service.dto.response.MemberResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

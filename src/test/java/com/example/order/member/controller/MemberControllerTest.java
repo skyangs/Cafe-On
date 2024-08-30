@@ -3,8 +3,8 @@ package com.example.order.member.controller;
 import com.example.order.member.domain.AuthType;
 import com.example.order.member.domain.Grade;
 import com.example.order.member.domain.Member;
-import com.example.order.member.dto.request.SignUpRequest;
-import com.example.order.member.dto.request.UpdateMemberRequest;
+import com.example.order.member.service.dto.request.SignUpRequest;
+import com.example.order.member.service.dto.request.UpdateMemberRequest;
 import com.example.order.member.fixture.MemberFixture;
 import com.example.order.member.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -92,7 +92,7 @@ public class MemberControllerTest {
         List<Member> 회원_리스트 = List.of(첫번째_회원, 두번째_회원);
         when(memberRepository.findAll()).thenReturn(회원_리스트);
 
-        mockMvc.perform(get("/members/all"))
+        mockMvc.perform(get("/members"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(2)))
                 .andExpect(jsonPath("$[0].memberId").value(MemberFixture.아이디))
