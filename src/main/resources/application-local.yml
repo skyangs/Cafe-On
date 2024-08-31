@@ -1,18 +1,33 @@
 spring:
+
+  h2:
+    console:
+      enabled: true
+
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/cafeOrder?serverTimezone=Asia/Seoul
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
     username: root
-    password: cafe
+    password:
+
   jpa:
-    database: mysql
+    database: h2
     hibernate:
       ddl-auto: update
-      show-sql: true
-      dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.H2Dialect
+        globally_quoted_identifiers: true
+  sql:
+    init:
+      mode: never
+
+  output:
+    ansi:
+      enabled: always
 
 logging:
   level:
