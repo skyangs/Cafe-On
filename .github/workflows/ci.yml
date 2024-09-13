@@ -9,10 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
-
     steps:
       - name: Get repository
         uses: actions/checkout@v4
@@ -24,10 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@dbbdc275be76ac10734476cc723d82dfe7ec6eda # v3.4.2
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build with Gradle Wrapper
         run: ./gradlew build
