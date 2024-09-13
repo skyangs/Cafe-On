@@ -28,14 +28,10 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 
 	runtimeOnly 'com.h2database:h2' // 테스트 DB
-
+	implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.2.0'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
-//	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-//	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-//	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
 	testImplementation 'org.mockito:mockito-core:4.7.0'
 
