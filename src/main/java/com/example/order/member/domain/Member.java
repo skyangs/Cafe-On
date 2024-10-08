@@ -2,186 +2,203 @@ package com.example.order.member.domain;
 
 import com.example.order.global.common.BaseTimeEntity;
 import com.example.order.member.errorMsg.MemberErrorMsg;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Objects;
 
 @NoArgsConstructor(force = true)
 @Getter
 @Entity
 public class Member extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-    @Column(nullable = false)
-    private final String memberId;
+  @Column(nullable = false)
+  private final String memberId;
 
-    @Column(nullable = false)
-    private String password;
+  @Column(nullable = false)
+  private String password;
 
-    @Column(nullable = false)
-    private final String name;
+  @Column(nullable = false)
+  private final String name;
 
-    @Enumerated(EnumType.STRING)
-    private AuthType authType;
+  @Enumerated(EnumType.STRING)
+  private AuthType authType;
 
-    @Column(nullable = false)
-    private String phoneNum;
+  @Column(nullable = false)
+  private String phoneNum;
 
-    @Enumerated(EnumType.STRING)
-    private Grade grade;
+  @Enumerated(EnumType.STRING)
+  private Grade grade;
 
-    @Transient
-    public static final String MEMBER_ID_REG = "^[a-zA-Z0-9]{4,10}$";
-    @Transient
-    public static final String PHONE_NUM_NUMBER_REG = "^\\d+$";
+  @Transient
+  public static final String MEMBER_ID_REG = "^[a-zA-Z0-9]{4,10}$";
+  @Transient
+  public static final String PHONE_NUM_NUMBER_REG = "^\\d+$";
 
-    @Transient
-    private static final int MIN_ID_LENGTH = 4;
-    @Transient
-    private static final int MAX_ID_LENGTH = 10;
-    @Transient
-    private static final int MIN_PASSWORD_LENGTH = 8;
-    @Transient
-    private static final int MAX_PASSWORD_LENGTH = 15;
-    @Transient
-    private static final int MIN_NAME_LENGTH = 1;
-    @Transient
-    private static final int MAX_NAME_LENGTH = 5;
-    @Transient
-    private static final int MIN_PHONE_NUM_LENGTH = 9;
-    @Transient
-    private static final int MAX_PHONE_NUM_LENGTH = 11;
+  @Transient
+  private static final int MIN_ID_LENGTH = 4;
+  @Transient
+  private static final int MAX_ID_LENGTH = 10;
+  @Transient
+  private static final int MIN_PASSWORD_LENGTH = 8;
+  @Transient
+  private static final int MAX_PASSWORD_LENGTH = 15;
+  @Transient
+  private static final int MIN_NAME_LENGTH = 1;
+  @Transient
+  private static final int MAX_NAME_LENGTH = 5;
+  @Transient
+  private static final int MIN_PHONE_NUM_LENGTH = 9;
+  @Transient
+  private static final int MAX_PHONE_NUM_LENGTH = 11;
 
-    private Member(String memberId, String password, String name, AuthType authType, String phoneNum, Grade grade){
-        validation(memberId, password, name, phoneNum);
-        this.memberId = memberId;
-        this.password = password;
-        this.name = name;
-        this.authType = authType;
-        this.phoneNum = phoneNum;
-        this.grade = grade;
+  private Member(String memberId, String password, String name, AuthType authType, String phoneNum,
+      Grade grade) {
+    validation(memberId, password, name, phoneNum);
+    this.memberId = memberId;
+    this.password = password;
+    this.name = name;
+    this.authType = authType;
+    this.phoneNum = phoneNum;
+    this.grade = grade;
+  }
+
+  public static Member of(String memberId, String password, String name, AuthType authType,
+      String phoneNum, Grade grade) {
+    return new Member(memberId, password, name, authType, phoneNum, grade);
+  }
+
+  private Member(long id, String memberId, String password, String name, AuthType authType,
+      String phoneNum) {
+    validation(memberId, password, name, phoneNum);
+    this.id = id;
+    this.memberId = memberId;
+    this.password = password;
+    this.name = name;
+    this.authType = authType;
+    this.phoneNum = phoneNum;
+  }
+
+  public static Member of(long id, String memberId, String password, String name, AuthType authType,
+      String phoneNum) {
+    return new Member(id, memberId, password, name, authType, phoneNum);
+  }
+
+  public void validation(String memberId, String password, String name, String phoneNum) {
+    checkIdLength(memberId);
+    checkIdRegex(memberId);
+
+    isPasswordNull(password);
+    checkPasswordLength(password);
+
+    isNameNull(name);
+    checkNameLength(name);
+
+    checkPhoneNumLength(phoneNum);
+    checkPhoneNumOnlyNumberRegex(phoneNum);
+  }
+
+  public void checkIdLength(String memberId) {
+
+    if (memberId.length() < MIN_ID_LENGTH || memberId.length() > MAX_ID_LENGTH) {
+      throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_LENGTH_ERROR_MESSAGE.getValue());
     }
 
-    public static Member of(String memberId, String password, String name, AuthType authType, String phoneNum, Grade grade){
-        return new Member(memberId, password, name, authType, phoneNum, grade);
+  }
+
+  public void checkIdRegex(String memberId) {
+
+    if (!memberId.matches(MEMBER_ID_REG)) {
+      throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_REGEX_ERROR_MESSAGE.getValue());
     }
+  }
 
-    private Member(long id, String memberId, String password, String name, AuthType authType, String phoneNum){
-        validation(memberId, password, name, phoneNum);
-        this.id = id;
-        this.memberId = memberId;
-        this.password = password;
-        this.name = name;
-        this.authType = authType;
-        this.phoneNum = phoneNum;
-    }
+  public void checkPasswordLength(String password) {
 
-    public static Member of(long id, String memberId, String password, String name, AuthType authType, String phoneNum){
-        return new Member(id, memberId, password, name, authType, phoneNum);
-    }
-
-    public void validation(String memberId, String password, String name, String phoneNum){
-        checkIdLength(memberId);
-        checkIdRegex(memberId);
-
-        isPasswordNull(password);
-        checkPasswordLength(password);
-
-        isNameNull(name);
-        checkNameLength(name);
-
-        checkPhoneNumLength(phoneNum);
-        checkPhoneNumOnlyNumberRegex(phoneNum);
-    }
-
-    public void checkIdLength(String memberId){
-
-        if(memberId.length() < MIN_ID_LENGTH || memberId.length() > MAX_ID_LENGTH){
-            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_LENGTH_ERROR_MESSAGE.getValue());
-        }
+    if (password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH) {
+      throw new IllegalArgumentException(
+          MemberErrorMsg.MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE.getValue());
 
     }
+  }
 
-    public void checkIdRegex(String memberId){
+  public void isPasswordNull(String password) {
 
-        if(!memberId.matches(MEMBER_ID_REG)){
-            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_ID_REGEX_ERROR_MESSAGE.getValue());
-        }
+    if (password == null) {
+      throw new NullPointerException(MemberErrorMsg.MEMBER_PASSWORD_NULL_ERROR_MESSAGE.getValue());
+    }
+  }
+
+  public void isNameNull(String name) {
+
+    if (name == null) {
+      throw new NullPointerException(MemberErrorMsg.MEMBER_NAME_NULL_ERROR_MESSAGE.getValue());
+    }
+  }
+
+  public void checkNameLength(String name) {
+
+    if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
+      throw new IllegalArgumentException(
+          MemberErrorMsg.MEMBER_NAME_LENGTH_ERROR_MESSAGE.getValue());
     }
 
-    public void checkPasswordLength(String password){
+  }
 
-        if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
-            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PASSWORD_LENGTH_ERROR_MESSAGE.getValue());
+  public void checkPhoneNumLength(String phoneNum) {
 
-        }
+    if (phoneNum.length() < MIN_PHONE_NUM_LENGTH || phoneNum.length() > MAX_PHONE_NUM_LENGTH) {
+      throw new IllegalArgumentException(
+          MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
     }
 
-    public void isPasswordNull(String password){
+  }
 
-        if(password == null){
-            throw new NullPointerException(MemberErrorMsg.MEMBER_PASSWORD_NULL_ERROR_MESSAGE.getValue());
-        }
-    }
+  public void checkPhoneNumOnlyNumberRegex(String phoneNum) {
 
-    public void isNameNull(String name){
-
-        if(name == null){
-            throw new NullPointerException(MemberErrorMsg.MEMBER_NAME_NULL_ERROR_MESSAGE.getValue());
-        }
-    }
-
-    public void checkNameLength(String name){
-
-        if(name.isEmpty() || name.length() > MAX_NAME_LENGTH){
-            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_NAME_LENGTH_ERROR_MESSAGE.getValue());
-        }
+    if (!phoneNum.matches(PHONE_NUM_NUMBER_REG)) {
+      throw new IllegalArgumentException(
+          MemberErrorMsg.MEMBER_PHONE_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
 
     }
 
-    public void checkPhoneNumLength(String phoneNum){
+  }
 
-        if(phoneNum.length() < MIN_PHONE_NUM_LENGTH || phoneNum.length() > MAX_PHONE_NUM_LENGTH){
-            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_LENGTH_ERROR_MESSAGE.getValue());
-        }
+  public void updateMember(String password, AuthType authType, String phoneNum) {
+    this.password = password;
+    this.authType = authType;
+    this.phoneNum = phoneNum;
+  }
 
+  public void updateMemberGrade(Grade grade) {
+    this.grade = grade;
+  }
+
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
 
-    public void checkPhoneNumOnlyNumberRegex(String phoneNum){
-
-        if(!phoneNum.matches(PHONE_NUM_NUMBER_REG)){
-            throw new IllegalArgumentException(MemberErrorMsg.MEMBER_PHONE_NUM_ONLY_NUMBER_REGEX_ERROR_MESSAGE.getValue());
-
-        }
-
-    }
-
-    public void updateMember(String password, AuthType authType, String phoneNum){
-        this.password = password;
-        this.authType = authType;
-        this.phoneNum = phoneNum;
-    }
-
-    public void updateMemberGrade(Grade grade){
-        this.grade = grade;
-    }
-
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Member member = (Member) o;
-        return Objects.equals(memberId, member.memberId) &&
-                Objects.equals(password, member.password) &&
-                Objects.equals(authType, member.authType) &&
-                Objects.equals(phoneNum, member.phoneNum);
-    }
-
+    Member member = (Member) o;
+    return Objects.equals(memberId, member.memberId) &&
+        Objects.equals(password, member.password) &&
+        Objects.equals(authType, member.authType) &&
+        Objects.equals(phoneNum, member.phoneNum);
+  }
 
 
 }
