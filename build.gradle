@@ -1,67 +1,67 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.4'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'checkstyle'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.4'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'checkstyle'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.testng:testng:7.7.0'
-	implementation 'org.jetbrains:annotations:24.0.0'
-	compileOnly 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.testng:testng:7.7.0'
+    implementation 'org.jetbrains:annotations:24.0.0'
+    compileOnly 'org.projectlombok:lombok'
 
-	runtimeOnly 'com.h2database:h2' // 테스트 DB
+    runtimeOnly 'com.h2database:h2' // 테스트 DB
 
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
 //	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 //	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 //	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-	testImplementation 'org.mockito:mockito-core:4.7.0'
+    testImplementation 'org.mockito:mockito-core:4.7.0'
 
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
 tasks.withType(Checkstyle) {
-	reports {
-		xml.required = true
-		html.required = true
-	}
+    reports {
+        xml.required = true
+        html.required = true
+    }
 }
 
 checkstyle {
-	maxWarnings = 0
-	configFile = file("config/checkstyle/google_checks.xml")
-	configProperties = ["suppressionFile": "config/checkstyle/sun_checks.xml"]
+    maxWarnings = 0
+    configFile = file("config/checkstyle/google_checks.xml")
+    configProperties = ["suppressionFile": "config/checkstyle/sun_checks.xml"]
 }
