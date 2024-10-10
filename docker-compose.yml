@@ -3,7 +3,7 @@ services:
     image: mysql:8.0.33
     container_name: mysql_docker
     ports:
-      - "3307:3306"
+      - "43306:3306"
     environment:
       MYSQL_DATABASE: cafeOrder
       MYSQL_ROOT_PASSWORD: cafe
