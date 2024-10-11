@@ -16,21 +16,60 @@
 
 ## 디렉토리 구조
 
--
+```
+C:.
+    ├─.github
+    │  └─workflows
+    └─src
+    ├─main
+    │  ├─generated
+    │  ├─java
+    │  │  └─com
+    │  │      └─example
+    │  │          └─order
+    │  │              ├─cafe
+    │  │              ├─config
+    │  │              ├─global
+    │  │              ├─member
+    │  │              └─order
+    │  └─resources
+    └─test
+        ├─java
+        │  └─com
+        │      └─example
+        │          └─order
+        │              ├─cafe
+        │              ├─member
+        │              └─order
+        └─resources
+```
+
+### 기획서
+
+[요구사항 명세서](https://resolute-blob-c94.notion.site/dddf8cfb14cd487a930a9ee2d8f203f3?v=f02d08c8d8e948f9ad4ce8d3f3229eaa&pvs=74)
 
 ### 프로젝트 설치 및 실행방법
 
-실행 파일 : OrderApplication
 ---- -
 
-## Docker
+#### Docker
 
-``` java
+``` 
 cd .\src\main\resources
 
 (실행 시) docker-compose up -d
 (정지 시) docker-compose stop
 (삭제 시) docker-compose down
+```
+
+#### 프로젝트 실행
+
+실행 파일 : OrderApplication
+
+```
+1. ./gradlew build
+2. cd build/libs
+3. java -jar order-0.0.1-SNAPSHOT.jar
 ```
 
 ### [Cafe-Owner, 카페 운영자 기능]
